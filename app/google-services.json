@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1009640732739",
+    "project_id": "barter-trade-app",
+    "storage_bucket": "barter-trade-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009640732739:android:a030b46f0e5b237e273cf6",
+        "android_client_info": {
+          "package_name": "com.example.group15project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009640732739-0upuphmrqeq9titm7u5ufak7sg8uuom0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjgGv0RBKui0SbHWpPn9yzj0-nn5o_IOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009640732739-0upuphmrqeq9titm7u5ufak7sg8uuom0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
