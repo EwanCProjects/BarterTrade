@@ -5,6 +5,18 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/statusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="600dp"
+        android:text="@string/empty_string"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
+
+    <TextView
         android:id="@+id/postPageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +53,6 @@
         android:autofillHints="postTitle"
         android:hint="@string/post_title_input"
         android:inputType="text"
-        android:text="@string/post_title_input"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,10 +82,9 @@
         android:layout_marginRight="132dp"
         android:layout_marginBottom="136dp"
         android:autofillHints="postTitle"
-        android:hint="@string/post_title_input"
+        android:hint="@string/post_description_input"
         android:inputType="text"
         android:singleLine="false"
-        android:text="@string/post_description_input"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +102,6 @@
         android:autofillHints="postTitle"
         android:hint="@string/post_cat_label"
         android:inputType="text"
-        android:text="@string/post_cat_label"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

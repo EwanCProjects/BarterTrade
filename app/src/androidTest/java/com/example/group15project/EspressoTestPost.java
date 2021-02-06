@@ -42,11 +42,34 @@ public class EspressoTestPost {
 
     /*** AT-I**/
     @Test
-    public void checkIfRegistrationPageIsShown() {
-        //this doesn't work right now, we need to add a way to get to the post page and update the test here
-        //to do this we need to add a "post" button for the main design
+    public void checkIfPostPageIsShown() {
+        //We also need to add a way to access the post page by adding a post button
         onView(withId(R.id.titleTextField)).check(matches(withText(R.string.empty_string)));
         onView(withId(R.id.categoryTextField)).check(matches(withText(R.string.empty_string)));
-        onView(withId(R.id.postButton)).check(matches(withText("Register")));
+        onView(withId(R.id.postButton)).check(matches(withText("POST!")));
+    }
+
+    /*** AT-II**/
+    @Test
+    public void checkIfTitleIsEmpty() {
+        onView(withId(R.id.titleTextField)).perform(typeText(""));
+        onView(withId(R.id.postButton)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_title)));
+    }
+
+    /*** AT-III**/
+    @Test
+    public void checkIfCategoryIsEmpty() {
+        onView(withId(R.id.categoryTextField)).perform(typeText(""));
+        onView(withId(R.id.postButton)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_category)));
+    }
+
+    /*** AT-IV**/
+    @Test
+    public void checkIfDescriptionIsEmpty() {
+        onView(withId(R.id.descriptionTextField)).perform(typeText(""));
+        onView(withId(R.id.postButton)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_description)));
     }
 }
