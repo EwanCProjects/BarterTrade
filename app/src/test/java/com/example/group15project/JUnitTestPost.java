@@ -2,6 +2,7 @@ package com.example.group15project;
 
 import android.app.Activity;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,5 +40,10 @@ public class JUnitTestPost {
     public void checkIfDescriptionIsEmpty() {
         assertTrue(postActivity.isEmptyDescription(""));
         assertFalse(postActivity.isEmptyDescription("xyz$56"));
+    }
+
+    @AfterClass
+    public static void tearDown(){
+        System.gc();
     }
 }

@@ -7,4 +7,5 @@
     <string name="post_description_input">Add a description</string>
     <string name="post_cat_label">Add a category</string>
     <string name="post_button_label">POST!</string>
+    <string name="empty_string">POST!</string>
 </resources>
