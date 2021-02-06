@@ -2,7 +2,9 @@
     <string name="app_name">Group 15 Project</string>
     <string name="posting_title_page">New Post</string>
     <string name="post_title_label">Ad Title</string>
+    <string name="post_title_input">Add a title</string>
     <string name="post_description_label">Ad Description</string>
-    <string name="post_cat_label">Add a category for your post here</string>
+    <string name="post_description_input">Add a description</string>
+    <string name="post_cat_label">Add a category</string>
     <string name="post_button_label">POST!</string>
 </resources>
