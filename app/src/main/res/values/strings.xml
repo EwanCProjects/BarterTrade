@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Group 15 Project</string>
+
     <string name="posting_title_page">New Post</string>
     <string name="post_title_label">Ad Title</string>
     <string name="post_title_input">Add a title</string>
@@ -7,6 +8,12 @@
     <string name="post_description_input">Add a description</string>
     <string name="post_cat_label">Add a category</string>
     <string name="post_button_label">POST!</string>
+
+    <string name="registerButton">Register</string>
+    <string name="NON_ALPHA_NUMERIC_USER_NAME"> Please use an alphanumeric username! </string>
+    <string name="INVALID_EMAIL_ADDRESS"> Invalid email. </string>
+
+
     <string name="empty_string"></string>
     <string name="empty_title">Please add a title!</string>
     <string name="empty_description">Please add a description!</string>

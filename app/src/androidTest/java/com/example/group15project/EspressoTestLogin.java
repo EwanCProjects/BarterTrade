@@ -3,6 +3,7 @@ package com.example.group15project;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -28,7 +29,7 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class EspressoTesLogin {
+public class EspressoTestLogin {
 
     @Rule
     public ActivityScenarioRule<PostActivity> myRule = new ActivityScenarioRule<>(PostActivity.class);
