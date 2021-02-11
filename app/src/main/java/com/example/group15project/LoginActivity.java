@@ -52,12 +52,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     protected String getUserName() {
-        EditText userName = findViewById(R.id.userName);
+        EditText userName = findViewById(R.id.username);
         return userName.getText().toString().trim();
     }
 
     protected String getEmailAddress() {
-        EditText emailAddress = findViewById(R.id.emailAddress);
+        EditText emailAddress = findViewById(R.id.email);
         return emailAddress.getText().toString().trim();
     }
 

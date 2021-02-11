@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="registerButton" type="id">com.example.group15project.R.id#registerButton</item>
-    <item name="userName" type="id">com.example.group15project.R.id#userName</item>
-    <item name="emailAddress" type="id">com.example.group15project.R.id#emailAddress</item>
+    <item name="username" type="id">com.example.group15project.R.id#1000157</item>
+    <item name="email" type="id">com.example.group15project.R.id#email</item>
 </resources>
