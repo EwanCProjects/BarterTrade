@@ -17,63 +17,62 @@ public class JUnitTestRegistration {
         assertEquals(4, 2 + 2);
     }
 
-    static MainActivity mainActivity;
+    static RegistrationActivity regActivity;
 
     @BeforeClass
     public static void setup() {
-        mainActivity = new MainActivity();
+        regActivity = new RegistrationActivity();
     }
 
 
 /*      NEW TESTS
-        ==========
+        ==========*/
 
         @Test
     public void checkIfFirstNameIsEmpty() {
-        assertTrue(mainActivity.isEmptyFirstName(""));
-        assertFalse(mainActivity.isEmptyFirstName("John"));
+        assertTrue(regActivity.isEmptyFirstName(""));
+        assertFalse(regActivity.isEmptyFirstName("John"));
     }
 
         @Test
     public void checkIfLastNameIsEmpty() {
-        assertTrue(mainActivity.isEmptyLastName(""));
-        assertFalse(mainActivity.isEmptyLastName("Smith"));
+        assertTrue(regActivity.isEmptyLastName(""));
+        assertFalse(regActivity.isEmptyLastName("Smith"));
     }
 
     @Test
     public void checkIfEmailIsEmpty() {
-        assertTrue(mainActivity.isEmptyEmail(""));
-        assertFalse(mainActivity.isEmptyLastName("abc.123@dal.ca"));
+        assertTrue(regActivity.isEmptyEmail(""));
+        assertFalse(regActivity.isEmptyLastName("abc.123@dal.ca"));
     }
 
     @Test
     public void checkIfPasswordIsEmpty() {
-        assertTrue(mainActivity.isEmptyLastName(""));
-        assertFalse(mainActivity.isEmptyLastName("abc123"));
+        assertTrue(regActivity.isEmptyLastName(""));
+        assertFalse(regActivity.isEmptyLastName("abc123"));
     }
 
     @Test
     public void checkIfPasswordsMatch() {
-        assertEquals(mainActivity.passwordsMatch(),true);
-        assertEquals(mainActivity.passwordsNotMatch(),false);
+        assertEquals(regActivity.passwordsMatch(),true);
+        assertEquals(regActivity.passwordsNotMatch(),false);
     }
 
     @Test
     public void checkIfPasswordsNotMatch() {
-        assertEquals(mainActivity.passwordsNotMatch(),true);
-        assertEquals(mainActivity.passwordsMatch(),false);
+        assertEquals(regActivity.passwordsNotMatch(),true);
+        assertEquals(regActivity.passwordsMatch(),false);
     }
 
- */
 
     @Test
     public void checkIfEmailIsValid(){
-        assertTrue(mainActivity.isValidEmailAddress("abc123@dal.ca"));
+        assertTrue(regActivity.isValidEmailAddress("abc123@dal.ca"));
     }
 
     @Test
     public void checkIfEmailIsInValid(){
-        assertFalse(mainActivity.isValidEmailAddress("abc.123dal.ca"));
+        assertFalse(regActivity.isValidEmailAddress("abc.123dal.ca"));
     }
 
     @AfterClass
