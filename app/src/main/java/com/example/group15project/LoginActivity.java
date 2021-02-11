@@ -1,5 +1,6 @@
 package com.example.group15project;
 
+
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -14,6 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.core.util.PatternsCompat;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,10 +45,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected void initializeDatabase(){
-        this.emailRef=emailRef;
-        this.userNameRef = userNameRef;
-        FirebaseDatabase rootRefEmail = FirebaseDatabase.getInstance(String.valueOf(emailRef));
-        FirebaseDatabase rootRefUser = FirebaseDatabase.getInstance(String.valueOf(userNameRef));
+        database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
+        userNameRef = database.getReference("userName");
+        emailRef = database.getReference("emailAddress");
     }
 
 
@@ -72,27 +78,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return m.matches();
     }
 
-    protected void switch2WelcomeWindow(String userName, String emailAddress) {
-        //your business logic goes here!
-        Toast.makeText(MainActivity.this,"Firebase connection success", Toast.LENGTH_LONG).show();
 
-    }
 
-    protected void saveUserNameToFirebase(String userName) {
-        //save user name to Firebase
-        //DatabaseReference userNameRef = null;
-        userNameRef.child(userName).setValue(userName);
-    }
 
-    protected void saveEmailToFirebase(String emailAddress) {
-        //save email to Firebase
-        userNameRef.child(emailAddress).setValue(emailAddress);
-    }
 
     protected void setStatusMessage(String message) {
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message);
     }
+
+    protected Task<Void> saveUserNameToFirebase(String userName) {
+        return userNameRef.setValue(userName);
+    }
+
+    protected Task<Void> saveEmailToFirebase(String emailAddress) {
+        return emailRef.setValue(emailAddress);
+    }
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -101,44 +105,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String emailAddress = getEmailAddress();
         String errorMessage = new String();
 
-        boolean usernameAlphaNumb = isAlphanumericUserName(userName);
-        boolean usernameEmpty = isEmptyUserName(userName);
-        boolean emailOK = isValidEmailAddress(emailAddress);
-
-        if (usernameEmpty) {
-            errorMessage = getResources().getString(R.string.empty_string);
-            setStatusMessage(errorMessage);
+        if (isEmptyUserName(userName)) {
+            errorMessage = getResources().getString(R.string.EMPTY_USER_NAME);
+        } else {
+            if (!isAlphanumericUserName(userName)) {
+                errorMessage = getResources().getString(R.string.NON_ALPHA_NUMERIC_USER_NAME);
+            }
         }
-
-        //check for valid user name
-        if (!usernameAlphaNumb) {
-            setStatusMessage(errorMessage);
-            TextView statusLabel = findViewById(R.id.statusLabel);
-            errorMessage = getResources().getString(R.string.NON_ALPHA_NUMERIC_USER_NAME); // usenmane NOT a.n
-            statusLabel.setText(errorMessage);
-        }
-
-        //check for valid email address
-        if (!emailOK) {
-            setStatusMessage(errorMessage);
-            TextView statusLabel = findViewById(R.id.statusLabel);
-            errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS); // usenmane NOT a.n
-            statusLabel.setText(errorMessage);
+        if (!isValidEmailAddress(emailAddress)) {
+            errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
         }
 
         if (errorMessage.isEmpty()) {
-            //no errors were found!
-            //much of the business logic goes here!
-            TextView statusLabel = findViewById(R.id.statusLabel);
-            errorMessage = getResources().getString(R.string.empty_string); // if is alphanumeric
-            statusLabel.setText(errorMessage);
-
-
-
+            saveUserNameToFirebase(userName);
+            saveEmailToFirebase(emailAddress);
+            //switch2WelcomeWindow(userName, emailAddress);
         } else {
             setStatusMessage(errorMessage);
         }
     }
+
 
 
 }
