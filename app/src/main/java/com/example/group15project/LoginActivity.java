@@ -35,6 +35,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //attaching the event handler
+        Button postButton = findViewById(R.id.postButton);
+        Button registerButton = findViewById(R.id.registerButton);
+        registerButton.setOnClickListener(this);
+
         //initiating the Firebase
         initializeDatabase();
     }
@@ -47,12 +52,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     protected String getUserName() {
-        EditText userName = findViewById(R.id.username);
+        EditText userName = findViewById(R.id.userName);
         return userName.getText().toString().trim();
     }
 
     protected String getEmailAddress() {
-        EditText emailAddress = findViewById(R.id.email);
+        EditText emailAddress = findViewById(R.id.emailAddress);
         return emailAddress.getText().toString().trim();
     }
 

@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
 
 public class JUnitTestLogin {
 
-    static MainActivity mainActivity;
+    static LoginActivity LoginActivity;
 
     @BeforeClass
     public static void setup() {
-        mainActivity = new MainActivity();
+        LoginActivity = new LoginActivity();
     }
 
 
@@ -27,7 +27,7 @@ public class JUnitTestLogin {
     //check if password empty
     @Test
     public void passwordEmpty() {
-        assertFalse(mainActivity.isPasswordValid(""));
+        assertFalse(LoginActivity.isPasswordValid(""));
 
     }
 
@@ -35,16 +35,16 @@ public class JUnitTestLogin {
     //check email is in a valid format
     @Test
     public void validEmail(){
-        assertTrue(mainActivity.isValidEmailAddress("abc123@dal.ca"));
+        assertTrue(LoginActivity.isValidEmailAddress("abc123@dal.ca"));
     }
 
     //AT-3
     //check email in an invalid format
     @Test
     public void invalidEmail(){
-        assertFalse(mainActivity.isValidEmailAddress("abc123dal.ca"));
-        assertFalse(mainActivity.isValidEmailAddress(""));
-        assertFalse(mainActivity.isValidEmailAddress("abc123dal@ca"));
+        assertFalse(LoginActivity.isValidEmailAddress("abc123dal.ca"));
+        assertFalse(LoginActivity.isValidEmailAddress(""));
+        assertFalse(LoginActivity.isValidEmailAddress("abc123dal@ca"));
     }
 
     //AT-4
@@ -52,7 +52,7 @@ public class JUnitTestLogin {
     @Test
     public void containsEmail() {
         //add this email to the DB
-        assertTrue(mainActivity.isEmailInDB("abc@de.fg"));
+        assertTrue(LoginActivity.isEmailInDB("abc@de.fg"));
 
     }
 
@@ -61,7 +61,7 @@ public class JUnitTestLogin {
     //check if email is not contained in database
     @Test
     public void DoesntContainsEmail() {
-        assertFalse(mainActivity.isEmailInDB("zzz@de.fg"));
+        assertFalse(LoginActivity.isEmailInDB("zzz@de.fg"));
 
     }
 
@@ -70,14 +70,14 @@ public class JUnitTestLogin {
     //check if the inputed password matches the password found to correspond to the email
     @Test
     public void PasswordMatchesDBPassword() {
-        assertTrue(mainActivity.isPasswordMatching("dog123", "dog123"));
+        assertTrue(LoginActivity.isPasswordMatching("dog123", "dog123"));
     }
 
     //AT-7
     //check if the inputed password doesnt matches the password found to correspond to the email
     @Test
     public void PasswordDoesntMatchDBPassword() {
-        assertFalse(mainActivity.isPasswordMatching("dog321", "dog123"));
+        assertFalse(LoginActivity.isPasswordMatching("dog321", "dog123"));
     }
 
 
