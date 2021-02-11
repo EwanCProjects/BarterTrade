@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">Group 15 Project</string>
-    <string name="posting_title_page">New Post</string>
-    <string name="post_title_label">Ad Title</string>
+    <string name="posting_title_page">NEW POST</string>
+    <string name="post_title_label">POST TITLE</string>
     <string name="post_title_input">Add a title</string>
-    <string name="post_description_label">Ad Description</string>
-    <string name="post_description_input">Add a description</string>
-    <string name="post_cat_label">Add a category</string>
+    <string name="post_description_label">POST DESCRIPTION</string>
+    <string name="post_description_input">Tell us what you want to trade!</string>
+    <string name="post_cat_label">POST CATEGORY</string>
+    <string name="post_cat_input">Add a category</string>
     <string name="post_button_label">POST!</string>
     <string name="empty_string"></string>
     <string name="empty_title">Please add a title!</string>
     <string name="empty_description">Please add a description!</string>
     <string name="empty_category">Please add a category!</string>
+    <string name="status_label">[Status label]</string>
 </resources>
