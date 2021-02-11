@@ -35,11 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //attaching the event handler
-        Button postButton = findViewById(R.id.postButton);
-        Button registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(this);
-
         //initiating the Firebase
         initializeDatabase();
     }

@@ -15,7 +15,16 @@
     <string name="EMPTY_USER_NAME"> username is empty </string>
     <string name="NON_ALPHA_NUMERIC_USER_NAME"> Please use an alphanumeric username! </string>
     <string name="INVALID_EMAIL_ADDRESS"> Invalid email. </string>
-    <string name="userName">username1234 </string>
+    <string name="INVALID_USERNAME"> Invalid username. </string>
+    <string name="LOGIN_FAILED"> Invalid username. </string>
+
+
+
+    <string name="username">usernamevalue </string>
+    <string name="email">abc@dal.ca </string>
+    <string name="password">abc123 </string>
+
+
 
 
     <string name="empty_string"></string>
