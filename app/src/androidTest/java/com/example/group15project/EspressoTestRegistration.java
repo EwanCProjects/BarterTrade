@@ -49,7 +49,6 @@ public class EspressoTestRegistration {
 
     @Test
     public void checkIfRegistrationPageIsShown() {
-        //onView(withId(R.id.userName)).check(matches(withText(R.string.EMPTY_STRING)));
         onView(withId(R.id.editTextEmailAddress)).perform(typeText(""));
         onView(withId(R.id.editTextFirstName)).perform(typeText(""));
         onView(withId(R.id.editTextLastName)).perform(typeText(""));
@@ -132,7 +131,6 @@ public class EspressoTestRegistration {
 
     @Test
     public void checkIfEmailIsValid() {
-        //onView(withId(R.id.userName)).perform(typeText("abc123"));
         onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("")));
@@ -141,7 +139,6 @@ public class EspressoTestRegistration {
 
     @Test
     public void checkIfEmailIsInvalid() {
-        //nView(withId(R.id.userName)).perform(typeText("abc123"));
         onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123.dal.ca"));
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("")));
@@ -150,13 +147,10 @@ public class EspressoTestRegistration {
     /*
     @Test
     public void checkIfMoved2WelcomePage(){
-        //onView(withId(R.id.userName)).perform(typeText("abc123"));
+
         onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
         onView(withId(R.id.registerButton)).perform(click());
         intended(hasComponent(LoginActivity.class.getName()));
     }
-
      */
-
-
 }

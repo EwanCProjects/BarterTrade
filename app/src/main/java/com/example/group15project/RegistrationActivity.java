@@ -13,8 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import android.content.Intent;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -105,10 +103,6 @@ protected void initializeDatabase() {
         return (getPassword().equals(getPasswordConfirmation()));
     }
 
-    protected boolean passwordsNotMatch(String password, String passwordConfirm) {
-        return !(getPassword().equals(getPasswordConfirmation()));
-    }
-
     protected Task<Void> savefirstNameToFirebase(String firstName) {
         return firstNameRef.setValue(firstName);
     }
@@ -145,7 +139,7 @@ protected void initializeDatabase() {
         if (!isValidEmailAddress(emailAddress)) {
             errorMessage = "Email is empty";
         }
-        if (!isEmptyPassword(password)) {
+        if (isEmptyPassword(password)) {
             errorMessage = "Password field empty";
         } /*else {
                 if(passwordsNotMatch(password,passwordConfirmation)){

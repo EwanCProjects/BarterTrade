@@ -12,10 +12,6 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class JUnitTestRegistration {
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
 
     static RegistrationActivity regActivity;
 
@@ -57,13 +53,6 @@ public class JUnitTestRegistration {
         assertEquals(true, regActivity.passwordsMatch("abc123","abc123"));
         //assertEquals(regActivity.passwordsNotMatch(),false);
     }
-
-    /*@Test
-    public void checkIfPasswordsNotMatch() {
-        assertEquals(false, regActivity.passwordsMatch("abc123","abc223"));
-        //assertEquals(regActivity.passwordsMatch(),false);
-    }*/
-
 
     @Test
     public void checkIfEmailIsValid(){
