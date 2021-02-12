@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    DatabaseReference fbdb = FirebaseDatabase.getInstance().getReference();
     FirebaseDatabase database = null;
     DatabaseReference firstNameRef = null;
     DatabaseReference lastNameRef = null;
@@ -33,53 +32,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         Button postButton = findViewById(R.id.signUpButton);
         postButton.setOnClickListener(this);
-    }
 
-    /*
-  WHAT IT USED TO BE FOR POST-ING EMAIL, NAMES, ETC:
-      protected String getPostDescription() {
-        EditText emailAddress = findViewById(R.id.descriptionTextField);
-        return emailAddress.getText().toString().trim();
-    }
- */
-
-    protected String getPostFullName() {
-        EditText fName = findViewById(R.id.editTextFirstName);
-        EditText lName = findViewById(R.id.editTextLastName);
-        String fullName = (fName.getText().toString().trim())+" "+(lName.getText().toString().trim());
-        return fullName;
-    }
-    protected String getPostFirstName() {
-        EditText fName = findViewById(R.id.editTextFirstName);
-        String firstName = (fName.getText().toString().trim());
-        return firstName;
-    }
-
-    protected String getPostLastName() {
-        EditText fName = findViewById(R.id.editTextFirstName);
-        String lastName = (fName.getText().toString().trim());
-        return lastName;
-    }
-    protected String getPostEmail() {
-        EditText emailAddress = findViewById(R.id.editTextEmailAddress);
-        return emailAddress.getText().toString().trim();
-    }
-
-    protected String getPostPassword() {
-        EditText emailAddress = findViewById(R.id.editTextPassword);
-        return emailAddress.getText().toString().trim();
-    }
-
-    protected boolean isEmptyTitle(String title) {
-        return title.isEmpty();
-    }
-
-    protected boolean isEmptyDescription(String description) {
-        return description.isEmpty();
-    }
-
-    protected boolean isEmptyCategory(String category) {
-        return category.isEmpty();
+        initializeDatabase();
     }
 
     protected void setStatusMessage(String message) {
@@ -87,7 +41,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         statusLabel.setText(message);
     }
 
-//====================NEW===================================
 protected void initializeDatabase() {
     database = FirebaseDatabase.getInstance();
     firstNameRef = database.getReference("firstName");
@@ -107,12 +60,12 @@ protected void initializeDatabase() {
     }
 
     //Do we need this function? Not sure. I'm just keeping this for now.
-    protected String getFullName() {
+   /* protected String getFullName() {
         EditText lastName = findViewById(R.id.editTextLastName);
         EditText firstName = findViewById(R.id.editTextFirstName);
         String fullName = (firstName.getText().toString().trim())+" "+(lastName.getText().toString().trim());
         return fullName;
-    }
+    }*/
     protected String getEmailAddress() {
         EditText emailAddress = findViewById(R.id.editTextEmailAddress);
         return emailAddress.getText().toString().trim();
@@ -143,10 +96,6 @@ protected void initializeDatabase() {
     protected boolean isEmptyPassword(String password) {
         return password.isEmpty();
     }
-/*
-    protected boolean isAlphanumericUserName(String userName) {
-        return userName.matches("[A-Za-z0-9]+");
-    }*/
 
     protected boolean isValidEmailAddress(String emailAddress) {
         return PatternsCompat.EMAIL_ADDRESS.matcher(emailAddress).matches();
@@ -159,12 +108,6 @@ protected void initializeDatabase() {
     protected boolean passwordsNotMatch(String password, String passwordConfirm) {
         return !(getPassword().equals(getPasswordConfirmation()));
     }
-/*
-    protected void switch2WelcomeWindow(String userName, String emailAddress) {
-        Intent myIntent = new Intent(this, WelcomeActivity.class);
-        myIntent.putExtra(WELCOME_MESSAGE, "Welcome " + userName + "! A welcome email was sent to " + emailAddress);
-        startActivity(myIntent);
-    }*/
 
     protected Task<Void> savefirstNameToFirebase(String firstName) {
         return firstNameRef.setValue(firstName);
@@ -181,13 +124,9 @@ protected void initializeDatabase() {
     protected Task<Void> savePasswordToFirebase(String password) {
         return passwordRef.setValue(password);
     }
-//========================================================//
+
     @Override
     public void onClick(View view) {
-        String postFirstName = getPostFirstName();
-        String postlastName = getPostLastName();
-        String postEmail = getPostEmail();
-        String postPassword = getPostPassword();
 
         String firstName = getFirstName();
         String lastName = getLastName();
@@ -219,7 +158,6 @@ protected void initializeDatabase() {
             savelastNameToFirebase(lastName);
             saveEmailToFirebase(emailAddress);
             savePasswordToFirebase(password);
-            //switch2WelcomeWindow(userName, emailAddress);
         } else {
             setStatusMessage(errorMessage);
         }
