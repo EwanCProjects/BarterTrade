@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     DatabaseReference userNameRef = null;
     DatabaseReference emailRef = null;
     EditText emailAddress = null; //global
-    //EditText username = null; //global
+   // EditText username = null; //global
 
 
 
@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         emailAddress = findViewById(R.id.email);
-        //username = findViewById(R.id.username);
+      //  username = findViewById(R.id.username);
 
 
 
@@ -57,17 +57,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailRef = database.getReference("email");
     }
 
-
+/**
     protected String getUserName() {
         EditText userName = findViewById(R.id.userName);
         return userName.getText().toString().trim();
     }
-
+**/
     protected String getEmailAddress() {
         EditText emailAddress = findViewById(R.id.email);
         return emailAddress.getText().toString().trim();
     }
-
+/**
     protected static boolean isEmptyUserName(String username) {
         return username.isEmpty();
     }
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //your business logic goes here!
         return (userName.matches("[A-Za-z0-9]+"));
     }
-
+ **/
     protected static boolean isValidEmailAddress(String emailAddress) {
         //your business logic goes here!
         String setPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -91,11 +91,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message);
     }
-
+/**
     protected Task<Void> saveUserNameToFirebase(String userName) {
         return userNameRef.setValue(userName);
     }
-
+**/
     protected Task<Void> saveEmailToFirebase(String emailAddress) {
         return emailRef.setValue(emailAddress);
     }
@@ -106,23 +106,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        String userName = getUserName();
+       // String userName = getUserName();
         String email = getEmailAddress();
         String errorMessage = new String();
 
-        if (isEmptyUserName(userName)) {
+        /**if (isEmptyUserName(userName)) {
             errorMessage = getResources().getString(R.string.EMPTY_USER_NAME);
         } else {
             if (!isAlphanumericUserName(userName)) {
                 errorMessage = getResources().getString(R.string.NON_ALPHA_NUMERIC_USER_NAME);
             }
-        }
+        }**/
         if (!isValidEmailAddress(email)) {
             errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
         }
 
         if (errorMessage.isEmpty()) {
-            saveUserNameToFirebase(userName);
+            //saveUserNameToFirebase(userName);
             saveEmailToFirebase(email);
             //switch2WelcomeWindow(userName, emailAddress);
         } else {
