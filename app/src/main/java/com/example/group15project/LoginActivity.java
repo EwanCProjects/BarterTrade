@@ -31,9 +31,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     FirebaseDatabase database = null;
     DatabaseReference userNameRef = null;
     DatabaseReference emailRef = null;
+    DatabaseReference passwordRef = null;
+
     EditText emailAddress = null; //global
     EditText username = null; //global
-    //View password = null; //global
+    EditText password = null; //global
 
 
 
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         emailAddress = findViewById(R.id.email);
-        //password = findViewById(R.id.password);
+        password = findViewById(R.id.password);
         username = findViewById(R.id.username);
 
 
@@ -79,6 +81,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected String getEmailAddress() {
         EditText emailAddress = findViewById(R.id.email);
         return emailAddress.getText().toString().trim();
+    }
+
+    protected String getPassword() {
+        EditText password = findViewById(R.id.password);
+        return password.getText().toString().trim();
     }
 
     protected static boolean isEmptyUserName(String username) {
@@ -124,12 +131,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return emailRef.setValue(email);
     }
 
+    protected Task<Void> savePasswordToFirebase(String password) {
+        return passwordRef.setValue(password);
+    }
+
 
     @Override
     public void onClick(View view) {
 
         String username = getUsername();
         String email = getEmailAddress();
+        String password = getPassword();
         String errorMessage = new String();
 
         if (isEmptyUserName(username)) {
@@ -147,6 +159,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (errorMessage.isEmpty()) {
             //saveUserNameToFirebase(userName);
             saveEmailToFirebase(email);
+            saveUserNameToFirebase(username);
+            savePasswordToFirebase(password);
             //switch2WelcomeWindow(userName, emailAddress);
         } else {
             setStatusMessage(errorMessage);
