@@ -3,25 +3,16 @@ package com.example.group15project;
 
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.core.util.PatternsCompat;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import static com.example.group15project.R.id.password;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -32,7 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     DatabaseReference userNameRef = null;
     DatabaseReference emailRef = null;
     EditText emailAddress = null; //global
-    EditText username = null; //global
+    View username = null; //global
     //View password = null; //global
 
 
@@ -73,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 protected String getPassword() {
-    EditText password = findViewById(R.id.password);
+    EditText password = findViewById(R.id.username);
     return password.getText().toString().trim();
 }
     protected String getEmailAddress() {

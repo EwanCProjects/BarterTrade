@@ -3,6 +3,5 @@
     <item name="login" type="id" />
     <item name="userName" type="id" />
     <item name="emailAddress" type="id" />
-    <item name="username" type="id">username</item>
-    <item name="password" type="id">password</item>
+    <item name="username" type="id" />
 </resources>

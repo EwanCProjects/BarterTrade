@@ -17,7 +17,7 @@ import com.example.group15project.R;
 
 
 
-import androidx.test.runner.AndroidJUnit4; // important!
+import android.support.test.runner.AndroidJUnit4;
 
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.assertion.ViewAssertions;
@@ -41,13 +41,10 @@ import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
-
-
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -86,15 +83,24 @@ public class EspressoTestLogin {
         onView(withId(R.id.email)).perform(ViewActions.typeText(""));
     }
 
+    @Test
+    public void usernameIsEmpty() {
+        onView(withId(R.id.username)).perform(ViewActions.typeText(""));
+    }
 
     @Test
     public void checkIfEmailIsInvalid() {
         onView(withId(R.id.email)).perform(typeText("abc123.dal.ca"));
         onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_EMAIL_ADDRESS)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_string)));
     }
 
-
+    @Test
+    public void checkIfUsernameIsInvalid() {
+        onView(withId(R.id.username)).perform(typeText("abc123"));
+        onView(withId(R.id.login)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_USERNAME)));
+    }
 /**
     @Test
     public void loginFailed() {
