@@ -156,7 +156,6 @@
                 android:id="@+id/contactButton"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:onClick="postOnButtonClick"
                 android:text="Contact Seller"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp" />
