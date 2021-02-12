@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.PatternsCompat;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -23,7 +24,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String currUser = null;
-    static User extractedUser = null;
+    static String extractedUserEmail = null;
+    static String extractedUserPassword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //returns value from the database from the currUser's string username
                 //rather than simply extracting it from the global currUser itself
                 if (dataSnapshot.child("Users").hasChild(currUser)) {
-                    extractedUser = dataSnapshot.child("Users").child(currUser).getValue(User.class);
-                }
-                else {
-                    extractedUser = null;
+                    extractedUserEmail = dataSnapshot.child("Users").child(currUser).child("email").getValue(String.class);
+                    extractedUserPassword = dataSnapshot.child("Users").child(currUser).child("password").getValue(String.class);
                 }
             }
 
@@ -95,6 +95,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return formattedEmail;
     }
 
+    protected boolean isValidEmailAddress(String emailAddress) {
+        return PatternsCompat.EMAIL_ADDRESS.matcher(emailAddress).matches();
+    }
+
     protected void switchToRegisterWindow() {
         Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
@@ -112,22 +116,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String email = getEmail();
                 String password = getPassword();
                 String errorMessage = getResources().getString(R.string.empty_string);
-                currUser = formatEmail(email);
-
-                if (!extractedUser.getPassword().equals(password)) {
-                    errorMessage = getResources().getString(R.string.wrong_password).trim();
-                }
-
-                if (extractedUser == null) {
-                    errorMessage = getResources().getString(R.string.no_account).trim();
-                }
-
-                if (isEmptyPassword(password)) {
-                    errorMessage = getResources().getString(R.string.empty_password).trim();
-                }
 
                 if (isEmptyEmail(email)) {
                     errorMessage = getResources().getString(R.string.empty_email).trim();
+                }
+
+                else {
+                    if (!isValidEmailAddress(email)) {
+                        errorMessage = getResources().getString(R.string.invalid_email).trim();
+                    }
+
+                    else {
+                        if (isEmptyPassword(password)) {
+                            errorMessage = getResources().getString(R.string.empty_password).trim();
+                        }
+
+                        else {
+                            currUser = formatEmail(email);
+
+                            databaseRead(realTimeDatabase);
+
+                            if (!extractedUserPassword.equals(password)) {
+                                errorMessage = getResources().getString(R.string.wrong_password).trim();
+                            }
+
+                            if (extractedUserEmail == null) {
+                                errorMessage = getResources().getString(R.string.no_account).trim();
+                            }
+                        }
+                    }
                 }
 
                 if (errorMessage.isEmpty()) {

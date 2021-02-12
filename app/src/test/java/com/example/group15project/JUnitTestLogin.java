@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 
 public class JUnitTestLogin {
-
+    /*
     //AT-2
     //check email is in a valid format
     @Test
@@ -40,6 +40,8 @@ public class JUnitTestLogin {
         assertFalse(LoginActivity.isEmptyUserName("ededede"));
         assertFalse(LoginActivity.isEmptyUserName("A"));
     }
+
+     */
 }
 
 

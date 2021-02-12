@@ -25,8 +25,9 @@
 
     <string name="login">Login</string>
     <string name="empty_email">Please enter your email!</string>
-    <string name="no_account">Email is invalid or not registered.</string>
-    <string name="empty_password">Empty password.</string>
+    <string name="invalid_email">Email does not appear to be valid.</string>
+    <string name="no_account">Email is not registered.</string>
+    <string name="empty_password">Please enter your password!</string>
     <string name="wrong_password">Incorrect password.</string>
 
     <string name="username_value">Username value</string>
