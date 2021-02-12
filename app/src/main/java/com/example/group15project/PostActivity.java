@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Random;
+import java.util.UUID;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +25,12 @@ import java.util.List;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    public static String userID = "3130_student_working_late";
 
+
+    // functions for Iteration 2
+    /*
     FirebaseDatabase db = null;
     private DatabaseReference database;
     DatabaseReference postTitleRef = null;
@@ -49,8 +56,23 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+    */
 
+    /*protected void move2PostScreen(String postTitle, String postCategory, String postDescription){
 
+    }
+
+    public void postOnButtonClick(View view) {
+    }*/
+
+    /*
+    protected void initializeDatabase() {
+        db = FirebaseDatabase.getInstance();
+        postTitleRef = db.getReference("Posts/postTitle");
+        postCategoryRef = db.getReference("Posts/postCategory");
+        postDescriptionRef = db.getReference("Posts/postDesc");
+    }
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,32 +82,27 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
 
-        initializeDatabase();
+        //initializeDatabase();
 
     }
 
-
-    protected void initializeDatabase() {
-        db = FirebaseDatabase.getInstance();
-        postTitleRef = db.getReference("Posts/postTitle");
-        postCategoryRef = db.getReference("Posts/postCategory");
-        postDescriptionRef = db.getReference("Posts/postDesc");
+    protected String generatePostID() {
+        return UUID.randomUUID().toString();
     }
-
 
     protected String getPostTitle() {
-        EditText userName = findViewById(R.id.titleTextField);
-        return userName.getText().toString().trim();
+        EditText title = findViewById(R.id.titleTextField);
+        return title.getText().toString().trim();
     }
 
     protected String getPostDescription() {
-        EditText emailAddress = findViewById(R.id.descriptionTextField);
-        return emailAddress.getText().toString().trim();
+        EditText description = findViewById(R.id.descriptionTextField);
+        return description.getText().toString().trim();
     }
 
     protected String getPostCategory() {
-        EditText emailAddress = findViewById(R.id.categoryTextField);
-        return emailAddress.getText().toString().trim();
+        EditText category = findViewById(R.id.categoryTextField);
+        return category.getText().toString().trim();
     }
 
     protected boolean isEmptyTitle(String title) {
@@ -100,47 +117,53 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         return category.isEmpty();
     }
 
+    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory) {
+        return new Post(author, postID, postTitle, postDescription, postCategory);
+    }
+
     protected void setStatusMessage(String message) {
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message);
     }
 
-    protected void addDataToFirebase(String postTitle, String postCategory, String postDescription){
-        postTitleRef.setValue(postTitle);
-        postCategoryRef.setValue(postCategory);
-        postDescriptionRef.setValue(postDescription);
+    protected void addPostToFirebase(DatabaseReference mDatabase, Post post, String postID){
+        mDatabase.child("Posts").child(postID).setValue(post);
+    }
+
+    protected void switchToMainWindow() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onClick(View view) {
+        String postID = generatePostID();
         String postTitle = getPostTitle();
         String postDescription = getPostDescription();
         String postCategory = getPostCategory();
-        String errorMessage = new String();
+        String errorMessage = getResources().getString(R.string.empty_string);
 
-        if (isEmptyTitle(postTitle)){
-            errorMessage = getResources().getString(R.string.empty_title);
-        }
-        if(isEmptyCategory(postCategory)){
-            errorMessage = getResources().getString(R.string.empty_category);
-        }
-        if(isEmptyDescription(postDescription)){
+        if(isEmptyDescription(postDescription)) {
             errorMessage = getResources().getString(R.string.empty_description);
         }
 
-        if (errorMessage.isEmpty()){
-            addDataToFirebase(postTitle, postCategory, postDescription);
-            //viewPostWindow()
-        } else {
-            setStatusMessage(errorMessage);
+        if(isEmptyCategory(postCategory)) {
+            errorMessage = getResources().getString(R.string.empty_category);
         }
 
-    }
+        if (isEmptyTitle(postTitle)) {
+            errorMessage = getResources().getString(R.string.empty_title);
+        }
 
-    protected void move2PostScreen(String postTitle, String postCategory, String postDescription){
+        if (errorMessage.isEmpty()) {
+            Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
+            addPostToFirebase(realTimeDatabase, post, postID);
+            switchToMainWindow();
+            //viewPostWindow()
+        }
 
-    }
-
-    public void postOnButtonClick(View view) {
+        else {
+            setStatusMessage(errorMessage);
+        }
     }
 }

@@ -7,16 +7,21 @@ public class Post {
     private String postDescription;
     private String postCategory;
 
-    public Post(){
-    }
-
     public Post(String author, String postId, String postTitle, String postDescription,
-                String postCategory){
+                String postCategory) {
         this.author = author;
         this.postId = postId;
         this.postTitle = postTitle;
         this.postDescription = postDescription;
         this.postCategory = postCategory;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getPostId() {
@@ -29,14 +34,18 @@ public class Post {
 
     public String getPostTitle() { return postTitle; }
 
-    public void setPostTitleTitle(String postTitle) { this.postTitle = postTitle; }
+    public void setPostTitle(String postTitle) { this.postTitle = postTitle; }
+
+    public String getPostCategory() {
+        return postCategory;
+    }
+
+    public void setPostCategory(String postCategory) { this.postCategory = postCategory; }
 
     public String getPostDescription() {
         return postDescription;
     }
 
-    public void setPostDescription(String postDescription) {
-        this.postDescription = postDescription;
-    }
+    public void setPostDescription(String postDescription) { this.postDescription = postDescription; }
 }
 
