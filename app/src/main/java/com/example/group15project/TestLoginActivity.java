@@ -20,9 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class TestLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    //public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String currUser = null;
     static String extractedUserEmail = null;
     static String extractedUserPassword = null;
@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         registerButton.setOnClickListener(this);
     }
 
+    /**
     public void databaseRead(DatabaseReference db) {
         //code for database initialization and accessing the credentials
         ValueEventListener userListener = new ValueEventListener() {
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
         db.addValueEventListener(userListener);
     }
-
+**/
     protected String getEmail() {
         EditText email = findViewById(R.id.email);
         return email.getText().toString().trim();
@@ -143,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         else {
                             currUser = formatEmail(email);
 
-                            databaseRead(realTimeDatabase);
+                            //databaseRead(realTimeDatabase);
 
                             if (!extractedUserPassword.equals(password)) {
                                 errorMessage = getResources().getString(R.string.wrong_password).trim();
