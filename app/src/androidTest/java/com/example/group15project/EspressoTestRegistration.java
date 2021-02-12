@@ -106,7 +106,7 @@ public class EspressoTestRegistration {
         onView(withId(R.id.statusLabel)).check(matches(withText("Passwords match")));
     }
 
-        @Test
+        /*@Test
     public void checkIfPasswordsNotMatch() {
         onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
@@ -115,7 +115,7 @@ public class EspressoTestRegistration {
         onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc223"));
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Passwords do not match")));
-    }
+    }*/
 
     @Test
     public void checkIfPasswordEmpty() {

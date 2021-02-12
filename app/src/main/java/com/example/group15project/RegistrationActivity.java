@@ -147,11 +147,11 @@ protected void initializeDatabase() {
         }
         if (!isEmptyPassword(password)) {
             errorMessage = "Password field empty";
-        } else {
+        } /*else {
                 if(passwordsNotMatch(password,passwordConfirmation)){
                     errorMessage = "Passwords do not match";
                 }
-            }
+            }*/
 
         if (errorMessage.isEmpty()) {
             savefirstNameToFirebase(firstName);

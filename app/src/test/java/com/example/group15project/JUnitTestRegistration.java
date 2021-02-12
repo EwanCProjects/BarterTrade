@@ -58,11 +58,11 @@ public class JUnitTestRegistration {
         //assertEquals(regActivity.passwordsNotMatch(),false);
     }
 
-    @Test
+    /*@Test
     public void checkIfPasswordsNotMatch() {
         assertEquals(false, regActivity.passwordsMatch("abc123","abc223"));
         //assertEquals(regActivity.passwordsMatch(),false);
-    }
+    }*/
 
 
     @Test
