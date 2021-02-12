@@ -21,7 +21,7 @@ public class JUnitTestLogin {
         LoginActivity = new LoginActivity();
     }
 
-
+/*
 
     //AT-1
     //check if password empty
@@ -30,6 +30,9 @@ public class JUnitTestLogin {
         assertFalse(LoginActivity.isPasswordValid(""));
 
     }
+
+*/
+
 
     //AT-2
     //check email is in a valid format
@@ -47,6 +50,25 @@ public class JUnitTestLogin {
         assertFalse(LoginActivity.isValidEmailAddress("abc123dal@ca"));
     }
 
+
+    //AT-3
+    //check password
+    @Test
+    public void emptyPassword(){
+        assertTrue(LoginActivity.isEmptyUserName(""));
+
+    }
+
+    //AT-3
+    //check password
+    @Test
+    public void nonEmptyPassword(){
+        assertFalse(LoginActivity.isEmptyUserName("ededede"));
+        assertFalse(LoginActivity.isEmptyUserName("A"));
+    }
+
+
+    /*
     //AT-4
     //check if email is contained in the database
     @Test
@@ -65,22 +87,25 @@ public class JUnitTestLogin {
 
     }
 
+*/
 
     //AT-6
     //check if the inputed password matches the password found to correspond to the email
-    @Test
-    public void PasswordMatchesDBPassword() {
-        assertTrue(LoginActivity.isPasswordMatching("dog123", "dog123"));
-    }
+
+
+  //  @Test
+    //public void PasswordMatchesDBPassword() {
+      //  assertTrue(LoginActivity.isPasswordMatching("dog123", "dog123"));
+    //}
 
     //AT-7
     //check if the inputed password doesnt matches the password found to correspond to the email
-    @Test
-    public void PasswordDoesntMatchDBPassword() {
-        assertFalse(LoginActivity.isPasswordMatching("dog321", "dog123"));
-    }
+    //@Test
+    //public void PasswordDoesntMatchDBPassword() {
+      //  assertFalse(LoginActivity.isPasswordMatching("dog321", "dog123"));
+    //}
 
-**/
+
 }
 
 

@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     protected String getUserName() {
-        EditText userName = findViewById(R.id.username);
+        EditText userName = findViewById(R.id.userName);
         return userName.getText().toString().trim();
     }
 
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return emailAddress.getText().toString().trim();
     }
 
-    protected boolean isEmptyUserName(String username) {
+    protected static boolean isEmptyUserName(String username) {
         return username.isEmpty();
     }
 
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return (userName.matches("[A-Za-z0-9]+"));
     }
 
-    protected boolean isValidEmailAddress(String emailAddress) {
+    protected static boolean isValidEmailAddress(String emailAddress) {
         //your business logic goes here!
         String setPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(setPattern);
