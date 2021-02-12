@@ -21,6 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.example.group15project.R.id.password;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,7 +32,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     DatabaseReference userNameRef = null;
     DatabaseReference emailRef = null;
     EditText emailAddress = null; //global
-   // EditText username = null; //global
+    EditText username = null; //global
+    //View password = null; //global
+
 
 
 
@@ -39,7 +43,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         emailAddress = findViewById(R.id.email);
-      //  username = findViewById(R.id.username);
+        //password = findViewById(R.id.password);
+        username = findViewById(R.id.username);
 
 
 
@@ -55,19 +60,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
         userNameRef = database.getReference("username");
         emailRef = database.getReference("email");
+        //password = database.getReference("password");
+
+
     }
 
-/**
+
     protected String getUserName() {
-        EditText userName = findViewById(R.id.userName);
+        EditText userName = findViewById(R.id.username);
         return userName.getText().toString().trim();
     }
-**/
+
+
+protected String getPassword() {
+    EditText password = findViewById(R.id.password);
+    return password.getText().toString().trim();
+}
     protected String getEmailAddress() {
         EditText emailAddress = findViewById(R.id.email);
         return emailAddress.getText().toString().trim();
     }
-/**
+
     protected static boolean isEmptyUserName(String username) {
         return username.isEmpty();
     }
@@ -76,7 +89,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //your business logic goes here!
         return (userName.matches("[A-Za-z0-9]+"));
     }
- **/
+
+
+
+     protected static boolean isEmptyPassword(String password) {
+     return password.isEmpty();
+     }
+
+     protected static boolean isAlphanumericPassword(String password) {
+     //your business logic goes here!
+     return (password.matches("[A-Za-z0-9]+"));
+     }
+
     protected static boolean isValidEmailAddress(String emailAddress) {
         //your business logic goes here!
         String setPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
@@ -91,11 +115,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message);
     }
-/**
+
     protected Task<Void> saveUserNameToFirebase(String userName) {
         return userNameRef.setValue(userName);
     }
-**/
+
     protected Task<Void> saveEmailToFirebase(String emailAddress) {
         return emailRef.setValue(emailAddress);
     }
@@ -110,13 +134,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = getEmailAddress();
         String errorMessage = new String();
 
-        /**if (isEmptyUserName(userName)) {
+        if (isEmptyUserName(username)) {
             errorMessage = getResources().getString(R.string.EMPTY_USER_NAME);
         } else {
-            if (!isAlphanumericUserName(userName)) {
+            if (!isAlphanumericUserName(username)) {
                 errorMessage = getResources().getString(R.string.NON_ALPHA_NUMERIC_USER_NAME);
             }
-        }**/
+        }
+
         if (!isValidEmailAddress(email)) {
             errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
         }
@@ -129,6 +154,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             setStatusMessage(errorMessage);
         }
     }
+
 
 
 

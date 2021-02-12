@@ -20,6 +20,8 @@
     <string name="INVALID_USERNAME"> Invalid username. </string>
     <string name="LOGIN_FAILED"> Invalid username. </string>
 
+    <string name="NON_ALPHA_NUMERIC_PASSWORD"> username is empty </string>
+    <string name="EMPTY_PASSWORD"> Please use an alphanumeric username! </string>
 
 
     <string name="usernamevalue">usernamevalue </string>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="registerButton" type="id" />
+    <item name="login" type="id" />
     <item name="userName" type="id" />
     <item name="emailAddress" type="id" />
+    <item name="username" type="id">username</item>
+    <item name="password" type="id">password</item>
 </resources>
