@@ -21,7 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static com.example.group15project.R.id.password;
+import static com.example.group15project.R.id.username;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     DatabaseReference emailRef = null;
     EditText emailAddress = null; //global
     EditText username = null; //global
-    View password = null; //global
+    //View password = null; //global
 
 
 
@@ -72,10 +72,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-protected String getPassword() {
-    EditText password = findViewById(R.id.password);
-    return password.getText().toString().trim();
-}
+    protected String getUsername() {
+        EditText username = findViewById(R.id.username);
+        return username.getText().toString().trim();
+    }
     protected String getEmailAddress() {
         EditText emailAddress = findViewById(R.id.email);
         return emailAddress.getText().toString().trim();
@@ -85,21 +85,21 @@ protected String getPassword() {
         return username.isEmpty();
     }
 
-    protected boolean isAlphanumericUserName(String userName) {
+    protected boolean isAlphanumericUserName(String username) {
         //your business logic goes here!
-        return (userName.matches("[A-Za-z0-9]+"));
+        return (username.matches("[A-Za-z0-9]+"));
     }
 
 
 
-     protected static boolean isEmptyPassword(String password) {
-     return password.isEmpty();
-     }
+    protected static boolean isEmptyPassword(String password) {
+        return password.isEmpty();
+    }
 
-     protected static boolean isAlphanumericPassword(String password) {
-     //your business logic goes here!
-     return (password.matches("[A-Za-z0-9]+"));
-     }
+    protected static boolean isAlphanumericPassword(String password) {
+        //your business logic goes here!
+        return (password.matches("[A-Za-z0-9]+"));
+    }
 
     protected static boolean isValidEmailAddress(String emailAddress) {
         //your business logic goes here!
@@ -116,19 +116,19 @@ protected String getPassword() {
         statusLabel.setText(message);
     }
 
-    protected Task<Void> saveUserNameToFirebase(String userName) {
-        return userNameRef.setValue(userName);
+    protected Task<Void> saveUserNameToFirebase(String username) {
+        return userNameRef.setValue(username);
     }
 
-    protected Task<Void> saveEmailToFirebase(String emailAddress) {
-        return emailRef.setValue(emailAddress);
+    protected Task<Void> saveEmailToFirebase(String email) {
+        return emailRef.setValue(email);
     }
 
 
     @Override
     public void onClick(View view) {
 
-        String username = getUserName();
+        String username = getUsername();
         String email = getEmailAddress();
         String errorMessage = new String();
 
