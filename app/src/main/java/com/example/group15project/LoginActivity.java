@@ -116,12 +116,10 @@ protected String getPassword() {
     }
 
 
-
-
     @Override
     public void onClick(View view) {
 
-       // String userName = getUserName();
+        String username = getUserName();
         String email = getEmailAddress();
         String errorMessage = new String();
 
