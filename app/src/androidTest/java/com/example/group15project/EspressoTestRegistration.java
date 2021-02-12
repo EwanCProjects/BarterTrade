@@ -112,7 +112,7 @@ public class EspressoTestRegistration {
         onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
         onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
         onView(withId(R.id.editTextPassword)).perform(typeText("abc123"));
-        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc@123"));
+        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc223"));
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Passwords do not match")));
     }
