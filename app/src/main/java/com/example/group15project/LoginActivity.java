@@ -29,14 +29,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     FirebaseDatabase database = null;
     DatabaseReference userNameRef = null;
     DatabaseReference emailRef = null;
+    EditText emailAddress = null; //global
+    //EditText username = null; //global
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
+        emailAddress = findViewById(R.id.email);
+        //username = findViewById(R.id.username);
+
+
 
         //attaching the event handler
-        Button postButton = findViewById(R.id.postButton);
         Button registerButton = findViewById(R.id.login);
         registerButton.setOnClickListener(this);
 

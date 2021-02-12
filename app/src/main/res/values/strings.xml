@@ -22,7 +22,7 @@
 
 
 
-    <string name="username">usernamevalue </string>
+    <string name="usernamevalue">usernamevalue </string>
     <string name="email">abc@dal.ca </string>
     <string name="password">abc123 </string>
 
