@@ -26,10 +26,12 @@ import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+/**
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+ **/
 
 import android.app.Activity;
 import android.content.Context;
@@ -52,6 +54,14 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
@@ -76,11 +86,6 @@ public class EspressoTestLogin {
     @Test
     public void usernameIsEmpty() {
         onView(withId(R.id.username)).perform(ViewActions.typeText(""));
-    }
-
-        @Test
-    public void passwordIsEmpty() {
-
     }
 
     @Test
@@ -108,7 +113,6 @@ public class EspressoTestLogin {
 
     @Test
     public void checkIfEmailIsValid() {
-        onView(withId(R.id.username)).perform(typeText("abc123"));
         onView(withId(R.id.email)).perform(typeText("abc123@dal.ca"));
         onView(withId(R.id.login)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_string)));

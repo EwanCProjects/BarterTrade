@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         //attaching the event handler
         Button postButton = findViewById(R.id.postButton);
-        Button registerButton = findViewById(R.id.registerButton);
+        Button registerButton = findViewById(R.id.login);
         registerButton.setOnClickListener(this);
 
         //initiating the Firebase
@@ -46,23 +46,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     protected void initializeDatabase(){
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
-        userNameRef = database.getReference("userName");
-        emailRef = database.getReference("emailAddress");
+        userNameRef = database.getReference("username");
+        emailRef = database.getReference("email");
     }
 
 
     protected String getUserName() {
-        EditText userName = findViewById(R.id.userName);
+        EditText userName = findViewById(R.id.username);
         return userName.getText().toString().trim();
     }
 
     protected String getEmailAddress() {
-        EditText emailAddress = findViewById(R.id.emailAddress);
+        EditText emailAddress = findViewById(R.id.email);
         return emailAddress.getText().toString().trim();
     }
 
-    protected boolean isEmptyUserName(String userName) {
-        return userName.isEmpty();
+    protected boolean isEmptyUserName(String username) {
+        return username.isEmpty();
     }
 
     protected boolean isAlphanumericUserName(String userName) {
@@ -77,8 +77,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         java.util.regex.Matcher m = p.matcher(emailAddress);
         return m.matches();
     }
-
-
 
 
 
@@ -102,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
 
         String userName = getUserName();
-        String emailAddress = getEmailAddress();
+        String email = getEmailAddress();
         String errorMessage = new String();
 
         if (isEmptyUserName(userName)) {
@@ -112,13 +110,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 errorMessage = getResources().getString(R.string.NON_ALPHA_NUMERIC_USER_NAME);
             }
         }
-        if (!isValidEmailAddress(emailAddress)) {
+        if (!isValidEmailAddress(email)) {
             errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
         }
 
         if (errorMessage.isEmpty()) {
             saveUserNameToFirebase(userName);
-            saveEmailToFirebase(emailAddress);
+            saveEmailToFirebase(email);
             //switch2WelcomeWindow(userName, emailAddress);
         } else {
             setStatusMessage(errorMessage);
