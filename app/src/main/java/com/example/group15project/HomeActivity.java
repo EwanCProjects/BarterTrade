@@ -15,11 +15,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+    public static String currUser = RegistrationActivity.currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (currUser == null) {
+            currUser = LoginActivity.currUser;
+        }
 
         Button newPostButton = findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);

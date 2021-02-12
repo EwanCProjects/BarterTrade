@@ -27,7 +27,7 @@ import java.util.List;
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String userID = RegistrationActivity.currUser;
+    public static String userID = HomeActivity.currUser;
 
 
     // functions for Iteration 2

@@ -20,4 +20,16 @@
     <string name="enter_email">Enter Email</string>
     <string name="enter_password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>
+
+    <string name="registerButton">Register</string>
+
+    <string name="login">Login</string>
+    <string name="empty_email">Please enter your email!</string>
+    <string name="no_account">Email is invalid or not registered.</string>
+    <string name="empty_password">Empty password.</string>
+    <string name="wrong_password">Incorrect password.</string>
+
+    <string name="username_value">Username value</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
 </resources>
