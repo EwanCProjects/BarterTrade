@@ -107,25 +107,4 @@ public class EspressoTestLogin {
     }
 
 
-/**
-    @Test
-    public void loginFailed() {
-        onView(withId(R.id.email)).perform(typeText("incorrect@email.com"));
-        onView(withId(R.id.password)).perform(typeText("qwerty"));
-        onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.LOGIN_FAILED)));
-    }
- **/
-
-    @Test
-    public void checkIfEmailIsValid() {
-        onView(withId(R.id.email)).perform(typeText("abc@dal.ca"));
-        //onView(withId(R.id.password)).perform(typeText("abc123"));
-        onView(withId(R.id.login)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_string)));
-    }
-
-
-
-
 }
