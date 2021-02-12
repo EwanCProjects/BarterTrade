@@ -98,9 +98,9 @@ protected void initializeDatabase() {
     protected boolean isValidEmailAddress(String emailAddress) {
         return PatternsCompat.EMAIL_ADDRESS.matcher(emailAddress).matches();
     }
-
+//edited
     protected boolean passwordsMatch(String password, String passwordConfirm) {
-        return (getPassword().equals(getPasswordConfirmation()));
+        return (password.equals(passwordConfirm));
     }
 
     protected Task<Void> savefirstNameToFirebase(String firstName) {
