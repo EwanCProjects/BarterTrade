@@ -1,5 +1,6 @@
 package com.example.group15project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.List;
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String userID = "3130_student_working_late";
+    public static String userID = RegistrationActivity.currUser;
 
 
     // functions for Iteration 2
@@ -130,8 +131,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         mDatabase.child("Posts").child(postID).setValue(post);
     }
 
-    protected void switchToMainWindow() {
-        Intent intent = new Intent(this, MainActivity.class);
+    // We need to implement this later for adding a list of posts to a User
+    protected void addPostIDToUser(DatabaseReference mDatabase, String postID, String userID){
+
+    }
+
+    protected void switchToHomeWindow() {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
@@ -158,7 +164,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         if (errorMessage.isEmpty()) {
             Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
             addPostToFirebase(realTimeDatabase, post, postID);
-            switchToMainWindow();
+            switchToHomeWindow();
             //viewPostWindow()
         }
 

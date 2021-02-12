@@ -1,5 +1,6 @@
 package com.example.group15project;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -122,8 +123,8 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
         mDatabase.child("Posts").child(postID).setValue(post);
     }
 
-    protected void switchToMainWindow() {
-        Intent intent = new Intent(this, MainActivity.class);
+    protected void switchToHomeWindow() {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
@@ -150,7 +151,7 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
         if (errorMessage.isEmpty()) {
             Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
             //addPostToFirebase(realTimeDatabase, post, postID);
-            switchToMainWindow();
+            switchToHomeWindow();
             //viewPostWindow()
         }
 
