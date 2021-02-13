@@ -7,27 +7,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.Random;
 import java.util.UUID;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 
+public class TestPostActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class PostActivity extends AppCompatActivity implements View.OnClickListener {
-
-    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String userID = HomeActivity.currUser;
+    //public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    public static String userID = "3130_student_working_late";
 
 
     // functions for Iteration 2
@@ -131,11 +123,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         mDatabase.child("Posts").child(postID).setValue(post);
     }
 
-    // We need to implement this later for adding a list of posts to a User
-    protected void addPostIDToUser(DatabaseReference mDatabase, String postID, String userID){
-
-    }
-
     protected void switchToHomeWindow() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
@@ -163,7 +150,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         if (errorMessage.isEmpty()) {
             Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
-            addPostToFirebase(realTimeDatabase, post, postID);
+            //addPostToFirebase(realTimeDatabase, post, postID);
             switchToHomeWindow();
             //viewPostWindow()
         }

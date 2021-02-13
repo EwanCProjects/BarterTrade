@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class JUnitTestPost {
-    static PostActivity postActivity;
+    static TestPostActivity postActivity;
 
     @BeforeClass
     public static void setup() {
-        postActivity = new PostActivity();
+        postActivity = new TestPostActivity();
     }
 
     /*** AT-II**/

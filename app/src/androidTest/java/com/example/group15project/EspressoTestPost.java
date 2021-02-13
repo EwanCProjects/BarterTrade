@@ -1,26 +1,22 @@
 package com.example.group15project;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.intent.Intents.intended;
-import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -46,6 +42,7 @@ public class EspressoTestPost {
         //We also need to add a way to access the post page by adding a post button
         onView(withId(R.id.titleTextField)).check(matches(withText(R.string.empty_string)));
         onView(withId(R.id.categoryTextField)).check(matches(withText(R.string.empty_string)));
+        onView(withId(R.id.descriptionTextField)).check(matches(withText(R.string.empty_string)));
         onView(withId(R.id.postButton)).check(matches(withText("POST!")));
     }
 
@@ -53,6 +50,9 @@ public class EspressoTestPost {
     @Test
     public void checkIfTitleIsEmpty() {
         onView(withId(R.id.titleTextField)).perform(typeText(""));
+        onView(withId(R.id.categoryTextField)).perform(typeText("Test Category 123"));
+        onView(withId(R.id.descriptionTextField)).perform(typeText("Description 123"));
+        closeSoftKeyboard();
         onView(withId(R.id.postButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_title)));
     }
@@ -60,7 +60,10 @@ public class EspressoTestPost {
     /*** AT-III**/
     @Test
     public void checkIfCategoryIsEmpty() {
+        onView(withId(R.id.titleTextField)).perform(typeText("Test Title 1234"));
         onView(withId(R.id.categoryTextField)).perform(typeText(""));
+        onView(withId(R.id.descriptionTextField)).perform(typeText("Description 123"));
+        closeSoftKeyboard();
         onView(withId(R.id.postButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_category)));
     }
@@ -68,7 +71,10 @@ public class EspressoTestPost {
     /*** AT-IV**/
     @Test
     public void checkIfDescriptionIsEmpty() {
+        onView(withId(R.id.titleTextField)).perform(typeText("Test Title 111"));
+        onView(withId(R.id.categoryTextField)).perform(typeText("Test Category 123"));
         onView(withId(R.id.descriptionTextField)).perform(typeText(""));
+        closeSoftKeyboard();
         onView(withId(R.id.postButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.empty_description)));
     }

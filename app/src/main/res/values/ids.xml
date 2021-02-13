@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="loginB" type="id" />
+    <item name="userName" type="id" />
+    <item name="emailAddress" type="id" />
+    <item name="email" type="id" />
+</resources>
