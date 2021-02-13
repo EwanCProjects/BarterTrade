@@ -66,11 +66,6 @@ public class TestLoginActivity extends AppCompatActivity implements View.OnClick
         return email.getText().toString().trim();
     }
 
-    protected String getUserName() {
-        EditText username = findViewById(R.id.userName);
-        return username.getText().toString().trim();
-    }
-
     protected String getPassword() {
         EditText password = findViewById(R.id.password);
         return password.getText().toString().trim();

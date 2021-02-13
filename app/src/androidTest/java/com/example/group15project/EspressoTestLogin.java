@@ -4,7 +4,7 @@
  * @source adapted from
  * -> Assignment 2
  * -> https://github.com/azygous13/Espresso-Login/blob/master/app/src/androidTest/java/com/bananacoding/expressologin/LoginActivityTest.java
- */
+ **/
 
 //package com.bananacoding.expressologin;
 
@@ -62,7 +62,7 @@ public class EspressoTestLogin {
     public void checkIfEmailIsInvalid() {
         onView(withId(R.id.email)).perform(typeText("abc123.dal.ca"));
         onView(withId(R.id.loginB)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_EMAIL_ADDRESS)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.invalid_email)));
     }
 
 
@@ -70,7 +70,7 @@ public class EspressoTestLogin {
     public void checkIfUsernameIsInvalid() {
         onView(withId(R.id.email)).perform(typeText("abc123.dal.ca"));
         onView(withId(R.id.loginB)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_EMAIL_ADDRESS)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.invalid_email)));
     }
 
 

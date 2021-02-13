@@ -2,6 +2,7 @@ package com.example.group15project;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String currUser = null;
+    public static DataSnapshot userTree = null;
     static String extractedUserEmail = null;
     static String extractedUserPassword = null;
 
@@ -37,37 +39,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton.setOnClickListener(this);
         Button registerButton = findViewById(R.id.registerB);
         registerButton.setOnClickListener(this);
+
+        databaseRead(realTimeDatabase);
     }
 
-    public void databaseRead(DatabaseReference db) {
-        //code for database initialization and accessing the credentials
-        ValueEventListener userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //note that currUser is already global from MainActivity - however the code below still actually
-                //returns value from the database from the currUser's string username
-                //rather than simply extracting it from the global currUser itself
-                if (dataSnapshot.child("Users").hasChild(currUser)) {
-                    extractedUserEmail = dataSnapshot.child("Users").child(currUser).child("email").getValue(String.class);
-                    extractedUserPassword = dataSnapshot.child("Users").child(currUser).child("password").getValue(String.class);
-                }
-            }
+     public void databaseRead(DatabaseReference db) {
+         //code for database initialization and accessing the credentials
+         ValueEventListener userListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            userTree = dataSnapshot.child("Users");
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
         db.addValueEventListener(userListener);
-    }
+     }
 
     protected String getEmail() {
         EditText email = findViewById(R.id.email);
         return email.getText().toString().trim();
-    }
-
-    protected String getUserName() {
-        EditText username = findViewById(R.id.userName);
-        return username.getText().toString().trim();
     }
 
     protected String getPassword() {
@@ -76,10 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     protected static boolean isEmptyEmail(String username) {
-        return username.isEmpty();
-    }
-
-    protected static boolean isEmptyUserName(String username) {
         return username.isEmpty();
     }
 
@@ -142,14 +131,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         else {
                             currUser = formatEmail(email);
-
-                            databaseRead(realTimeDatabase);
-
-                            if (!extractedUserPassword.equals(password)) {
-                                errorMessage = getResources().getString(R.string.wrong_password).trim();
+                            if (userTree.hasChild(currUser)) {
+                                extractedUserPassword = userTree.child(currUser).child("password").getValue(String.class);
+                                extractedUserEmail = userTree.child(currUser).child("email").getValue(String.class);
+                                if (!extractedUserPassword.equals(password)) {
+                                    errorMessage = getResources().getString(R.string.wrong_password).trim();
+                                }
                             }
-
-                            if (extractedUserEmail == null) {
+                            else {
                                 errorMessage = getResources().getString(R.string.no_account).trim();
                             }
                         }

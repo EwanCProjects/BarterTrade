@@ -16,6 +16,10 @@ public class Post {
         this.postCategory = postCategory;
     }
 
+    public Post() {
+
+    }
+
     public String getAuthor() {
         return author;
     }
