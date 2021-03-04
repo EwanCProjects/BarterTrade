@@ -3,10 +3,12 @@ package com.example.group15project;
 import android.content.Context;
 
 import androidx.test.espresso.intent.Intents;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,6 +23,9 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class EspressoTestTradeRequest {
+
+    @Rule
+    public ActivityScenarioRule<TradeRequestActivity> myRule = new ActivityScenarioRule<>(TradeRequestActivity.class);
 
     @BeforeClass
     public static void setup(){
