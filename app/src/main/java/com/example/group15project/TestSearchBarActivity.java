@@ -1,16 +1,46 @@
 package com.example.group15project;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 // NEED HELP
+//StorageReference titleGiven = storageRef.child(title); // both need to be changed to strings...
+// StorageReference CategoryGiven = storageRef.child(postCategory);
+// list of posts
+// then iterate
+//extractedUserPassword = userTree.child(Posts).child("password").getValue(String.class);
 
 public class TestSearchBarActivity {
 
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    StorageReference titleGiven = storageRef.child(title); // both need to be changed to strings...
-    StorageReference CategoryGiven = storageRef.child(postCategory);
+    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+
+    StorageReference postNode = storage.getReference("Posts"); // ?
+    public static DataSnapshot currAuthour = null;
+    public static DataSnapshot currID = null;
+    public static DataSnapshot currTitle = null;
+    public static DataSnapshot currDescription = null;
+    public static DataSnapshot currCategory = null;
+
+
+    /**
+     * fill the lists with posts to iterate over
+     * @return
+     */
+
+    public ArrayList<Post> ListOfAllPosts(){
+        ArrayList<Post> postList= new ArrayList<Post>(); // empty array
+        for (int i =0; i < postList.size(); i++){
+            postList.get(i) = new Post(currAuthour, currID, currTitle, currDescription, currCategory);
+        }
+        return postList;
+    }
 
 
     public boolean isEmptyInput(String testString){
@@ -20,12 +50,18 @@ public class TestSearchBarActivity {
     public boolean checkPostExistence(String title, String category){
         boolean titleIsAvailable = false;
         boolean categoryIsAvailable = false;
-        if(title == titleGiven){
-            titleAvailable = true;
+
+        // iterate over posting list
+        for(Post post: postList){
+            if(post.getPostTitle().matches(title)){
+                titleIsAvailable = true;
+            }
+            if(category ==  post.getPostCategory()){
+                categoryIsAvailable = true;
+            }
         }
-        if(category == CategoryGiven){
-            categoryIsAvailable = true;
-        }
+
+
         return (titleIsAvailable && categoryIsAvailable);
     }
 
