@@ -37,7 +37,8 @@ public class TestSearchBarActivity {
     public ArrayList<Post> ListOfAllPosts(){
         ArrayList<Post> postList= new ArrayList<Post>(); // empty array
         for (int i =0; i < postList.size(); i++){
-            postList.get(i) = new Post(currAuthour, currID, currTitle, currDescription, currCategory);
+            postList.get(i) = new Post(currAuthour.toString(), currID.toString(),
+                    currTitle.toString(), currDescription.toString(), currCategory.toString());
         }
         return postList;
     }
