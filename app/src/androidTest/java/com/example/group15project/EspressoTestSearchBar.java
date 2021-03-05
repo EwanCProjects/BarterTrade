@@ -27,8 +27,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 public class EspressoTestSearchBar {
 
     @Rule
-    public ActivityScenarioRule<PostActivity> myRule = new ActivityScenarioRule<>(searchBar.class);
-    public IntentsTestRule<PostActivity> myIntentRule=new IntentsTestRule<>(searchBar.class);
+    public ActivityScenarioRule<PostActivity> myRule = new ActivityScenarioRule<>(searchBarBtn.class);
+    public IntentsTestRule<PostActivity> myIntentRule=new IntentsTestRule<>(searchBarBtn.class);
 
     @BeforeClass
     public static void setup(){
@@ -39,16 +39,21 @@ public class EspressoTestSearchBar {
     /*** AT-I**/
     @Test
     public void checkIfSearchPageIsShown() {
-        onView(withId(R.id.editTextSearchBar)).check(matches(withText(R.string.empty_string)));
-        onView(withId(R.id.searchButton)).check(matches(withText("Search")));
+        onView(withId(R.id.hashTagSearch)).check(matches(withText(R.string.empty_string)));
+        onView(withId(R.id.titleSearch)).check(matches(withText(R.string.empty_string)));
+        onView(withId(R.id.searchBarBtn)).check(matches(withText("Search")));
     }
 
     /*** AT-II**/
     @Test
     public void checkIfSearchBarEmpty() {
-        onView(withId(R.id.editTextSearchBar)).perform(typeText(""));
+        onView(withId(R.id.hashTagSearch)).perform(typeText(""));
+
+        onView(withId(R.id.hashTagSearch)).check(matches(withText(R.string.empty_string)));
+        onView(withId(R.id.titleSearch)).check(matches(withText(R.string.empty_string)));
         closeSoftKeyboard();
-        onView(withId(R.id.searchButton)).perform(click());
+
+        onView(withId(R.id.searchBarBtn)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Empty input")));
     }
 
@@ -56,18 +61,23 @@ public class EspressoTestSearchBar {
     /*** AT-III**/
     @Test
     public void checkIfResultPageIsEmpty() {
-        onView(withId(R.id.editTextSearchBar)).perform(typeText("PS6"));
+        onView(withId(R.id.hashTagSearch)).perform(typeText("Electronics"));
+        onView(withId(R.id.titleSearch)).perform(typeText("PS6"));
         closeSoftKeyboard();
-        onView(withId(R.id.searchButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText("No results")));    }
+
+        onView(withId(R.id.searchBarBtn)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText("No results")));
+    }
 
 
     /*** AT-IV**/
     @Test
     public void checkIfResultPageIsNotEmpty() {
-        onView(withId(R.id.editTextSearchBar)).perform(typeText("PS2"));
+        onView(withId(R.id.hashTagSearch)).perform(typeText("Electronics"));
+        onView(withId(R.id.titleSearch)).perform(typeText("PS3"));
         closeSoftKeyboard();
-        onView(withId(R.id.searchButton)).perform(click());
+
+        onView(withId(R.id.searchBarBtn)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("")));
     }
 

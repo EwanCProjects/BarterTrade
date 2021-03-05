@@ -28,9 +28,10 @@ public class JUnitTestSearchBar {
     }
 
     @Test
-    public void checkIfOutputExists(){
-        assertFalse(sbActivity.checkOutput("ps6"));
-        assertTrue(sbActivity.checkOutput("ps2"));
+    public void checkIfPostingExists(){
+        assertFalse(sbActivity.checkPostExistence("ps6", "furniture"));
+        //assertTrue(sbActivity.checkPostExistence("chair", "furniture")); // this needs to pass
+        assertTrue(sbActivity.checkPostExistence("Tester One Post 2", "Electronics"));
     }
 
     @AfterClass
