@@ -42,7 +42,7 @@ public class SearchBarActivity extends Activity {
         for (int i =0; i < postList.size(); i++){
             Post insertPost = new Post(currAuthour.toString(), currID.toString(),
                     currTitle.toString(), currDescription.toString(), currCategory.toString());
-            postList.add(insertPost);
+            postList.add(i, insertPost);
         }
         return postList;
     }
