@@ -26,10 +26,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class EspressoTestSearchBar {
 
+    /*
     @Rule
-    public ActivityScenarioRule<PostActivity> myRule = new ActivityScenarioRule<>(searchBarBtn.class);
-    public IntentsTestRule<PostActivity> myIntentRule=new IntentsTestRule<>(searchBarBtn.class);
-
+    public ActivityScenarioRule<SearchBarActivity> myRule = new ActivityScenarioRule<SearchBarActivity>(searchBarBtn.class);
+    public IntentsTestRule<SearchBarActivity> myIntentRule = new IntentsTestRule<SearchBarActivity>(searchBarBtn.class);
+     */
     @BeforeClass
     public static void setup(){
         Intents.init();

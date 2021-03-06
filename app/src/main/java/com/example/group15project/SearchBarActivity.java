@@ -1,5 +1,7 @@
 package com.example.group15project;
 
+import android.app.Activity;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 // then iterate
 //extractedUserPassword = userTree.child(Posts).child("password").getValue(String.class);
 
-public class TestSearchBarActivity {
+public class SearchBarActivity extends Activity {
 
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -27,6 +29,8 @@ public class TestSearchBarActivity {
     public static DataSnapshot currTitle = null;
     public static DataSnapshot currDescription = null;
     public static DataSnapshot currCategory = null;
+    ArrayList<Post> postList= new ArrayList<Post>(); // empty array
+
 
 
     /**
@@ -35,10 +39,10 @@ public class TestSearchBarActivity {
      */
 
     public ArrayList<Post> ListOfAllPosts(){
-        ArrayList<Post> postList= new ArrayList<Post>(); // empty array
         for (int i =0; i < postList.size(); i++){
-            postList.get(i) = new Post(currAuthour.toString(), currID.toString(),
+            Post insertPost = new Post(currAuthour.toString(), currID.toString(),
                     currTitle.toString(), currDescription.toString(), currCategory.toString());
+            postList.add(insertPost);
         }
         return postList;
     }

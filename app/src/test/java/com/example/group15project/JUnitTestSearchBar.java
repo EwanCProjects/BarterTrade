@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class JUnitTestSearchBar {
-    static TestSearchBarActivity sbActivity;
+    static SearchBarActivity sbActivity;
 
     @BeforeClass
     public static void setup() {
-        sbActivity = new TestSearchBarActivity();
+        sbActivity = new SearchBarActivity();
     }
 
     @Test
