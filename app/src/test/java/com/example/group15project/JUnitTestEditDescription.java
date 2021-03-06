@@ -18,24 +18,30 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class JUnitTestEditDescription {
-    static TestEditDescriptionActivity edActivity;
+    static EditDescriptionActivity edActivity;
 
     @BeforeClass
     public static void setup() {
-        edActivity = new TestEditDescriptionActivity();
+        edActivity = new EditDescriptionActivity();
     }
 
     @Test
-    public void checkIfChangeIsEmpty() {
-        assertTrue(edActivity.isEmptyChange(""));
-
+    public void changeIsEmpty() {
+        assertTrue(edActivity.isEmptyDescription(""));
     }
 
     @Test
-    public void checkIfChangeIsNotEmpty(){
-        assertFalse(edActivity.isEmptyChange("bla bla"));
+    public void changeIsNotEmpty(){
+        assertFalse(edActivity.isEmptyDescription("bla bla"));
 
     }
+/*
+    @Test
+    public void descriptionIsUpdated(){
+        assertFalse(edActivity.("Typing, typing, ..."));
+
+    }
+ */
 
     @AfterClass
     public static void tearDown(){

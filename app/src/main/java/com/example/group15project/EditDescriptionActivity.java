@@ -26,4 +26,16 @@ public class EditDescriptionActivity extends AppCompatActivity {
         myRef.setValue(editedText);
     }
 
+
+
+
+    protected String getUpdatedPostDescription() {
+        EditText updatedDescription = findViewById(R.id.editDesciption);
+        return updatedDescription.getText().toString().trim();
+    }
+
+    protected boolean isEmptyDescription(String description) {
+        return description.isEmpty();
+    }
+
 }
