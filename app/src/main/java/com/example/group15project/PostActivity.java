@@ -31,7 +31,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
 
     // functions for Iteration 2
-    /*
+
     FirebaseDatabase db = null;
     private DatabaseReference database;
     DatabaseReference postTitleRef = null;
@@ -57,23 +57,23 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-    */
 
-    /*protected void move2PostScreen(String postTitle, String postCategory, String postDescription){
+
+    protected void move2PostScreen(String postTitle, String postCategory, String postDescription){
 
     }
 
     public void postOnButtonClick(View view) {
-    }*/
+    }
 
-    /*
+
     protected void initializeDatabase() {
         db = FirebaseDatabase.getInstance();
         postTitleRef = db.getReference("Posts/postTitle");
         postCategoryRef = db.getReference("Posts/postCategory");
         postDescriptionRef = db.getReference("Posts/postDesc");
     }
-    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
 
-        //initializeDatabase();
+        initializeDatabase();
 
     }
 

@@ -26,9 +26,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class EspressoEditDescriptionActivity {
 
-    //@Rule
-    //public ActivityScenarioRule<EditDescriptionActivity> myRule = new ActivityScenarioRule<EditDescriptionActivity>(activity_edit_description.class);
-    //public IntentsTestRule<EditDescriptionActivity> myIntentRule=new IntentsTestRule<EditDescriptionActivity>(editPost.class);
+    @Rule
+    public ActivityScenarioRule<EditPostActivity> myRule
+            = new ActivityScenarioRule<EditPostActivity>(EditPostActivity.class);
+
+    public IntentsTestRule<EditPostActivity> myIntentRule
+            = new IntentsTestRule<EditPostActivity>(EditPostActivity.class);
 
     @BeforeClass
     public static void setup(){
@@ -36,10 +39,12 @@ public class EspressoEditDescriptionActivity {
     }
 
 
+    // HELP 2
     /*** AT-I**/
     @Test
     public void checkIfEditPageIsShown() {
-        onView(withId(R.id.editDescBtn)).check(matches(withText("edit description")));
+        onView(withId(R.id.editDescBtn)).check(matches(withText("update")));
+
     }
 
 
