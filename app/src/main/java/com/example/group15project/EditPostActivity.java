@@ -28,10 +28,7 @@ public class EditPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_post);
-
         realTimeDatabase = FirebaseDatabase.getInstance();//.getReference();
-
-        //DatabaseReference postNode = realTimeDatabase.getReference("Posts");
         Post fetchedPost = getPost(postID);
 
     }
@@ -47,11 +44,15 @@ public class EditPostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 globalPost = dataSnapshot.getValue(Post.class);
-                //System.out.println(post.getPostDescription());
-                EditText editText = findViewById(R.id.editDesciption);
-                editText.setText(globalPost.getPostDescription());
-                //globalPost = post;
-                //return post;
+                EditText editTextOfDescr = findViewById(R.id.editDesciption);
+                EditText editTextOfTitle = findViewById(R.id.editTitle);
+                EditText editTextOfCategory = findViewById(R.id.editCategory);
+
+                editTextOfDescr.setText(globalPost.getPostDescription());
+                editTextOfTitle.setText(globalPost.getPostTitle());
+                editTextOfCategory.setText(globalPost.getPostCategory());
+
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -64,9 +65,17 @@ public class EditPostActivity extends AppCompatActivity {
     }
 
     public void buttonClicked(android.view.View view) {
-        EditText editText = findViewById(R.id.editDesciption);
-        String editedText = editText.getText().toString();
-        globalPost.setPostDescription(editedText);
+        EditText editTextDes = findViewById(R.id.editDesciption);
+        EditText editTextOfTitle = findViewById(R.id.editTitle);
+        EditText editTextOfCategory = findViewById(R.id.editCategory);
+
+        String editedDescStr = editTextDes.getText().toString();
+        String editedTitleStr = editTextOfTitle.getText().toString();
+        String editedCategoryStr = editTextOfCategory.getText().toString();
+
+        globalPost.setPostDescription(editedDescStr);
+        globalPost.setPostTitle(editedTitleStr);
+        globalPost.setPostCategory(editedCategoryStr);
 
         DatabaseReference ref = realTimeDatabase.getReference();
 
@@ -88,13 +97,12 @@ public class EditPostActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    // THE FOLLOWING ARE ONLY USED IN JUNIT TESTS
     protected boolean isEmptyTitle(String title) { return title.isEmpty(); }
-    protected boolean isEmptyCategory(String category) {
-        return category.isEmpty();
-    }
-    protected boolean isEmptyDescription(String description) {
-        return description.isEmpty();
-    }
+    protected boolean isEmptyCategory(String category) { return category.isEmpty(); }
+    protected boolean isEmptyDescription(String description) { return description.isEmpty(); }
+
 
     public void setUpdatedDescription(String newDescription){
         globalPost.setPostDescription(newDescription);
