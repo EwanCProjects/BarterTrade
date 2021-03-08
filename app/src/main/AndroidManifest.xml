@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group15project">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +22,7 @@
         <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".TestRegistrationActivity"></activity>
         <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".ViewPostActivity"></activity>
         <activity android:name=".PostActivity"></activity>
         <activity android:name=".TestPostActivity"></activity>
     </application>

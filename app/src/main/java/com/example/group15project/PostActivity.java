@@ -1,27 +1,18 @@
 package com.example.group15project;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.Random;
 import java.util.UUID;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
@@ -92,7 +83,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected String getPostTitle() {
-        EditText title = findViewById(R.id.titleTextField);
+        EditText title = findViewById(R.id.originalPosterField);
         return title.getText().toString().trim();
     }
 
