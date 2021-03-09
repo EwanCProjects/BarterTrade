@@ -33,4 +33,9 @@
     <string name="username_value">Username value</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="history">History</string>
+    <string name="close">Close</string>
+    <string name="posts">Posts</string>
+    <string name="trades">Trades</string>
+    <string name="refresh">Refresh</string>
 </resources>
