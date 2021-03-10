@@ -27,6 +27,9 @@ import com.google.firebase.storage.FirebaseStorage;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     public static String currUser = RegistrationActivity.currUser;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
+
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,82 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newPostButton.setOnClickListener(this);
     }
 
+    private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
+
+        PermissionUtil.checkPermission(activity, context, Permission, prefName,
+                new PermissionUtil.PermissionAskListener() {
+                    @Override
+                    public void onPermissionAsk() {
+                        ActivityCompat.requestPermissions(HomeActivity.this,
+                                new String[]{Permission},
+                                MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                    }
+
+                    @Override
+                    public void onPermissionPreviouslyDenied() {
+                        //show a dialog explaining is permission denied previously , but app require it and then request permission
+
+                        showToast("Permission previously Denied.");
+
+                        ActivityCompat.requestPermissions(HomeActivity.this,
+                                new String[]{Permission},
+                                MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                    }
+
+                    @Override
+                    public void onPermissionDisabled() {
+                        // permission check box checked and permission denied previously .
+                        askUserToAllowPermissionFromSetting();
+                    }
+
+                    @Override
+                    public void onPermissionGranted() {
+                        showToast("Permission Granted.");
+                    }
+                });
+    }
+
+    private void askUserToAllowPermissionFromSetting() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title
+        alertDialogBuilder.setTitle("Permission Required:");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Kindly allow Permission from App Setting, without this permission app could not show maps.")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                        showToast("Permission forever Disabled.");
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -63,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     getLocation();
                 } else {
                     // Permission Denied
-                    Toast.makeText(this, "Permission denied, Please change your permission in your settings if needed", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Permission denied, please change your permission in your settings if needed", Toast.LENGTH_SHORT)
                             .show();
                 }
                 return;
