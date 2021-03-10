@@ -7,19 +7,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
 import java.util.Arrays;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String currUser = null;
+    static String currUser = null;
+
+    DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    DataSnapshot userTree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,24 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         Button postButton = findViewById(R.id.signUpButton);
         postButton.setOnClickListener(this);
+
+        databaseRead(realTimeDatabase);
+    }
+
+    public void databaseRead(DatabaseReference db) {
+        //code for database initialization and accessing the credentials
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userTree = dataSnapshot.child("Users");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        };
+        db.addValueEventListener(userListener);
     }
 
     protected void setStatusMessage(String message) {
@@ -45,13 +69,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         return lastName.getText().toString().trim();
     }
 
-    //Do we need this function? Not sure. I'm just keeping this for now.
-   /* protected String getFullName() {
-        EditText lastName = findViewById(R.id.editTextLastName);
-        EditText firstName = findViewById(R.id.editTextFirstName);
-        String fullName = (firstName.getText().toString().trim())+" "+(lastName.getText().toString().trim());
-        return fullName;
-    }*/
     protected String getEmailAddress() {
         EditText emailAddress = findViewById(R.id.editTextEmailAddress);
         return emailAddress.getText().toString().trim();
@@ -148,6 +165,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         if (isEmptyFirstName(firstName)) {
             errorMessage = "First name is empty!";
+        }
+
+        if (userTree.hasChild(formatEmail(emailAddress))) {
+            errorMessage = "Email already registered!";
         }
 
         if (errorMessage.isEmpty()) {

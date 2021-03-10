@@ -23,7 +23,14 @@ public class JUnitTestViewPost {
     @Mock
     static Post mockPost = null;
 
-    @Test public void checkIfPosted() {
+    @BeforeClass
+    public static void setup() {
+        viewPostActivity = new ViewPostActivity();
+    }
+
+    // AT 2 - ET 2
+    @Test
+    public void checkIfPosted() {
         when(mockPost.getAuthor()).thenReturn("Phone-obsessed teen");
         when(mockPost.getPostTitle()).thenReturn("Two year old phone");
         when(mockPost.getPostCategory()).thenReturn("Electronics");
@@ -46,10 +53,12 @@ public class JUnitTestViewPost {
                 "but this one is mine. " +
                 "My phone is my best friend. It is my life.", mockPost.getPostDescription());
         Mockito.verify(mockPost, Mockito.atLeastOnce()).getPostDescription();
+
+
     }
 
-
-
-    
-
+    @AfterClass
+    public static void tearDown(){
+        System.gc();
+    }
 }
