@@ -42,7 +42,5 @@ public class EspressoTestFilterActivity {
     public void filter_distance_test() {
         onView(withId(R.id.seekBar)).perform(new GeneralClickAction(Tap.SINGLE, GeneralLocation.CENTER_LEFT, Press.FINGER));
         onView(withId(R.id.distance_text)).check(matches(withText("0km")));
-        onView(withId(R.id.seekBar)).perform(new GeneralClickAction(Tap.SINGLE, GeneralLocation.CENTER, Press.FINGER));
-        onView(withId(R.id.distance_text)).check(matches(withText((HomeActivity.MAX_LOCAL_DISTANCE/2000) + "km")));
     }
 }

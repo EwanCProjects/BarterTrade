@@ -29,7 +29,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     public static final int MAX_LOCAL_DISTANCE = 50000; //local is defined as 50km max in this app
+
     Context context;
+    private MyLocation myLocation;
+
+    /**
+     * runs when Filter button is clicked
+     */
+    public void goToFilterActivity(View v){
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
+    }
+    /**
+     *this method would be useful when extracting posts based on distance
+     */
+    private float getDistance(String latitudeLongitude){
+        if(latitudeLongitude == null){
+            return -1;
+        }
+
+        Double lat = Double.parseDouble(latitudeLongitude.split(",")[0]);
+        Double lon = Double.parseDouble(latitudeLongitude.split(",")[1]);
+
+        LongLatLocation myLoc = new LongLatLocation(lat,lon);
+        return myLocation.calcDistanceToLocation(myLoc);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

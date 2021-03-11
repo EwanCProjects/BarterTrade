@@ -49,6 +49,17 @@ public class FilterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
+
+    private void loadAndApplyUserFilterPreferences() {
+        FilterPreferences filterPrefs = UserStatusData.getUserFilterPrefs(this);
+        if(filterPrefs == null){
+            return;
+        }
+        textView.setText(filterPrefs.maxDistance + " km");
+        seekBar.setProgress(filterPrefs.maxDistance);
+
+    }
+
     /**
      * runs when cancel button is clicked
      */
@@ -60,6 +71,9 @@ public class FilterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+        textView = (TextView) findViewById(R.id.distance_text);
+        //homepage view of the tasks will go here
         setupSeekBar();
+        loadAndApplyUserFilterPreferences();
     }
 }
