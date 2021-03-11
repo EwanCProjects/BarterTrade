@@ -28,7 +28,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public static String currUser = RegistrationActivity.currUser;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
-
+    public static final int MAX_LOCAL_DISTANCE = 50000; //local is defined as 50km max in this app
     Context context;
 
     @Override
