@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newPostButton.setOnClickListener(this);
     }
 
+
     private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
 
         PermissionUtil.checkPermission(activity, context, Permission, prefName,
