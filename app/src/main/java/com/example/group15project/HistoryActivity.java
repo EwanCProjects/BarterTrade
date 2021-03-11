@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    Post post;
+    Trade trade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,14 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             realTimeDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //get trade
-                    // need to add maybe an EditText or something in the activity_history to populate it with a trade/multiple trades
-                    //get post
-                    // need to add maybe an EditText or something in the activity_history to populate it with a post/multiple posts
+
+                    post = snapshot.getValue(Post.class);
+                    EditText postInfo = findViewById(R.id.postMultiLine);
+                    postInfo.setText(post.getPostTitle());
+
+                    trade = snapshot.getValue(Trade.class);
+                    EditText tradeInfo = findViewById(R.id.tradeMultiLine);
+                    tradeInfo.setText("Traded " + trade.getTitle + " with " + "");
                 }
 
                 @Override

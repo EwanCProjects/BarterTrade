@@ -49,7 +49,7 @@
         android:id="@+id/tradeHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="148dp"
         android:text="@string/trades"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,5 +68,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/historyHeader"
         app:layout_constraintVertical_bias="0.532" />
+
+    <EditText
+        android:id="@+id/postMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/postHeader" />
+
+    <EditText
+        android:id="@+id/tradeMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tradeHeader"
+        app:layout_constraintVertical_bias="0.173" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
