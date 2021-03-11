@@ -6,6 +6,8 @@ public class Post {
     private String postTitle;
     private String postDescription;
     private String postCategory;
+    private String latLonLocation;
+    private float distance;
 
     public Post(String author, String postId, String postTitle, String postDescription,
                 String postCategory) {
@@ -48,6 +50,22 @@ public class Post {
 
     public String getPostDescription() {
         return postDescription;
+    }
+
+    public String getLatLonLocation() {
+        return latLonLocation;
+    }
+
+    public void setLatLonLocation(String latLonLocation) {
+        this.latLonLocation = latLonLocation;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     public void setPostDescription(String postDescription) { this.postDescription = postDescription; }
