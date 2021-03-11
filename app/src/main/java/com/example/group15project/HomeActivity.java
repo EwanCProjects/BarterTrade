@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, FilterActivity.class);
         startActivity(intent);
     }
+
     /**
      *this method would be useful when extracting posts based on distance
      */
@@ -79,7 +80,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button newPostButton = findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);
     }
+    /*
+    * useful when showing main page with default or prev saved preferences of user
 
+    private void setFilterPrefsToDefaultIfNeeded() {
+        FilterPreferences filterPrefs = UserStatusData.getUserFilterPrefs(this);
+        if (filterPrefs != null){
+
+        }else{
+            filterPrefs = new FilterPreferences();
+            filterPrefs.setMaxDistance(MAX_LOCAL_DISTANCE/1000);
+            UserStatusData.saveUserFilterPrefsData(filterPrefs,this);
+        }
+    }*/
 
     private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
 
