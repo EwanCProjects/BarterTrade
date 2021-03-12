@@ -17,7 +17,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference("Posts");
+    public static DatabaseReference database = FirebaseDatabase.getInstance().getReference("Trades");
     Post post;
     Trade trade;
 
@@ -49,7 +50,16 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                     post = snapshot.getValue(Post.class);
                     EditText postInfo = findViewById(R.id.postMultiLine);
                     postInfo.setText(post.getPostTitle());
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    System.out.println("Database read failed: "+ error.getMessage());
+                }
+            });
+            database.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     trade = snapshot.getValue(Trade.class);
                     EditText tradeInfo = findViewById(R.id.tradeMultiLine);
                     tradeInfo.setText(trade.getTitle());
@@ -60,6 +70,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                     System.out.println("Database read failed: "+ error.getMessage());
                 }
             });
+
 
         }else if (view.getId() == R.id.closeButton){
             switchToHomeWindow();
