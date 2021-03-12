@@ -20,52 +20,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = HomeActivity.currUser;
 
-
-    // functions for Iteration 2
-    /*
-    FirebaseDatabase db = null;
-    private DatabaseReference database;
-    DatabaseReference postTitleRef = null;
-    DatabaseReference postCategoryRef = null;
-    DatabaseReference postDescriptionRef = null;
-
-    public void dbRead(DatabaseReference db){
-        db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterator<DataSnapshot> itr = dataSnapshot.getChildren().iterator();
-                List<String> post = new ArrayList();
-                while (itr.hasNext()){
-                    Post p = itr.next().getValue(Post.class);
-                    String dbValue = p.getPostId();
-                    post.add(dbValue);
-                }
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    */
-
-    /*protected void move2PostScreen(String postTitle, String postCategory, String postDescription){
-
-    }
-
-    public void postOnButtonClick(View view) {
-    }*/
-
-    /*
-    protected void initializeDatabase() {
-        db = FirebaseDatabase.getInstance();
-        postTitleRef = db.getReference("Posts/postTitle");
-        postCategoryRef = db.getReference("Posts/postCategory");
-        postDescriptionRef = db.getReference("Posts/postDesc");
-    }
-    */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +27,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
-
-        //initializeDatabase();
-
     }
 
     protected String generatePostID() {

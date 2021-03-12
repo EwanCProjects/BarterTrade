@@ -2,26 +2,24 @@ package com.example.group15project;
 
 import android.widget.TextView;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-@RunWith(MockitoJUnitRunner.Silent.class)
 public class JUnitTestViewPost {
     static ViewPostActivity viewPostActivity;
 
-    @Mock
-    static Post mockPost = null;
+    String author = "Phone-obsessed teen";
+    String testID = "abc123";
+    String title = "Two year old phone";
+    String category = "Electronics";
+    String description = "This is my phone. There are many like it, " +
+            "but this one is mine. " +
+            "My phone is my best friend. It is my life.";
+    Post testPost = new Post(author, testID, title, description, category);
 
     @BeforeClass
     public static void setup() {
@@ -31,30 +29,12 @@ public class JUnitTestViewPost {
     // AT 2 - ET 2
     @Test
     public void checkIfPosted() {
-        when(mockPost.getAuthor()).thenReturn("Phone-obsessed teen");
-        when(mockPost.getPostTitle()).thenReturn("Two year old phone");
-        when(mockPost.getPostCategory()).thenReturn("Electronics");
-        when(mockPost.getPostDescription()).thenReturn("This is my phone. There are many like it, " +
-                "but this one is mine. " +
-                "My phone is my best friend. It is my life.");
 
-        // viewPostActivity.displayPost(mockPost);
-
-        assertEquals("Phone-obsessed teen", mockPost.getAuthor());
-        Mockito.verify(mockPost, Mockito.atLeastOnce()).getAuthor();
-
-        assertEquals("Two year old phone", mockPost.getPostTitle());
-        Mockito.verify(mockPost, Mockito.atLeastOnce()).getPostTitle();
-
-        assertEquals("Electronics", mockPost.getPostCategory());
-        Mockito.verify(mockPost, Mockito.atLeastOnce()).getPostCategory();
-
-        assertEquals("This is my phone. There are many like it, " +
-                "but this one is mine. " +
-                "My phone is my best friend. It is my life.", mockPost.getPostDescription());
-        Mockito.verify(mockPost, Mockito.atLeastOnce()).getPostDescription();
-
-
+        viewPostActivity.currPost = testPost;
+        assertEquals(viewPostActivity.currPost.getAuthor(), testPost.getAuthor());
+        assertEquals(viewPostActivity.currPost.getPostTitle(), testPost.getPostTitle());
+        assertEquals(viewPostActivity.currPost.getPostDescription(), testPost.getPostDescription());
+        assertEquals(viewPostActivity.currPost.getPostCategory(), testPost.getPostCategory());
     }
 
     @AfterClass

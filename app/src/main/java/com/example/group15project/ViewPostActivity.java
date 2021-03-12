@@ -21,7 +21,7 @@ public class ViewPostActivity extends AppCompatActivity implements View.OnClickL
 
     private void getPost() { currPost = HomeAdapter.currPost; }
 
-    private void displayPost(Post postToDisplay) {
+    public void displayPost(Post postToDisplay) {
         TextView postTitle = findViewById(R.id.postTitle);
         TextView originalPoster = findViewById(R.id.originalPosterField);
         TextView postCategory = findViewById(R.id.categoryTextField);

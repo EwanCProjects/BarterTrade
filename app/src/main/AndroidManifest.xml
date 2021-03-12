@@ -15,7 +15,6 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -28,6 +27,7 @@
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".PostActivity"
             android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".EditPostActivity"/>
         <activity android:name=".TestPostActivity"/>
     </application>
 </manifest>
