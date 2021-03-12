@@ -27,6 +27,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     static String currUser = RegistrationActivity.currUser;
     DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
@@ -37,15 +38,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         databaseRead(realTimeDatabase);
 
-        homeView = findViewById(R.id.homePostsView);
-
-        homeAdapter = new HomeAdapter(this, postTitles, postOPs, postCategories);
-        homeView.setAdapter(homeAdapter);
-        homeView.setLayoutManager(new LinearLayoutManager(this));
-
         if (currUser == null) {
             currUser = LoginActivity.currUser;
         }
+
+        homeView = findViewById(R.id.homePostsView);
+
+        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
+        homeView.setAdapter(homeAdapter);
+        homeView.setLayoutManager(new LinearLayoutManager(this));
 
         Button newPostButton = findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);
@@ -56,12 +57,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot: dataSnapshot.child("Posts").getChildren()) {
-                    Post extractedPost = postSnapshot.getValue(Post.class);
-                    postTitles.add(extractedPost.getPostTitle());
-                    postOPs.add(extractedPost.getAuthor());
-                    postCategories.add(extractedPost.getPostCategory());
-                    homeAdapter.notifyDataSetChanged();
+                if (dataSnapshot.child("Posts").hasChildren()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
+                        Post extractedPost = postSnapshot.getValue(Post.class);
+                        extractedPosts.add(extractedPost);
+                        postTitles.add(extractedPost.getPostTitle());
+                        postOPs.add(extractedPost.getAuthor());
+                        postCategories.add(extractedPost.getPostCategory());
+                        homeAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 

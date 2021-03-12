@@ -143,6 +143,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         String emailAddress = getEmailAddress();
         String errorMessage = getResources().getString(R.string.empty_string);
 
+        if (userTree.hasChild(formatEmail(emailAddress))) {
+            errorMessage = "Email already registered!";
+        }
+
         if (!passwordsMatch(password, passwordConfirm)) {
             errorMessage = "Passwords do not match!";
         }
@@ -165,10 +169,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         if (isEmptyFirstName(firstName)) {
             errorMessage = "First name is empty!";
-        }
-
-        if (userTree.hasChild(formatEmail(emailAddress))) {
-            errorMessage = "Email already registered!";
         }
 
         if (errorMessage.isEmpty()) {

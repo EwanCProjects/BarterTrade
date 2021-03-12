@@ -3,30 +3,34 @@ package com.example.group15project;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ViewPostActivity extends AppCompatActivity implements View.OnClickListener {
-    public static Post currPost = null; // for integration, this will not be null but passed from HomeActivity
+    public static Post currPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
+
+        getPost();
+        displayPost(currPost);
     }
 
-    public void displayPost(Post postToDisplay) {
-        currPost = postToDisplay;
+    private void getPost() { currPost = HomeAdapter.currPost; }
 
+    private void displayPost(Post postToDisplay) {
         TextView postTitle = findViewById(R.id.postTitle);
         TextView originalPoster = findViewById(R.id.originalPosterField);
         TextView postCategory = findViewById(R.id.categoryTextField);
         TextView postDescription = findViewById(R.id.descriptionTextField);
 
-        setTextField(postTitle, currPost.getPostTitle());
-        setTextField(originalPoster, currPost.getAuthor());
-        setTextField(postCategory, currPost.getPostCategory());
-        setTextField(postDescription, currPost.getPostDescription());
+        setTextField(postTitle, postToDisplay.getPostTitle());
+        setTextField(originalPoster, postToDisplay.getAuthor());
+        setTextField(postCategory, postToDisplay.getPostCategory());
+        setTextField(postDescription, postToDisplay.getPostDescription());
     }
 
     protected void setTextField(TextView field, String strValue) {
