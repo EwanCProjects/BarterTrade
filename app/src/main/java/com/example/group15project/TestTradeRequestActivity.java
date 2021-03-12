@@ -10,13 +10,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.UUID;
 
-public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
-
-    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+public class TestTradeRequestActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +78,7 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
 
             if(errorMessage.isEmpty()){
                 Trade trade = createTrade(tradeID, title, description);
-                addTradeToDatabase(realTimeDatabase, trade, tradeID);
+                //addTradeToDatabase(realTimeDatabase, trade, tradeID);
                 switchToHomeWindow();
 
             }else{
@@ -90,7 +87,7 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
 
         }
         else if (v.getId() == R.id.cancelRequestButton){
-           switchToHomeWindow();
+            switchToHomeWindow();
         }
     }
 }

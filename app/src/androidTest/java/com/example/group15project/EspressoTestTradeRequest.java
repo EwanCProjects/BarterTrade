@@ -3,6 +3,7 @@ package com.example.group15project;
 import android.content.Context;
 
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -26,6 +27,7 @@ public class EspressoTestTradeRequest {
 
     @Rule
     public ActivityScenarioRule<TradeRequestActivity> myRule = new ActivityScenarioRule<>(TradeRequestActivity.class);
+    public IntentsTestRule<TradeRequestActivity> myIntentRule=new IntentsTestRule<>(TradeRequestActivity.class);
 
     @BeforeClass
     public static void setup(){
@@ -54,7 +56,7 @@ public class EspressoTestTradeRequest {
         onView(withId(R.id.itemDescription)).perform(typeText("Good condition and working Xbox 360 with one controller"));
         closeSoftKeyboard();
         onView(withId(R.id.sendRequestButton)).perform(click());
-        onView(withId(R.id.tradeRequestStatusLabel)).check(matches(withText("Title is Empty")));
+        onView(withId(R.id.tradeRequestStatusLabel)).check(matches(withText(R.string.title_is_empty)));
     }
 
     @Test
@@ -63,6 +65,6 @@ public class EspressoTestTradeRequest {
         onView(withId(R.id.itemDescription)).perform(typeText(""));
         closeSoftKeyboard();
         onView(withId(R.id.sendRequestButton)).perform(click());
-        onView(withId(R.id.tradeRequestStatusLabel)).check(matches(withText("Description is Empty")));
+        onView(withId(R.id.tradeRequestStatusLabel)).check(matches(withText(R.string.description_is_empty)));
     }
 }

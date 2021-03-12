@@ -9,10 +9,10 @@ import static org.junit.Assert.assertTrue;
 
 public class JUnitTestTradeRequest {
 
-    static TradeRequestActivity tradeRequestActivity;
+    static TestTradeRequestActivity tradeRequestActivity;
 
     @BeforeClass
-    public static void setup(){ tradeRequestActivity = new TradeRequestActivity();}
+    public static void setup(){ tradeRequestActivity = new TestTradeRequestActivity();}
 
     @Test
     public void isTitleEmpty() {
