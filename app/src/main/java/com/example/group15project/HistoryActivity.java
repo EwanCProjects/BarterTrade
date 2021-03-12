@@ -52,7 +52,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
                     trade = snapshot.getValue(Trade.class);
                     EditText tradeInfo = findViewById(R.id.tradeMultiLine);
-                    tradeInfo.setText("Traded " + trade.getTitle + " with " + "");
+                    tradeInfo.setText(trade.getTitle());
                 }
 
                 @Override
