@@ -28,10 +28,10 @@ public class EspressoEditDescriptionActivity {
 
     @Rule
     public ActivityScenarioRule<EditPostActivity> myRule
-            = new ActivityScenarioRule<EditPostActivity>(EditPostActivity.class);
+            = new ActivityScenarioRule<>(EditPostActivity.class);
 
     public IntentsTestRule<EditPostActivity> myIntentRule
-            = new IntentsTestRule<EditPostActivity>(EditPostActivity.class);
+            = new IntentsTestRule<>(EditPostActivity.class);
 
     @BeforeClass
     public static void setup(){
@@ -46,8 +46,4 @@ public class EspressoEditDescriptionActivity {
         onView(withId(R.id.editDescBtn)).check(matches(withText("update")));
 
     }
-
-
-
-
 }

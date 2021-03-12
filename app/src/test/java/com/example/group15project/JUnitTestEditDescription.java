@@ -1,7 +1,3 @@
-
-
-
-
 package com.example.group15project;
 
 import android.app.Activity;
@@ -37,7 +33,7 @@ public class JUnitTestEditDescription {
     @BeforeClass
     public static void setup() {
         //DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();// mock
-       // Mockito.mock//
+        // Mockito.mock//
         //edActivity = new EditDescriptionActivity();
         // exUpdatedPost = new EditDescriptionActivity();
         edActivity = new EditPostActivity();
@@ -65,7 +61,7 @@ public class JUnitTestEditDescription {
         // Post edited = exUpdatedPost.editedPost;
         Post updatedPost = exOriginalPost;
         String updatedDescriptionStr = "The updated description of a chair...";
-        updatedPost.setPostDescription(updatedDescriptionStr); ;//.setUpdatedDescription(updatedDescriptionStr);
+        updatedPost.setPostDescription(updatedDescriptionStr);
         assertEquals(updatedPost.getPostDescription(),updatedDescriptionStr);
     }
 
