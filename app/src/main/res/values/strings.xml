@@ -4,7 +4,7 @@
     <string name="post_title_label">POST TITLE</string>
     <string name="post_title_input">Add a title</string>
     <string name="post_description_label">POST DESCRIPTION</string>
-    <string name="post_description_input">Tell us what you want to trade!</string>
+    <string name="post_description_input">Tell us what you want to trade</string>
     <string name="post_cat_label">POST CATEGORY</string>
     <string name="post_cat_input">Add a category</string>
     <string name="post_button_label">POST!</string>

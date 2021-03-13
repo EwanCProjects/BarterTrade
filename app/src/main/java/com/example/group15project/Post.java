@@ -6,14 +6,16 @@ public class Post {
     private String postTitle;
     private String postDescription;
     private String postCategory;
+    private String image;
 
     public Post(String author, String postId, String postTitle, String postDescription,
-                String postCategory) {
+                String postCategory, String image) {
         this.author = author;
         this.postId = postId;
         this.postTitle = postTitle;
         this.postDescription = postDescription;
         this.postCategory = postCategory;
+        this.image = image;
     }
 
     public Post() {
@@ -51,5 +53,15 @@ public class Post {
     }
 
     public void setPostDescription(String postDescription) { this.postDescription = postDescription; }
+
+    public String getimage() {
+        return image;
+    }
+
+    public void setimage(String image) { this.image = image; }
+
+
+
+
 }
 

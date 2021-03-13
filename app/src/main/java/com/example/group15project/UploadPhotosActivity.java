@@ -51,14 +51,14 @@ public class UploadPhotosActivity extends Activity {
 
 
         // Create a reference to 'chair.jpg'
-        StorageReference chairRef = storageRef.child('chair.jpg');
+       // StorageReference chairRef = storageRef.child('chair.jpg');
 
         // Create a reference to 'images/chair.jpg'
-        StorageReference chairImagesRef = storageRef.child('images/chair.jpg');
+        //StorageReference chairImagesRef = storageRef.child('images/chair.jpg');
 
         // While the file names are the same, the references point to different files
-        chairRef.getName().equals(chairImagesRef.getName());    // true
-        chairRef.getPath().equals(chairImagesRef.getPath());    // false
+       // chairRef.getName().equals(chairImagesRef.getName());    // true
+        //chairRef.getPath().equals(chairImagesRef.getPath());    // false
 
     }
 

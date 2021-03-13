@@ -26,8 +26,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 public class EspressoTestUploadPhotos {
 
     @Rule
-    public ActivityScenarioRule<UploadPhotosActivity> myRule = new ActivityScenarioRule<>(UploadPhotosActivity.class);
-    public IntentsTestRule<UploadPhotosActivity> myIntentRule=new IntentsTestRule<>(UploadPhotosActivity.class);
+    public ActivityScenarioRule<PostImageActivity> myRule = new ActivityScenarioRule<>(PostImageActivity.class);
+    public IntentsTestRule<PostImageActivity> myIntentRule=new IntentsTestRule<>(PostImageActivity.class);
 
     @BeforeClass
     public static void setup(){
@@ -43,47 +43,9 @@ public class EspressoTestUploadPhotos {
     @Test
     public void postPageIsShown() {
         //We also need to add a way to access the post page by adding a post button
-        onView(withId(R.id.titleTextField)).check(matches(withText(R.string.empty_string)));
-        onView(withId(R.id.categoryTextField)).check(matches(withText(R.string.empty_string)));
-        onView(withId(R.id.descriptionTextField)).check(matches(withText(R.string.empty_string)));
-        onView(withId(R.id.postButton)).check(matches(withText("POST!")));
-    }
-
-    /*** AT-II**/
-    /**
-     * Click add/remove button photos and move to the new screen, with empty photos
-     */
-    @Test
-    public void movedToUploadPhotosPage() {
-        onView(withId(R.id.editPost)).perform(click());
-        onView(withId(R.id.addOrRemovePhotos)).perform(click());
-        onView(withId(R.id.photoSpot1)).check(matches(withText(R.string.empty_photo)));
-        onView(withId(R.id.photoSpot2)).check(matches(withText(R.string.empty_photo)));
-        onView(withId(R.id.photoSpot3)).check(matches(withText(R.string.empty_photo)));
-
-    }
-
-
-    /*** AT-III**/
-    /**
-     * click '+' on the empty photo to add, '+' -> 'x'
-     */
-    @Test
-    public void addedPhotoFromPhone() {
-        onView(withId(R.id.photoSpot1)).check(matches(withText(R.string.empty_photo)));
-        onView(withId(R.id.addPhoto)).perform(click());
-
-    }
-
-    /*** AT-IV**/
-    /**
-     * click 'x' on the empty photo to remove
-     */
-    @Test
-    public void photoIsRemoved() {
-        onView(withId(R.id.photoSpot1)).check(matches(withText(R.string.empty_photo)));
-        onView(withId(R.id.removePhoto)).perform(click());
-
+        onView(withId(R.id.btnChoose)).check(matches(withText("Choose")));
+        onView(withId(R.id.btnUpload)).check(matches(withText("Upload")));
+        onView(withId(R.id.btnreturnpost)).check(matches(withText("done")));
     }
 
 

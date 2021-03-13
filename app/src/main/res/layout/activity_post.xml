@@ -127,6 +127,15 @@
 
         </LinearLayout>
 
+    <Button
+        android:id="@+id/postimagebtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="select images"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp" />
+
     <LinearLayout
         android:id="@+id/postButtonParent"
         android:layout_width="370dp"
