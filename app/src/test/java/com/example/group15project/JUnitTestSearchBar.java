@@ -18,7 +18,7 @@ public class JUnitTestSearchBar {
 
     @BeforeClass
     public static void setup() {
-        sbActivity = new SearchBarActivity();
+        sbActivity = new SearchBarActivity();// ??
     }
 
     @Test
