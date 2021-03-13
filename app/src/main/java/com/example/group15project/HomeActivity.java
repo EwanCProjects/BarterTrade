@@ -112,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     /// SEARCH BAR ACTIVITY ADDED:
 
     public void buttonClicked(android.view.View view) {
+
         //System.out.println("!!!!!!");
         EditText editedTextOfTitle = findViewById(R.id.titleSearch);
         EditText editedTextOfCategory = findViewById(R.id.hashTagSearch);
