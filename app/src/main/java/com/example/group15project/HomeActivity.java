@@ -1,4 +1,6 @@
 package com.example.group15project;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,16 +21,36 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
-    public static String currUser = RegistrationActivity.currUser;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     public static final int MAX_LOCAL_DISTANCE = 50000; //local is defined as 50km max in this app
+
+    RecyclerView homeView;
+    HomeAdapter homeAdapter;
+
+    static String currUser = RegistrationActivity.currUser;
+    DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    List<Post> extractedPosts = new ArrayList<>();
+    List<String> postTitles = new ArrayList<>();
+    List<String> postOPs = new ArrayList<>();
+    List<String> postCategories = new ArrayList<>();
 
     Context context;
     private MyLocation myLocation;
@@ -56,14 +78,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return myLocation.calcDistanceToLocation(myLoc);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        databaseRead(realTimeDatabase);
 
         if (currUser == null) {
             currUser = LoginActivity.currUser;
         }
+
+        homeView = findViewById(R.id.homePostsView);
+
+        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
+        homeView.setAdapter(homeAdapter);
+        homeView.setLayoutManager(new LinearLayoutManager(this));
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -80,8 +110,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button newPostButton = findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);
     }
-    /*
-    * useful when showing main page with default or prev saved preferences of user
+
+    /** useful when showing main page with default or prev saved preferences of user */
 
     private void setFilterPrefsToDefaultIfNeeded() {
         FilterPreferences filterPrefs = UserStatusData.getUserFilterPrefs(this);
@@ -92,7 +122,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             filterPrefs.setMaxDistance(MAX_LOCAL_DISTANCE/1000);
             UserStatusData.saveUserFilterPrefsData(filterPrefs,this);
         }
-    }*/
+    }
 
     private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
 
@@ -211,7 +241,32 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-@Override
+    public void databaseRead(DatabaseReference db) {
+        //code for database initialization and grabbing all Posts
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("Posts").hasChildren()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
+                        Post extractedPost = postSnapshot.getValue(Post.class);
+                        extractedPosts.add(extractedPost);
+                        postTitles.add(extractedPost.getPostTitle());
+                        postOPs.add(extractedPost.getAuthor());
+                        postCategories.add(extractedPost.getPostCategory());
+                        homeAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        };
+        db.addValueEventListener(postListener);
+    }
+
+    @Override
     public void onClick(View view) {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);

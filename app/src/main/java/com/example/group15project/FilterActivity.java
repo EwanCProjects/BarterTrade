@@ -1,6 +1,9 @@
 package com.example.group15project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -58,6 +61,16 @@ public class FilterActivity extends AppCompatActivity {
         textView.setText(filterPrefs.maxDistance + " km");
         seekBar.setProgress(filterPrefs.maxDistance);
 
+    }
+
+    private FilterPreferences getUserPreferences() {
+        FilterPreferences prefs = UserStatusData.getUserFilterPrefs(this);
+
+        if(prefs == null){
+            prefs = new FilterPreferences();
+        }
+        prefs.setMaxDistance(seekBar.getProgress());
+        return prefs;
     }
 
     /**

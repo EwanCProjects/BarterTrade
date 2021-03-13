@@ -40,7 +40,7 @@ public class EspressoTestPost {
     @Test
     public void checkIfPostPageIsShown() {
         //We also need to add a way to access the post page by adding a post button
-        onView(withId(R.id.titleTextField)).check(matches(withText(R.string.empty_string)));
+        onView(withId(R.id.originalPosterField)).check(matches(withText(R.string.empty_string)));
         onView(withId(R.id.categoryTextField)).check(matches(withText(R.string.empty_string)));
         onView(withId(R.id.descriptionTextField)).check(matches(withText(R.string.empty_string)));
         onView(withId(R.id.postButton)).check(matches(withText("POST!")));
@@ -49,7 +49,7 @@ public class EspressoTestPost {
     /*** AT-II**/
     @Test
     public void checkIfTitleIsEmpty() {
-        onView(withId(R.id.titleTextField)).perform(typeText(""));
+        onView(withId(R.id.originalPosterField)).perform(typeText(""));
         onView(withId(R.id.categoryTextField)).perform(typeText("Test Category 123"));
         onView(withId(R.id.descriptionTextField)).perform(typeText("Description 123"));
         closeSoftKeyboard();
@@ -60,7 +60,7 @@ public class EspressoTestPost {
     /*** AT-III**/
     @Test
     public void checkIfCategoryIsEmpty() {
-        onView(withId(R.id.titleTextField)).perform(typeText("Test Title 1234"));
+        onView(withId(R.id.originalPosterField)).perform(typeText("Test Title 1234"));
         onView(withId(R.id.categoryTextField)).perform(typeText(""));
         onView(withId(R.id.descriptionTextField)).perform(typeText("Description 123"));
         closeSoftKeyboard();
@@ -71,7 +71,7 @@ public class EspressoTestPost {
     /*** AT-IV**/
     @Test
     public void checkIfDescriptionIsEmpty() {
-        onView(withId(R.id.titleTextField)).perform(typeText("Test Title 111"));
+        onView(withId(R.id.originalPosterField)).perform(typeText("Test Title 111"));
         onView(withId(R.id.categoryTextField)).perform(typeText("Test Category 123"));
         onView(withId(R.id.descriptionTextField)).perform(typeText(""));
         closeSoftKeyboard();
