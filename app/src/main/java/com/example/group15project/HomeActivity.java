@@ -2,6 +2,7 @@ package com.example.group15project;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,8 +35,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     HomeAdapter homeAdapter;
     HomeAdapter searchedAdapter; // might not need to be global
 
-    static String currUser = RegistrationActivity.currUser;
-    DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    public static String currUser = RegistrationActivity.currUser;
+    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
@@ -66,7 +67,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         Button newPostButton = findViewById(R.id.newPostButton);
         newPostButton.setOnClickListener(this);
-
+        Button histButton = findViewById(R.id.histButton);
+        histButton.setOnClickListener(this);
 
         /// searching:
         searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
@@ -74,20 +76,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     public void databaseRead(DatabaseReference db) {
         //code for database initialization and grabbing all Posts
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("Posts").hasChildren()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
-                        Post extractedPost = postSnapshot.getValue(Post.class);
-                        extractedPosts.add(extractedPost);
-                        postTitles.add(extractedPost.getPostTitle());
-                        postOPs.add(extractedPost.getAuthor());
-                        postCategories.add(extractedPost.getPostCategory());
-                        homeAdapter.notifyDataSetChanged();
-                    }
+                for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
+                    Post extractedPost = postSnapshot.getValue(Post.class);
+                    extractedPosts.add(extractedPost);
+                    postTitles.add(extractedPost.getPostTitle());
+                    postOPs.add(extractedPost.getAuthor());
+                    postCategories.add(extractedPost.getPostCategory());
+                    homeAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -99,10 +100,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         db.addValueEventListener(postListener);
     }
 
-    @Override
-    public void onClick(View view) {
+    protected void switchToHistoryWindow() {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
+    protected void switchToPostWindow() {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.newPostButton:
+                switchToPostWindow();
+                break;
+
+            case R.id.histButton:
+                switchToHistoryWindow();
+                break;
+
+            default:
+                break;
+        }
         //Toast.makeText(MainActivity.this,"Firebase connection success", Toast.LENGTH_LONG).show();
     }
 

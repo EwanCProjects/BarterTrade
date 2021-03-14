@@ -130,7 +130,7 @@
         android:paddingRight="25dp">
 
         <Button
-            android:id="@+id/contactButton"
+            android:id="@+id/editButton"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:text="@string/contact_seller"

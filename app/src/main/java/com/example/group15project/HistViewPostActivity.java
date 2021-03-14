@@ -8,22 +8,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ViewPostActivity extends AppCompatActivity implements View.OnClickListener {
+public class HistViewPostActivity extends AppCompatActivity implements View.OnClickListener {
     public static Post currPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_post);
-
-        Button contactSeller = findViewById(R.id.contactButton);
-        contactSeller.setOnClickListener(this);
+        setContentView(R.layout.activity_hist_view_post);
 
         getPost();
         displayPost(currPost);
+
+        Button editPostButton = findViewById(R.id.editButton);
+        editPostButton.setOnClickListener(this);
     }
 
-    private void getPost() { currPost = HomeAdapter.currPost; }
+    private void getPost() { currPost = HistoryAdapter.currPost; }
 
     public void displayPost(Post postToDisplay) {
         TextView postTitle = findViewById(R.id.postTitle);
@@ -61,10 +61,23 @@ public class ViewPostActivity extends AppCompatActivity implements View.OnClickL
         return postDescription.getText().toString().trim();
     }
 
-    public void onClick(View view) {
-        // add code for pressing contact button and integrating that contact button US
-        Intent intent = new Intent(this, TradeRequestActivity.class);
+    protected void switchToEditPostWindow() {
+        Intent intent = new Intent(this, EditPostActivity.class);
         startActivity(intent);
     }
 
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.editButton:
+                switchToEditPostWindow();
+                break;
+
+            case R.id.deleteButton:
+                ;
+                break;
+
+            default:
+                break;
+        }
+    }
 }
