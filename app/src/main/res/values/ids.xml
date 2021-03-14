@@ -4,4 +4,6 @@
     <item name="userName" type="id" />
     <item name="emailAddress" type="id" />
     <item name="email" type="id" />
+    <item name="titleSearch" type="id"/>
+    <item name="hashTagSearch" type="id"/>
 </resources>
