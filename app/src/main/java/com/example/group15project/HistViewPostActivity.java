@@ -19,7 +19,7 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
         getPost();
         displayPost(currPost);
 
-        Button editPostButton = findViewById(R.id.editButton);
+        Button editPostButton = findViewById(R.id.contactButton);
         editPostButton.setOnClickListener(this);
     }
 
@@ -68,7 +68,7 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.editButton:
+            case R.id.contactButton:
                 switchToEditPostWindow();
                 break;
 
