@@ -33,4 +33,9 @@
     <string name="username_value">Username value</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="trade_request">trade_request</string>
+    <string name="send_request">send_request</string>
+    <string name="cancel_request">cancel_request</string>
+    <string name="title_of_item">title_of_item</string>
+    <string name="description_of_item">description_of_item</string>
 </resources>
