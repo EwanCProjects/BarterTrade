@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.group15project">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +27,16 @@
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".PostActivity"
             android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".ViewPostActivity"
             android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".PostActivity"
+            android:parentActivityName=".HomeActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity android:name=".HistoryActivity"
+            android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".HistViewPostActivity"
+            android:parentActivityName=".HistoryActivity"/>
+        <activity android:name=".EditPostActivity"/>
         <activity android:name=".TestPostActivity"/>
         <activity android:name=".AcceptanceActivity"></activity>
     </application>

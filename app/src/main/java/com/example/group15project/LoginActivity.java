@@ -23,11 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String currUser = null;
-    public static DataSnapshot userTree = null;
-    static String extractedUserEmail = null;
-    static String extractedUserPassword = null;
+    static String currUser = null;
+
+    DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    DataSnapshot userTree = null;
+    String extractedUserEmail = null;
+    String extractedUserPassword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +47,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      public void databaseRead(DatabaseReference db) {
          //code for database initialization and accessing the credentials
          ValueEventListener userListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            userTree = dataSnapshot.child("Users");
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userTree = dataSnapshot.child("Users");
             }
-        };
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+         };
         db.addValueEventListener(userListener);
      }
 
