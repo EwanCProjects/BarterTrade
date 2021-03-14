@@ -20,6 +20,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = HomeActivity.currUser;
 
+
+    String image = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,25 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
+
+        if(getIntent().hasExtra("postTitle") && getIntent().hasExtra("postDescription")&&
+                getIntent().hasExtra("postCategory")){
+            String postTitle = getIntent().getStringExtra("postTitle");
+            String postDescription = getIntent().getStringExtra("postDescription");
+            String postCategory = getIntent().getStringExtra("postCategory");
+
+            EditText title = findViewById(R.id.originalPosterField);
+            EditText description = findViewById(R.id.descriptionTextField);
+            EditText category = findViewById(R.id.categoryTextField);
+            title.setText(postTitle);
+            description.setText(postDescription);
+            category.setText(postCategory);
+        }
+
+
+
+
+
     }
 
     protected String generatePostID() {
@@ -60,8 +83,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         return category.isEmpty();
     }
 
-    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory) {
-        return new Post(author, postID, postTitle, postDescription, postCategory);
+    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, String image) {
+        return new Post(author, postID, postTitle, postDescription, postCategory, image);
     }
 
     protected void setStatusMessage(String message) {
@@ -85,7 +108,28 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        String postID = generatePostID();
+
+        if (view.getId() == R.id.postimagebtn) {
+
+
+            String postTitle = getPostTitle();
+            String postDescription = getPostDescription();
+            String postCategory = getPostCategory();
+
+            Intent firstintent = new Intent(PostActivity.this, PostImageActivity.class);
+            firstintent.putExtra("postTitle", postTitle);
+            firstintent.putExtra("postDescription", postDescription);
+            firstintent.putExtra("postCategory", postCategory);
+            startActivity(firstintent);
+
+
+        }
+        else{
+
+             image = getIntent().getStringExtra("image_url");
+
+
+            String postID = generatePostID();
         String postTitle = getPostTitle();
         String postDescription = getPostDescription();
         String postCategory = getPostCategory();
@@ -104,7 +148,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (errorMessage.isEmpty()) {
-            Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
+            Post post = createPost(userID, postID, postTitle, postDescription, postCategory, image);
             addPostToFirebase(realTimeDatabase, post, postID);
             switchToHomeWindow();
             //viewPostWindow()
@@ -113,5 +157,5 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         else {
             setStatusMessage(errorMessage);
         }
-    }
+    }}
 }

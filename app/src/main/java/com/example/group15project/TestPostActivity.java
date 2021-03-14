@@ -19,6 +19,7 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
     //public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = "3130_student_working_late";
 
+    String image = "";
 
     // functions for Iteration 2
     /*
@@ -73,6 +74,9 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
 
+        Button postimageButton = findViewById(R.id.postimagebtn);
+        postimageButton.setOnClickListener(this);
+
         //initializeDatabase();
 
     }
@@ -109,7 +113,7 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
     }
 
     protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory) {
-        return new Post(author, postID, postTitle, postDescription, postCategory);
+        return new Post(author, postID, postTitle, postDescription, postCategory, image);
     }
 
     protected void setStatusMessage(String message) {
@@ -128,33 +132,45 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        String postID = generatePostID();
-        String postTitle = getPostTitle();
-        String postDescription = getPostDescription();
-        String postCategory = getPostCategory();
-        String errorMessage = getResources().getString(R.string.empty_string);
 
-        if(isEmptyDescription(postDescription)) {
-            errorMessage = getResources().getString(R.string.empty_description);
+        if (view.getId() == R.id.postimagebtn) {
+
+            System.out.println("the method is calledAAAAAAAAAAAAAAAA");
+            Intent firstintent = new Intent(TestPostActivity.this, PostImageActivity.class);
+            startActivity(firstintent);
+
+
+        }
+        else if(view.getId() == R.id.postButton) {
+            System.out.println("kill meuebfhhoeriufierhfierhefierhfjker");
+            String postID = generatePostID();
+            String postTitle = getPostTitle();
+            String postDescription = getPostDescription();
+            String postCategory = getPostCategory();
+            String errorMessage = getResources().getString(R.string.empty_string);
+
+            if (isEmptyDescription(postDescription)) {
+                errorMessage = getResources().getString(R.string.empty_description);
+            }
+
+            if (isEmptyCategory(postCategory)) {
+                errorMessage = getResources().getString(R.string.empty_category);
+            }
+
+            if (isEmptyTitle(postTitle)) {
+                errorMessage = getResources().getString(R.string.empty_title);
+            }
+
+            if (errorMessage.isEmpty()) {
+                Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
+                //addPostToFirebase(realTimeDatabase, post, postID);
+                switchToHomeWindow();
+                //viewPostWindow()
+            } else {
+                setStatusMessage(errorMessage);
+            }
         }
 
-        if(isEmptyCategory(postCategory)) {
-            errorMessage = getResources().getString(R.string.empty_category);
-        }
 
-        if (isEmptyTitle(postTitle)) {
-            errorMessage = getResources().getString(R.string.empty_title);
-        }
-
-        if (errorMessage.isEmpty()) {
-            Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
-            //addPostToFirebase(realTimeDatabase, post, postID);
-            switchToHomeWindow();
-            //viewPostWindow()
-        }
-
-        else {
-            setStatusMessage(errorMessage);
-        }
     }
-}
+    }
