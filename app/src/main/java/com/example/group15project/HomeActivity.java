@@ -24,6 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     RecyclerView homeView;
     HomeAdapter homeAdapter;
@@ -34,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
