@@ -48,5 +48,17 @@ public class EspressoTestUploadPhotos {
         onView(withId(R.id.btnreturnpost)).check(matches(withText("done")));
     }
 
+    /*** AT-II**/
+    /**
+     * Check that an image is chosen
+     */
+    @Test
+    public void noChosenImages() {
+        onView(withId(R.id.btnUpload)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText("please choose an image")));
+    }
+
+
+
 
 }
