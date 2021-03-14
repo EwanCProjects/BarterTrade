@@ -1,7 +1,9 @@
 package com.example.group15project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,9 @@ public class ViewPostActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_post);
+
+        Button contactSeller = findViewById(R.id.contactButton);
+        contactSeller.setOnClickListener(this);
 
         getPost();
         displayPost(currPost);
@@ -59,6 +64,8 @@ public class ViewPostActivity extends AppCompatActivity implements View.OnClickL
 
     public void onClick(View view) {
         // add code for pressing contact button and integrating that contact button US
+        Intent intent = new Intent(this, TradeRequestActivity.class);
+        startActivity(intent);
     }
 
 }
