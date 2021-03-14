@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,8 +45,8 @@ public class AcceptanceActivity extends AppCompatActivity {
     }
 
     public void switchActivity() {
-        Intent intent = new Intent(this, RegistrationActivity.class);
-        startActivity(intent);
+        Toast.makeText(getApplicationContext(),  "This was supposed to redirect to chat but chat has been oved to IT-3", Toast.LENGTH_SHORT).show();
+
     }
 
     public void showMessageIcon(ImageView ig) {
