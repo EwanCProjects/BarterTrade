@@ -47,9 +47,7 @@ public class SearchBarActivity extends Activity {
 
         List<Post> foundPostsList = new ArrayList<>();
 
-            foundPostsList = foundPosts(editTitleStr, editCategoryStr); // need to run through page
-
-
+        foundPostsList = foundPosts(editTitleStr, editCategoryStr); // need to run through page
 
         // display post
         System.out.println(foundPostsList.size());
@@ -110,7 +108,7 @@ public class SearchBarActivity extends Activity {
     /*
      * iterate over the posts until found post if maching title
      * @return filled lists with posts
-     * @status MIGHT NEED HELP, not sure if being accessed
+     * @status STIL L NEEDS EDITS
      */
     public List<Post> foundPosts(String title, String category){
         //postList = ListOfAllPosts();
@@ -125,10 +123,19 @@ public class SearchBarActivity extends Activity {
 
             }
         }
+        //homeadapter.notifyDataSetChange;
         return matchedPosts;
 
     }
 
+
+    // iterate over posting list
+    //for(Post post: postList){
+
+    ///// !!!!! first CHEKC IF NOT NULL ,
+    ////// then verify searching is correct (i.e. .mathes is correct)
+    ///// then make sure non empty list when searching for a value string
+    //// contact Issac
     /*
      * @return boolean if there exists a post
      * @status DONE
@@ -137,13 +144,12 @@ public class SearchBarActivity extends Activity {
         boolean titleIsAvailable = false;
         boolean categoryIsAvailable = false;
 
-        // iterate over posting list
-        //for(Post post: postList){
-
-        ///// !!!!! first CHEKC IF NOT NULL ,
-        ////// then verify searching is correct (i.e. .mathes is correct)
-        ///// then make sure non empty list when searching for a value string
-        //// contact Issac
+        if(title == null || category == null || post == null){
+            return false; // ie null
+        }
+        if (post.getPostTitle() == null || post.getPostCategory() != null){
+            return false;
+        }
         if(post.getPostTitle() != null && post.getPostCategory() != null ){
             if(post.getPostTitle().matches(title)){
                 titleIsAvailable = true;
@@ -152,6 +158,8 @@ public class SearchBarActivity extends Activity {
                 categoryIsAvailable = true;
             }
         }
+
+
 
         return (titleIsAvailable && categoryIsAvailable); // Works , returns correctly
     }
