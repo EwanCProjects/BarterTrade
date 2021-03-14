@@ -6,19 +6,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ViewPostActivity extends AppCompatActivity implements View.OnClickListener {
+public class HistViewPostActivity extends AppCompatActivity implements View.OnClickListener {
     public static Post currPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_post);
+        setContentView(R.layout.activity_hist_view_post);
 
         getPost();
         displayPost(currPost);
     }
 
-    private void getPost() { currPost = HomeAdapter.currPost; }
+    private void getPost() { currPost = HistoryAdapter.currPost; }
 
     public void displayPost(Post postToDisplay) {
         TextView postTitle = findViewById(R.id.postTitle);

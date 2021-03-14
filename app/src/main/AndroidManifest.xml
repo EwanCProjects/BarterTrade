@@ -27,6 +27,10 @@
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".PostActivity"
             android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".HistoryActivity"
+            android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".HistViewPostActivity"
+            android:parentActivityName=".HistoryActivity"/>
         <activity android:name=".EditPostActivity"/>
         <activity android:name=".TestPostActivity"/>
     </application>
