@@ -1,7 +1,9 @@
 package com.example.group15project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,9 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
 
         getPost();
         displayPost(currPost);
+
+        Button editPostButton = findViewById(R.id.editButton);
+        editPostButton.setOnClickListener(this);
     }
 
     private void getPost() { currPost = HistoryAdapter.currPost; }
@@ -56,8 +61,23 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
         return postDescription.getText().toString().trim();
     }
 
-    public void onClick(View view) {
-        // add code for pressing contact button and integrating that contact button US
+    protected void switchToEditPostWindow() {
+        Intent intent = new Intent(this, EditPostActivity.class);
+        startActivity(intent);
     }
 
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.editButton:
+                switchToEditPostWindow();
+                break;
+
+            case R.id.deleteButton:
+                ;
+                break;
+
+            default:
+                break;
+        }
+    }
 }
