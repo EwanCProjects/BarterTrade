@@ -14,14 +14,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Group15Project">
+        android:theme="@style/Theme.Group15Project"
+        android:fullBackupContent="@xml/backup_descriptor">
 
+        <!-- API key for google maps based API-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBDDkvKOf0IaUtVJQrRxa_q3Et_YMeE0dU" />
-
-        android:theme="@style/Theme.Group15Project"
-        android:fullBackupContent="@xml/backup_descriptor">
 
         <activity android:name=".LoginActivity">
             <intent-filter>

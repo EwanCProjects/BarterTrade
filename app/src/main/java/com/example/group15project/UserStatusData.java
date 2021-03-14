@@ -26,6 +26,7 @@ public class UserStatusData {
         return null;
     }
     /**
+     *
      * set user first run status/flag; if it's not user's firs run set to false
      */
     public static void setUserFirstRun(Context context, boolean firstRun) {
