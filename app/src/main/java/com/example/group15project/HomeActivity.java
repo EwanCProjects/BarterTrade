@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     HomeAdapter homeAdapter;
 
     static String currUser = RegistrationActivity.currUser;
-    DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();

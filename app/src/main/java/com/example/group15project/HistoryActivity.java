@@ -20,7 +20,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     HistoryAdapter histAdapter;
 
     public static String currUser = HomeActivity.currUser;
-    DatabaseReference realTimeDatabase = HomeActivity.realTimeDatabase;
+    static DatabaseReference realTimeDatabase = HomeActivity.realTimeDatabase;
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
