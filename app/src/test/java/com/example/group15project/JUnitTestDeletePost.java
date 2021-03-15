@@ -22,47 +22,36 @@ import java.lang.String;
 
 public class JUnitTestDeletePost {
 
-    //public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference("Posts");
-    static Post testPost;
-    static DeletePostActivity deletePostActivity;
+    static TestDeletePost testerActivity;
+    //static Post testPost;
+    //static DeletePostActivity deletePostActivity;
+    private final static String author = "example post";
+    public static String postId = "005500"; //HomeActivity.currUser;
+    private final static String postTitle = "--test--";
+    private final static String postDescription = "description of post";
+    private final static String postCategory = "TEST";
+    private final static Post testPost = new Post( author,  postId,  postTitle,  postDescription, postCategory);
 
-    /*@BeforeClass
+    @BeforeClass
     public static void setup() {
-        testPost = new Post();
-        realTimeDatabase.child("Posts").child("00test00").setValue(testPost);
-    }*/
-
-    @Test
-    public void checkPostIsDeleted() {
-        /*deletePostActivity.deletePost(testPost);
-        //call delete post
-
-        final Boolean[] postExists = new Boolean[1];
-        realTimeDatabase.child("Posts").orderByChild("postId").equalTo(testPost.getPostId())
-                .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
-                    //post exists
-                    postExists[0] = true;
-                }else {
-                    //post does not exist
-                    postExists[0] = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        assertFalse(postExists[0]);
-
-        //check post exists in database, assert false*/
+        //testPost = new Post("deleteTest", "00test00", "titletest", "description", "testCategory");
+        //tester.sendPost(testPost);
+        testerActivity = new TestDeletePost();
     }
 
-    /*@AfterClass
+    @Test
+    public void postIdDeleted() {
+        Post deletedPost = testerActivity.removePost(testPost);
+        assertEquals("", deletedPost.getPostId());
+        assertEquals("", deletedPost.getAuthor());
+        assertEquals("", deletedPost.getPostCategory());
+        assertEquals("", deletedPost.getPostDescription());
+        assertEquals("", deletedPost.getPostTitle());
+
+    }
+
+    @AfterClass
     public static void tearDown(){
         System.gc();
-    }*/
+    }
 }

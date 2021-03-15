@@ -25,7 +25,7 @@ public class DeletePostActivity extends AppCompatActivity implements View.OnClic
     public static String postID;
     public Post postToRemove;
 
-
+    //uncomment below lines once connected to history class
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,9 +71,9 @@ public class DeletePostActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    /*protected String getPostID() {
-        return "id"; // from viewing post page,
-    }*/
+    public String getPostID() {
+        return postToRemove.getPostId(); // from viewing post page,
+    }
 
     public void deletePost(Post post) {
         realTimeDatabase.child(post.getPostId()).removeValue();
