@@ -3,6 +3,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -37,7 +38,7 @@ import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 
-import com.google.firebase.storage.FirebaseStorage;
+
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;

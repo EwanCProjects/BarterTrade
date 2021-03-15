@@ -37,6 +37,14 @@
     <string name="username_value">Username value</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="trade_request">Trade Request</string>
+    <string name="send_request">Send Request</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="title_of_item">Title of Item</string>
+    <string name="description_of_item">Description of Item</string>
+    <string name="title_is_empty">Title is Empty</string>
+    <string name="description_is_empty">Description is Empty</string>
+
     <string name="title_activity_filter">FilterActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
