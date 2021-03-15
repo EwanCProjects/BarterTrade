@@ -30,7 +30,7 @@ public class DeletePostActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hist_view_post);
+        //setContentView(R.layout.activity_hist_view_post);
 
         Button deleteButton = findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
@@ -59,8 +59,8 @@ public class DeletePostActivity extends AppCompatActivity implements View.OnClic
                 });
 
                 deletePost(postToRemove);
-                Intent intent = new Intent(DeletePostActivity.this, HistViewPostActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(DeletePostActivity.this, HistViewPostActivity.class);
+                //startActivity(intent);
                 //Toast.makeText(getBaseContext(), "Post deleted.", Toast.LENGTH_LONG).show();
             }
 
