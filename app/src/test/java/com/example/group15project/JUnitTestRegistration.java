@@ -25,13 +25,13 @@ public class JUnitTestRegistration {
 /*      NEW TESTS
         ==========*/
 
-        @Test
+    @Test
     public void checkIfFirstNameIsEmpty() {
         assertTrue(regActivity.isEmptyFirstName(""));
         assertFalse(regActivity.isEmptyFirstName("John"));
     }
 
-        @Test
+    @Test
     public void checkIfLastNameIsEmpty() {
         assertTrue(regActivity.isEmptyLastName(""));
         assertFalse(regActivity.isEmptyLastName("Smith"));

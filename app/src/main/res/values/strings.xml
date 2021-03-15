@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">Group 15 Project</string>
-    <string name="posting_title_page">NEW POST</string>
-    <string name="post_title_label">POST TITLE</string>
+    <string name="posting_title_page">New Post</string>
+    <string name="post_title_label">Post Title</string>
+    <string name="op_label">Original Poster</string>
     <string name="post_title_input">Add a title</string>
-    <string name="post_description_label">POST DESCRIPTION</string>
+    <string name="post_description_label">Post Description</string>
     <string name="post_description_input">Tell us what you want to trade!</string>
-    <string name="post_cat_label">POST CATEGORY</string>
+    <string name="post_cat_label">Post Category</string>
     <string name="post_cat_input">Add a category</string>
     <string name="post_button_label">POST!</string>
-    <string name="empty_string"></string>
+    <string name="empty_string"/>
     <string name="empty_title">Please add a title!</string>
     <string name="empty_description">Please add a description!</string>
     <string name="empty_category">Please add a category!</string>
@@ -21,6 +22,9 @@
     <string name="enter_password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>
 
+    <string name="contact_seller">Contact Seller</string>
+    <string name="edit_post">Edit Post</string>
+    <string name="del_post">Delete Post</string>
     <string name="registerButton">Register</string>
 
     <string name="login">Login</string>
@@ -33,4 +37,21 @@
     <string name="username_value">Username value</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="trade_request">Trade Request</string>
+    <string name="send_request">Send Request</string>
+    <string name="cancel_request">Cancel Request</string>
+    <string name="title_of_item">Title of Item</string>
+    <string name="description_of_item">Description of Item</string>
+    <string name="title_is_empty">Title is Empty</string>
+    <string name="description_is_empty">Description is Empty</string>
+
+    <string name="title_activity_filter">FilterActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

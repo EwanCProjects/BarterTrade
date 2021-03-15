@@ -17,32 +17,32 @@
 
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/postTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
             android:layout_margin="20dp"
             android:fontFamily="sans-serif-black"
             android:gravity="center"
+            android:text="@string/post_title_label"
             android:textColor="#67A520"
-            android:text="NEW POST"
-            android:textSize="32dp" />
+            android:textSize="32sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="149dp"
+        android:layout_height="238dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="7dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/postTitleLabel"
+            android:id="@+id/originalPoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:text="POST TITLE"
+            android:text="@string/op_label"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -50,7 +50,7 @@
             android:layout_height="38dp">
 
             <TextView
-                android:id="@+id/titleTextField"
+                android:id="@+id/originalPosterField"
                 style="@style/Widget.AppCompat.EditText"
                 android:layout_width="173dp"
                 android:layout_height="51dp"
@@ -58,7 +58,6 @@
                 android:layout_marginRight="152dp"
                 android:layout_marginBottom="432dp"
                 android:autofillHints="postTitle"
-                android:inputType="text"
                 android:textSize="16sp" />
 
 
@@ -69,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="POST CATEGORY"
+            android:text="@string/post_cat_label"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -85,8 +84,36 @@
                 android:layout_marginRight="152dp"
                 android:layout_marginBottom="432dp"
                 android:autofillHints="postCategory"
-                android:inputType="text"
                 android:textSize="16sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="348dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Post Location:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/TaskLocation"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="My Location:"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
@@ -102,18 +129,12 @@
         android:layout_marginLeft="20dp"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:gravity="left"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"/>
-
         <TextView
             android:id="@+id/postDescriptionLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
-            android:text="Trade description"
+            android:text="@string/post_description_label"
             android:textSize="16sp" />
 
         <TextView
@@ -123,44 +144,27 @@
             android:padding="10dp"
             android:layout_height="145dp"
             android:ems="10"
-            android:gravity="start|top"
-            android:inputType="textMultiLine" />
+            android:gravity="start|top" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/postButtonParent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="0sp"
+        android:layout_marginRight="0sp"
         android:gravity="center"
-        android:paddingLeft="10dp">
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
 
-
-        <LinearLayout
-            android:id="@+id/postButtonParent"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/contactButton"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:gravity="right"
-            android:paddingLeft="25dp">
-
-            <Button
-                android:id="@+id/contactButton"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:text="Contact Seller"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp" />
-
-        </LinearLayout>
+            android:text="@string/contact_seller"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
 
     </LinearLayout>
 

@@ -1,11 +1,19 @@
 package com.example.group15project;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class Post {
     private String author;
     private String postId;
     private String postTitle;
     private String postDescription;
     private String postCategory;
+    private String latLonLocation;
+    private float distance;
 
     public Post(String author, String postId, String postTitle, String postDescription,
                 String postCategory) {
@@ -50,6 +58,33 @@ public class Post {
         return postDescription;
     }
 
+    public String getLatLonLocation() {
+        return latLonLocation;
+    }
+
+    public void setLatLonLocation(String latLonLocation) {
+        this.latLonLocation = latLonLocation;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
     public void setPostDescription(String postDescription) { this.postDescription = postDescription; }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("author", author);
+        result.put("postCategory:", postCategory);
+        result.put("postDescription:", postDescription);
+        result.put("postID", postId);
+        result.put("postTitle", postTitle);
+        return result;
+    }
 }
 
