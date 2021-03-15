@@ -28,5 +28,6 @@
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".EditPostActivity"/>
         <activity android:name=".TestPostActivity"/>
+
     </application>
 </manifest>
