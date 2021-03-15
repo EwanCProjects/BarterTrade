@@ -28,6 +28,7 @@ public class DeletePostActivity extends AppCompatActivity implements View.OnClic
     public Post postToRemove;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
