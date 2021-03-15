@@ -1,7 +1,6 @@
 package com.example.group15project;
 
-import android.location.Address;
-import android.location.Geocoder;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,25 +8,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
-import java.util.List;
-
-public class ViewPostActivity extends AppCompatActivity implements View.OnClickListener {
+public class HistViewPostActivity extends AppCompatActivity implements View.OnClickListener {
     public static Post currPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_post);
-
-        Button contactSeller = findViewById(R.id.contactButton);
-        contactSeller.setOnClickListener(this);
+        setContentView(R.layout.activity_hist_view_post);
 
         getPost();
         displayPost(currPost);
+
+        Button editPostButton = findViewById(R.id.contactButton);
+        editPostButton.setOnClickListener(this);
     }
 
-    private void getPost() { currPost = HomeAdapter.currPost; }
+    private void getPost() { currPost = HistoryAdapter.currPost; }
 
     public void displayPost(Post postToDisplay) {
         TextView postTitle = findViewById(R.id.postTitle);
@@ -65,26 +61,23 @@ public class ViewPostActivity extends AppCompatActivity implements View.OnClickL
         return postDescription.getText().toString().trim();
     }
 
-    public void onClick(View view) {
-        // add code for pressing contact button and integrating that contact button US
-        Intent intent = new Intent(this, TradeRequestActivity.class);
+    protected void switchToEditPostWindow() {
+        Intent intent = new Intent(this, EditPostActivity.class);
         startActivity(intent);
     }
 
-    private String getAddressFromLonLatOnUI(String latLon){
-        double lat = Double.parseDouble(latLon.split(",")[0]);
-        double lon = Double.parseDouble(latLon.split(",")[1]);
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.contactButton:
+                switchToEditPostWindow();
+                break;
 
-        try {
-            //get the address
-            Geocoder geocoder = new Geocoder(this);
-            List<Address> addresses = geocoder.getFromLocation(lat,lon,1);
-            String address = addresses.get(0).getAddressLine(0);
+            case R.id.deleteButton:
+                ;
+                break;
 
-            return address;
-        } catch (IOException e) {
-            return "unable to get address";
+            default:
+                break;
         }
     }
-
 }
