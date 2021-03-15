@@ -20,8 +20,6 @@ import com.google.firebase.database.Query;
 
 public class DeletePostActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //trade has been completed, user has opened this activity on their own post to close the post
-
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = HomeActivity.currUser;
     public static String postID;
