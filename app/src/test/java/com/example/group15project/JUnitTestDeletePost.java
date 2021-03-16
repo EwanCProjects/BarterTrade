@@ -25,12 +25,12 @@ public class JUnitTestDeletePost {
     static TestDeletePost testerActivity;
     //static Post testPost;
     //static DeletePostActivity deletePostActivity;
-    private final static String author = "example post";
+    private static String author = "example post";
     public static String postId = "005500"; //HomeActivity.currUser;
-    private final static String postTitle = "--test--";
-    private final static String postDescription = "description of post";
-    private final static String postCategory = "TEST";
-    private final static Post testPost = new Post( author,  postId,  postTitle,  postDescription, postCategory);
+    private static String postTitle = "--test--";
+    private static String postDescription = "description of post";
+    private static String postCategory = "TEST";
+    private static Post testPost = new Post( author,  postId,  postTitle,  postDescription, postCategory);
 
     @BeforeClass
     public static void setup() {
@@ -40,7 +40,7 @@ public class JUnitTestDeletePost {
     }
 
     @Test
-    public void postIdDeleted() {
+    public void postIsDeleted() {
         Post deletedPost = testerActivity.removePost(testPost);
         assertEquals("", deletedPost.getPostId());
         assertEquals("", deletedPost.getAuthor());
