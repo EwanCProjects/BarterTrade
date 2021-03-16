@@ -45,6 +45,8 @@
         <activity android:name=".EditPostActivity"/>
         <activity android:name=".FilterActivity"/>
         <activity android:name=".TestPostActivity"/>
+
+        <activity android:name=".PostImageActivity"></activity>
         <activity android:name=".AcceptanceActivity"/>
     </application>
 </manifest>
