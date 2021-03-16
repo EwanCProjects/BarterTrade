@@ -84,8 +84,7 @@ public abstract class MyLocation {
 
         };
 
-        fusedLocationProviderClient = LocationServices.
-                getFusedLocationProviderClient(activity);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
 
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
