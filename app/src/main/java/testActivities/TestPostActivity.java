@@ -1,4 +1,4 @@
-package com.example.group15project;
+package testActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.group15project.HomeActivity;
+import com.example.group15project.Post;
+import com.example.group15project.PostImageActivity;
+import com.example.group15project.R;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.UUID;
@@ -100,15 +104,15 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
         return category.getText().toString().trim();
     }
 
-    protected boolean isEmptyTitle(String title) {
+    public boolean isEmptyTitle(String title) {
         return title.isEmpty();
     }
 
-    protected boolean isEmptyDescription(String description) {
+    public boolean isEmptyDescription(String description) {
         return description.isEmpty();
     }
 
-    protected boolean isEmptyCategory(String category) {
+    public boolean isEmptyCategory(String category) {
         return category.isEmpty();
     }
 
