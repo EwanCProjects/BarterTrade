@@ -30,7 +30,7 @@ public class JUnitTestDeletePost {
     private static String postTitle = "--test--";
     private static String postDescription = "description of post";
     private static String postCategory = "TEST";
-    private static Post testPost = new Post( author,  postId,  postTitle,  postDescription, postCategory);
+    private static Post testPost = new Post( author,  postId,  postTitle,  postDescription, postCategory, "image-string");
 
     @BeforeClass
     public static void setup() {
