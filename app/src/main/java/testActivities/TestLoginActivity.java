@@ -1,6 +1,7 @@
-package com.example.group15project;
+package testActivities;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
 
@@ -13,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.group15project.HomeActivity;
+import com.example.group15project.R;
+import com.example.group15project.RegistrationActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class TestLoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String currUser = null;
     static String extractedUserEmail = null;
     static String extractedUserPassword = null;
@@ -39,28 +42,6 @@ public class TestLoginActivity extends AppCompatActivity implements View.OnClick
         registerButton.setOnClickListener(this);
     }
 
-    /**
-    public void databaseRead(DatabaseReference db) {
-        //code for database initialization and accessing the credentials
-        ValueEventListener userListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //note that currUser is already global from MainActivity - however the code below still actually
-                //returns value from the database from the currUser's string username
-                //rather than simply extracting it from the global currUser itself
-                if (dataSnapshot.child("Users").hasChild(currUser)) {
-                    extractedUserEmail = dataSnapshot.child("Users").child(currUser).child("email").getValue(String.class);
-                    extractedUserPassword = dataSnapshot.child("Users").child(currUser).child("password").getValue(String.class);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        db.addValueEventListener(userListener);
-    }
-**/
     protected String getEmail() {
         EditText email = findViewById(R.id.email);
         return email.getText().toString().trim();
@@ -75,7 +56,7 @@ public class TestLoginActivity extends AppCompatActivity implements View.OnClick
         return username.isEmpty();
     }
 
-    protected static boolean isEmptyUserName(String username) {
+    public static boolean isEmptyUserName(String username) {
         return username.isEmpty();
     }
 
@@ -100,7 +81,7 @@ public class TestLoginActivity extends AppCompatActivity implements View.OnClick
         return formattedEmail;
     }
 
-    protected static boolean isValidEmailAddress(String emailAddress) {
+    public static boolean isValidEmailAddress(String emailAddress) {
         return PatternsCompat.EMAIL_ADDRESS.matcher(emailAddress).matches();
     }
 
@@ -114,6 +95,7 @@ public class TestLoginActivity extends AppCompatActivity implements View.OnClick
         startActivity(intent);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -138,8 +120,6 @@ public class TestLoginActivity extends AppCompatActivity implements View.OnClick
 
                         else {
                             currUser = formatEmail(email);
-
-                            //databaseRead(realTimeDatabase);
 
                             if (!extractedUserPassword.equals(password)) {
                                 errorMessage = getResources().getString(R.string.wrong_password).trim();
