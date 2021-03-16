@@ -1,4 +1,4 @@
-package com.example.group15project;
+package testActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
+import com.example.group15project.HomeActivity;
+import com.example.group15project.R;
+import com.example.group15project.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -65,15 +68,15 @@ public class TestRegistrationActivity extends AppCompatActivity implements View.
         return passwordConfirmation.getText().toString().trim();
     }
 
-    protected boolean isEmptyFirstName(String firstName) {
+    public boolean isEmptyFirstName(String firstName) {
         return firstName.isEmpty();
     }
 
-    protected boolean isEmptyLastName(String lastName) {
+    public boolean isEmptyLastName(String lastName) {
         return lastName.isEmpty();
     }
 
-    protected boolean isEmptyEmail(String email) {
+    public boolean isEmptyEmail(String email) {
         return email.isEmpty();
     }
 
@@ -81,11 +84,11 @@ public class TestRegistrationActivity extends AppCompatActivity implements View.
         return password.isEmpty();
     }
 
-    protected boolean isValidEmailAddress(String emailAddress) {
+    public boolean isValidEmailAddress(String emailAddress) {
         return PatternsCompat.EMAIL_ADDRESS.matcher(emailAddress).matches();
     }
 
-    protected boolean passwordsMatch(String password, String passwordConfirm) {
+    public boolean passwordsMatch(String password, String passwordConfirm) {
         return (password.equals(passwordConfirm));
     }
 

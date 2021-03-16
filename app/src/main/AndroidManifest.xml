@@ -29,10 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestLoginActivity"/>
+        <activity android:name="testActivities.TestLoginActivity"/>
         <activity android:name=".RegistrationActivity"
             android:parentActivityName=".LoginActivity"/>
-        <activity android:name=".TestRegistrationActivity"/>
+        <activity android:name="testActivities.TestRegistrationActivity"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".ViewPostActivity"
             android:parentActivityName=".HomeActivity"/>
@@ -42,11 +42,12 @@
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".HistViewPostActivity"
             android:parentActivityName=".HistoryActivity"/>
-        <activity android:name=".EditPostActivity"/>
+        <activity android:name=".EditPostActivity"
+            android:parentActivityName=".HistoryActivity"/>
         <activity android:name=".FilterActivity"/>
-        <activity android:name=".TestPostActivity"/>
+        <activity android:name="testActivities.TestPostActivity"/>
 
-        <activity android:name=".PostImageActivity"></activity>
+        <activity android:name=".PostImageActivity"/>
         <activity android:name=".AcceptanceActivity"/>
     </application>
 </manifest>
