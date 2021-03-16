@@ -21,9 +21,6 @@ public class EditPostActivity extends AppCompatActivity {
     String postID = "510fa197-1421-4ec3-a57a-f52ae4e76afd"; // get in contact w history
     Post globalPost;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +29,6 @@ public class EditPostActivity extends AppCompatActivity {
         Post fetchedPost = getPost(postID);
 
     }
-
 
     public Post getPost(String postID){
         DatabaseReference ref = realTimeDatabase.getReference("Posts/"+postID);
