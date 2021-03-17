@@ -137,8 +137,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 extractedUserPassword = userTree.child(currUser).child("password").getValue(String.class);
                                 extractedUserEmail = userTree.child(currUser).child("email").getValue(String.class);
                                 if (!extractedUserPassword.equals(password)) {
+                                    currUser = null;
                                     errorMessage = getResources().getString(R.string.wrong_password).trim();
                                 }
+                                else {currUser = formatEmail(email);}
                             }
                             else {
                                 errorMessage = getResources().getString(R.string.no_account).trim();

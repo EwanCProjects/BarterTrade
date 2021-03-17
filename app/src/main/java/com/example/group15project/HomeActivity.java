@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     HomeAdapter homeAdapter;
     HomeAdapter searchedAdapter; // might not need to be global
 
-    public static String currUser = RegistrationActivity.currUser;
+    public static String currUser = LoginActivity.currUser;
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         databaseRead(realTimeDatabase);
 
         if (currUser == null) {
-            currUser = LoginActivity.currUser;
+            currUser = RegistrationActivity.currUser;
         }
 
         homeView = findViewById(R.id.homePostsView);
