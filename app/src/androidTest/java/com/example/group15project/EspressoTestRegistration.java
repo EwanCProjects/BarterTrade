@@ -13,6 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import testActivities.TestRegistrationActivity;
+
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -32,7 +34,6 @@ public class EspressoTestRegistration {
 
     @Rule
     public ActivityScenarioRule<TestRegistrationActivity> myRule = new ActivityScenarioRule<>(TestRegistrationActivity.class);
-    public IntentsTestRule<TestRegistrationActivity> myIntentRule=new IntentsTestRule<>(TestRegistrationActivity.class);
 
     @BeforeClass
     public static void setup(){
@@ -56,94 +57,57 @@ public class EspressoTestRegistration {
         onView(withId(R.id.registerHeader)).check(matches(withText(R.string.register)));
     }
 
-
-/*      NEW TESTS
-        ==========*/
-        @Test
+    @Test
     public void checkIfFirstNameIsEmpty() {
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
         onView(withId(R.id.editTextFirstName)).perform(typeText(""));
         onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
-        onView(withId(R.id.editTextPassword)).perform(typeText("abc123"));
-        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc123"));
+        onView(withId(R.id.editTextPassword)).perform(typeText("p"));
+        closeSoftKeyboard();
+        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("p"));
         closeSoftKeyboard();
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("First name is empty!")));
     }
 
-        @Test
+    @Test
     public void checkIfLastNameIsEmpty() {
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
         onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
         onView(withId(R.id.editTextLastName)).perform(typeText(""));
         onView(withId(R.id.editTextPassword)).perform(typeText("abc123"));
+        closeSoftKeyboard();
         onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc123"));
         closeSoftKeyboard();
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Last name is empty!")));
     }
 
-        @Test
+    @Test
     public void checkIfEmailIsEmpty() {
         onView(withId(R.id.editTextEmailAddress)).perform(typeText(""));
         onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
         onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
         onView(withId(R.id.editTextPassword)).perform(typeText("abc123"));
+        closeSoftKeyboard();
         onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc123"));
         closeSoftKeyboard();
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Email is empty!")));
     }
 
-        @Test
-    public void checkIfPasswordsMatch() {
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc.123@dal.ca"));
-        onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
-        onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
-        onView(withId(R.id.editTextPassword)).perform(typeText("abc123"));
-        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc123"));
-        closeSoftKeyboard();
-        onView(withId(R.id.signUpButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText("")));
-    }
-
-        /*@Test
-    public void checkIfPasswordsNotMatch() {
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc.123@dal.ca"));
-        onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
-        onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
-        onView(withId(R.id.editTextPassword)).perform(typeText("abc123"));
-        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("abc223"));
-        onView(withId(R.id.signUpButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText("Passwords do not match")));
-    }*/
-
     @Test
     public void checkIfPasswordEmpty() {
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
         onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
         onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
         onView(withId(R.id.editTextPassword)).perform(typeText(""));
+        closeSoftKeyboard();
         onView(withId(R.id.editTextConfirmPassword)).perform(typeText(""));
         closeSoftKeyboard();
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Password field empty!")));
     }
-
-
-
-    @Test
-    public void checkIfEmailIsValid() {
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
-        onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
-        onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
-        onView(withId(R.id.editTextPassword)).perform(typeText("p"));
-        onView(withId(R.id.editTextConfirmPassword)).perform(typeText("p"));
-        closeSoftKeyboard();
-        onView(withId(R.id.signUpButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText("")));
-    }
-
 
     @Test
     public void checkIfEmailIsInvalid() {
@@ -151,19 +115,10 @@ public class EspressoTestRegistration {
         onView(withId(R.id.editTextFirstName)).perform(typeText("John"));
         onView(withId(R.id.editTextLastName)).perform(typeText("Smith"));
         onView(withId(R.id.editTextPassword)).perform(typeText("p"));
+        closeSoftKeyboard();
         onView(withId(R.id.editTextConfirmPassword)).perform(typeText("p"));
         closeSoftKeyboard();
         onView(withId(R.id.signUpButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText("Email is invalid!")));
     }
-
-    /*
-    @Test
-    public void checkIfMoved2WelcomePage(){
-
-        onView(withId(R.id.editTextEmailAddress)).perform(typeText("abc123@dal.ca"));
-        onView(withId(R.id.registerButton)).perform(click());
-        intended(hasComponent(LoginActivity.class.getName()));
-    }
-     */
 }

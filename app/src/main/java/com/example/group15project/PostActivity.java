@@ -1,24 +1,52 @@
 package com.example.group15project;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.Address;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.location.LocationListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+import java.security.acl.Permission;
+import java.util.Random;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = HomeActivity.currUser;
+
+
+    String image = "";
+
+
+    private MyLocation myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +55,94 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
+
+        if(getIntent().hasExtra("postTitle") && getIntent().hasExtra("postDescription")&&
+                getIntent().hasExtra("postCategory")){
+            String postTitle = getIntent().getStringExtra("postTitle");
+            String postDescription = getIntent().getStringExtra("postDescription");
+            String postCategory = getIntent().getStringExtra("postCategory");
+
+            EditText title = findViewById(R.id.originalPosterField);
+            EditText description = findViewById(R.id.descriptionTextField);
+            EditText category = findViewById(R.id.categoryTextField);
+            title.setText(postTitle);
+            description.setText(postDescription);
+            category.setText(postCategory);
+        }
+
+
+
+
+
+    }
+
+    private void showDbDataUi(Post dataFromDb) {
+        String address = latLongStringToAddress(dataFromDb);
+
+        ((TextView) findViewById(R.id.GPSLocation)).setText(address);
+    }
+
+    private String latLongStringToAddress(Post dataFromDb) {
+        List<Address> addresses = null;
+        try {
+            Geocoder geocoder = new Geocoder(this);
+            Double lat = Double.parseDouble(dataFromDb.getLatLonLocation().split(",")[0]);
+            Double lon = Double.parseDouble(dataFromDb.getLatLonLocation().split(",")[1]);
+            addresses = geocoder.getFromLocation(lat, lon, 1);
+            myLocation = new MyLocation(null) {
+                @Override
+                public void LocationResult(Location location) {
+                }
+            };
+            LongLatLocation latLocation = new LongLatLocation(lat, lon);
+            myLocation.setLastLocation(latLocation);
+        } catch (IOException e) {
+            getLocation();
+            return "";
+        }
+
+        return addresses.get(0).getAddressLine(0);
+    }
+
+    private void getLocation() {
+         myLocation = new MyLocation(this) {
+        @Override
+        public void LocationResult(Location location)
+        {
+        showMyLocationOnUI(location);
+        }
+        };
+    }
+
+    private void showMyLocationOnUI(Location location) {
+        double lat = location.getLatitude();
+        double lon = location.getLongitude();
+
+        try {
+            //get the address
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+            String address = addresses.get(0).getAddressLine(0);
+
+            ((TextView) findViewById(R.id.GPSLocation)).setText(address);
+
+        } catch (IOException e) {
+            ((TextView) findViewById(R.id.GPSLocation)).setText("unable to get address");
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 99 && grantResults[0] == PERMISSION_GRANTED) {
+            getLocation();
+        } else {
+            Toast.makeText(this, "This app requires permissions to get Location data"
+                    , Toast.LENGTH_SHORT).show();
+        }
     }
 
     protected String generatePostID() {
@@ -60,8 +176,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         return category.isEmpty();
     }
 
-    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory) {
-        return new Post(author, postID, postTitle, postDescription, postCategory);
+    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, String image) {
+        return new Post(author, postID, postTitle, postDescription, postCategory, image);
     }
 
     protected void setStatusMessage(String message) {
@@ -85,7 +201,28 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        String postID = generatePostID();
+
+        if (view.getId() == R.id.postimagebtn) {
+
+
+            String postTitle = getPostTitle();
+            String postDescription = getPostDescription();
+            String postCategory = getPostCategory();
+
+            Intent firstintent = new Intent(PostActivity.this, PostImageActivity.class);
+            firstintent.putExtra("postTitle", postTitle);
+            firstintent.putExtra("postDescription", postDescription);
+            firstintent.putExtra("postCategory", postCategory);
+            startActivity(firstintent);
+
+
+        }
+        else{
+
+             image = getIntent().getStringExtra("image_url");
+
+
+            String postID = generatePostID();
         String postTitle = getPostTitle();
         String postDescription = getPostDescription();
         String postCategory = getPostCategory();
@@ -104,7 +241,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (errorMessage.isEmpty()) {
-            Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
+            Post post = createPost(userID, postID, postTitle, postDescription, postCategory, image);
             addPostToFirebase(realTimeDatabase, post, postID);
             switchToHomeWindow();
             //viewPostWindow()
@@ -113,5 +250,5 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         else {
             setStatusMessage(errorMessage);
         }
-    }
+    }}
 }

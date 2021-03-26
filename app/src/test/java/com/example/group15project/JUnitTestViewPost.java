@@ -19,7 +19,8 @@ public class JUnitTestViewPost {
     String description = "This is my phone. There are many like it, " +
             "but this one is mine. " +
             "My phone is my best friend. It is my life.";
-    Post testPost = new Post(author, testID, title, description, category);
+    String image = "https://firebasestorage.googleapis.com/v0/b/barter-trade-app.appspot.com/o/1615742712551?alt=media&token=3dd86e49-8800-41ac-918d-b5ce9ad84699";
+    Post testPost = new Post(author, testID, title, description, category, image);
 
     @BeforeClass
     public static void setup() {

@@ -1,4 +1,4 @@
-package com.example.group15project;
+package testActivities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.group15project.HomeActivity;
+import com.example.group15project.R;
+import com.example.group15project.Trade;
+import com.example.group15project.ViewPostActivity;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.UUID;
@@ -47,9 +51,9 @@ public class TestTradeRequestActivity extends AppCompatActivity implements View.
 
     }
 
-    protected boolean isTitleEmpty(String title){ return title.isEmpty();}
+    public boolean isTitleEmpty(String title){ return title.isEmpty();}
 
-    protected boolean isDescriptionEmpty(String description){ return description.isEmpty();}
+    public boolean isDescriptionEmpty(String description){ return description.isEmpty();}
 
     protected Trade createTrade(String tradeID, String title, String description, String userProvider, String userReceiver){
         return new Trade(tradeID, title, description, userProvider, userReceiver);
