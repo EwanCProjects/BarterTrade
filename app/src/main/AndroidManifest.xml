@@ -44,6 +44,10 @@
             android:parentActivityName=".HistoryActivity"/>
         <activity android:name=".EditPostActivity"
             android:parentActivityName=".HistoryActivity"/>
+        <activity android:name=".HistChatActivity"
+            android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".ChatActivity"
+            android:parentActivityName=".HistChatActivity"/>
         <activity android:name=".FilterActivity"/>
         <activity android:name="testActivities.TestPostActivity"/>
 
