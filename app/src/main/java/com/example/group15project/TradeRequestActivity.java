@@ -84,6 +84,9 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
             if(errorMessage.isEmpty()){
                 Trade trade = createTrade(tradeID, title, description, provider, receiver);
                 addTradeToDatabase(realTimeDatabase, trade, tradeID);
+
+                // add code to create conversations here
+
                 switchToHomeWindow();
 
             }else{
