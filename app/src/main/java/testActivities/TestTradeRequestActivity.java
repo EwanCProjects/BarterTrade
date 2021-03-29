@@ -19,8 +19,8 @@ import java.util.UUID;
 
 public class TestTradeRequestActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public static String provider = ViewPostActivity.currPost.getAuthor();
-    public static String receiver = HomeActivity.currUser;
+    //public static String provider = ViewPostActivity.currPost.getAuthor();
+    //public static String receiver = HomeActivity.currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class TestTradeRequestActivity extends AppCompatActivity implements View.
             }
 
             if(errorMessage.isEmpty()){
-                Trade trade = createTrade(tradeID, title, description, provider, receiver);
+                //Trade trade = createTrade(tradeID, title, description, provider, receiver);
                 //addTradeToDatabase(realTimeDatabase, trade, tradeID);
                 switchToHomeWindow();
 
