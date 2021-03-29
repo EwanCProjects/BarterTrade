@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Group15Project"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:name="androidx.multidex.MultiDexApplication">
 
         <!-- API key for google maps based API-->
         <meta-data
@@ -47,6 +48,10 @@
             android:parentActivityName=".HistoryActivity"/>
         <activity android:name=".EditPostActivity"
             android:parentActivityName=".HistoryActivity"/>
+        <activity android:name=".HistChatActivity"
+            android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".ChatActivity"
+            android:parentActivityName=".HistChatActivity"/>
         <activity android:name=".FilterActivity"/>
         <activity android:name="testActivities.TestPostActivity"/>
 
