@@ -12,11 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.group15project.HomeActivity;
 import com.example.group15project.R;
 import com.example.group15project.Trade;
+import com.example.group15project.ViewPostActivity;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.UUID;
 
 public class TestTradeRequestActivity extends AppCompatActivity implements View.OnClickListener{
+
+    //public static String provider = ViewPostActivity.currPost.getAuthor();
+    //public static String receiver = HomeActivity.currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +55,8 @@ public class TestTradeRequestActivity extends AppCompatActivity implements View.
 
     public boolean isDescriptionEmpty(String description){ return description.isEmpty();}
 
-    protected Trade createTrade(String tradeID, String title, String description){
-        return new Trade(tradeID, title, description);
+    protected Trade createTrade(String tradeID, String title, String description, String userProvider, String userReceiver){
+        return new Trade(tradeID, title, description, userProvider, userReceiver);
     }
     protected void addTradeToDatabase(DatabaseReference mDatabase, Trade trade, String tradeID){
         mDatabase.child("Trades").child(tradeID).setValue(trade);
@@ -80,7 +84,7 @@ public class TestTradeRequestActivity extends AppCompatActivity implements View.
             }
 
             if(errorMessage.isEmpty()){
-                Trade trade = createTrade(tradeID, title, description);
+                //Trade trade = createTrade(tradeID, title, description, provider, receiver);
                 //addTradeToDatabase(realTimeDatabase, trade, tradeID);
                 switchToHomeWindow();
 

@@ -39,6 +39,9 @@
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".PostActivity"
             android:parentActivityName=".HomeActivity"/>
+
+        <activity android:name=".TradeRequestActivity"/>
+
         <activity android:name=".HistoryActivity"
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".HistViewPostActivity"
@@ -54,5 +57,6 @@
 
         <activity android:name=".PostImageActivity"/>
         <activity android:name=".AcceptanceActivity"/>
+
     </application>
 </manifest>
