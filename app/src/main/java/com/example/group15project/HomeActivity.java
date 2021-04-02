@@ -41,6 +41,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
+    SearchBar searchBar;
+    ArrayList<Post> postArrayList = new ArrayList<>();
+    List<String> postImages = new ArrayList<>();
 
 
     ArrayList<Post> postListFound = new ArrayList<Post>(); // aka postList
@@ -54,13 +57,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         databaseRead(realTimeDatabase);
 
+        searchBar = new SearchBar();
+        postArrayList = searchBar.ListOfAllPosts();
+
         if (currUser == null) {
             currUser = LoginActivity.currUser;
         }
 
         homeView = findViewById(R.id.homePostsView);
 
-        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
+        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
 
         homeView.setAdapter(homeAdapter);
         homeView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,10 +75,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newPostButton.setOnClickListener(this);
         Button histButton = findViewById(R.id.histButton);
         histButton.setOnClickListener(this);
+        Button searchBarMainBtn = findViewById(R.id.searchBarMainBtn);
+        searchBarMainBtn.setOnClickListener(this);
+
 
         /// searching:
-        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
-        postListFound = ListOfAllPosts();
+        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
+        //postListFound = ListOfAllPosts(); //? still need
 
     }
 
@@ -110,6 +119,36 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    ////////////// update with search activity
+    protected void switchToSearchResults() {
+        //Intent intent = new Intent(this, SearchBarActivity.class);
+        //startActivity(intent);
+        EditText searchText = findViewById(R.id.searchText);
+        List<Post> foundPostList = searchBar.foundPosts(searchText.getText().toString(), postArrayList);
+
+        System.out.println(foundPostList.size());
+
+        List<String> postTitles = new ArrayList<>();
+        List<String> postOPs = new ArrayList<>();
+        List<String> postCategories = new ArrayList<>();
+        List<String> postImages = new ArrayList<>();
+
+        for(int i = 0; i < foundPostList.size(); i++){
+            postTitles.add(foundPostList.get(i).getPostTitle());
+            postOPs.add(foundPostList.get(i).getAuthor()); /// username? must be email
+            postCategories.add(foundPostList.get(i).getPostCategory());
+            // postImages.add(foundPostList.get(i).); ??????
+            // !!!! Talk to Ewan, need to add list of images to show in search results!
+        }
+
+
+        searchedAdapter = new HomeAdapter(this, foundPostList, postTitles, postOPs, postCategories, postImages);
+        homeView.setAdapter(searchedAdapter);
+        homeView.setLayoutManager(new LinearLayoutManager(this));
+
+
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
@@ -120,6 +159,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.histButton:
                 switchToHistoryWindow();
+                break;
+
+            case R.id.searchBarMainBtn:
+                switchToSearchResults();
                 break;
 
             default:
@@ -133,6 +176,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     /// SEARCH BAR ACTIVITY ADDED:
 
+    /**
     public void buttonClicked(android.view.View view) {
 
         //System.out.println("!!!!!!");
@@ -151,9 +195,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
         // display post
-        System.out.println(foundPostsList.size());
+       // System.out.println(foundPostsList.size());
 
-        //// display home page
+
     }
 
 
@@ -200,10 +244,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /*
-     * @return boolean if there exists a post
-     * @status DONE
-     */
+
     public boolean checkPostExistence(String title, String category, Post post){
         boolean titleIsAvailable = false;
         boolean categoryIsAvailable = false;
@@ -221,6 +262,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public boolean isEmptyInput(String testString){
         return testString.isEmpty();
     }
+
+     **/
 
 
 

@@ -33,5 +33,6 @@
         <activity android:name=".EditPostActivity"/>
         <activity android:name=".TestPostActivity"/>
         <activity android:name=".AcceptanceActivity"/>
+        <activity android:name=".SearchBarActivity"/>
     </application>
 </manifest>
