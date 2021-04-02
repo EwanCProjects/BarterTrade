@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
