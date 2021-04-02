@@ -1,7 +1,4 @@
 package com.example.group15project;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,20 +20,20 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import androidx.core.app.ActivityCompat;
 
 
 
@@ -83,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    ArrayList<Post> postListFound = new ArrayList<Post>(); // aka postList
+    ArrayList<Post> postListFound = new ArrayList<>(); // aka postList
     public static DatabaseReference databaseReference;
 
 
@@ -291,6 +288,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    protected void switchToTradeWindow() {
+        Intent intent = new Intent(this, HistTradeActivity.class);
+        startActivity(intent);
+    }
+
+    protected void switchToChatWindow() {
+        Intent intent = new Intent(this, HistChatActivity.class);
+        startActivity(intent);
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
@@ -301,6 +308,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.histButton:
                 switchToHistoryWindow();
+                break;
+
+            case R.id.tradeHistory:
+                switchToTradeWindow();
+                break;
+
+            case R.id.chatButton:
+                switchToChatWindow();
                 break;
 
             default:
