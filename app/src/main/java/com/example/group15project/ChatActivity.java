@@ -23,8 +23,7 @@ import java.util.UUID;
 public class ChatActivity extends AppCompatActivity {
 
     String currUser = HomeActivity.currUser;
-    Conversation currConversation;
-    Conversation oppositeConversation;
+    String currConversation, oppositeConversation;
     LinearLayout chatLayout1;
     RelativeLayout chatLayout2;
     ImageView sendButton;
@@ -43,13 +42,13 @@ public class ChatActivity extends AppCompatActivity {
         messageArea = findViewById(R.id.chatMessageArea);
         chatScrollView = findViewById(R.id.chatScrollView);
 
-        currConversation = HistChatAdapter.currConversation;
-        oppositeConversation = currConversation.getOppositeConversation();
+        currConversation = HistChatAdapter.currConversation.getConversationName();
+        oppositeConversation = HistChatAdapter.currConversation.getOppositeConversation();
 
         conversation = new Firebase("https://barter-trade-app-default-rtdb.firebaseio.com/Conversations/"+
-                currConversation.getConversationName()+"/Messages");
+                currConversation+"/messages");
         dualConversation = new Firebase("https://barter-trade-app-default-rtdb.firebaseio.com/Conversations/"+
-                oppositeConversation.getConversationName()+"/Messages");
+                oppositeConversation+"/messages");
 
         
         sendButton.setOnClickListener(v -> {
