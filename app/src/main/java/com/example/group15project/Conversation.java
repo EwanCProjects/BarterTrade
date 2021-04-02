@@ -1,18 +1,20 @@
 package com.example.group15project;
 
 public class Conversation {
-    private String conversationName;
     private String user;
     private String oppositeUser;
-    private Conversation oppositeConversation;
+    private String conversationName;
+    private String oppositeConversation;
+    private String messages;
 
-    public Conversation(String conversationName, String provider, String receiver) {
-        this.conversationName = conversationName;
-        this.user = provider;
-        this.oppositeUser = receiver;
+    public Conversation(String user, String oppositeUser) {
+        this.user = user;
+        this.oppositeUser = oppositeUser;
+        this.conversationName = user+"_"+oppositeUser;
+        this.oppositeConversation = oppositeUser+"_"+user;
     }
 
-    public Conversation getOppositeConversation() { return oppositeConversation; }
+    public String getOppositeConversation() { return oppositeConversation; }
 
     public String getConversationName() { return conversationName; }
 
@@ -20,8 +22,8 @@ public class Conversation {
 
     public String getOppositeUser() { return oppositeUser; }
 
-    public void setOppositeConversation(Conversation conversation) {
-        this.oppositeConversation = conversation;
+    public void setOppositeConversation(String oppositeConversationName) {
+        this.oppositeConversation = oppositeConversationName;
     }
 
     public void setConversationName(String conversationName) {

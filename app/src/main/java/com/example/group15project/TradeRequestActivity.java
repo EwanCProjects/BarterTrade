@@ -56,8 +56,13 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
     protected Trade createTrade(String tradeID, String title, String description, String userProvider, String userReceiver){
         return new Trade(tradeID, title, description, userProvider, userReceiver);
     }
+
     protected void addTradeToDatabase(DatabaseReference mDatabase, Trade trade, String tradeID){
         mDatabase.child("Trades").child(tradeID).setValue(trade);
+    }
+
+    protected void addConversationToDatabase(Conversation conversation){
+        realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
     }
 
     protected void switchToHomeWindow(){
@@ -86,10 +91,17 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
                 addTradeToDatabase(realTimeDatabase, trade, tradeID);
 
                 // add code to create conversations here
+                Conversation userConversation = new Conversation(receiver, provider);
+                Conversation oppositeConversation = new Conversation(provider, receiver);
+
+                addConversationToDatabase(userConversation);
+                addConversationToDatabase(oppositeConversation);
 
                 switchToHomeWindow();
 
-            }else{
+            }
+
+            else{
                 setStatusMessage(errorMessage);
             }
 
