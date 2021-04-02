@@ -1,11 +1,11 @@
 package com.example.group15project;
 
-public class Singular_Item {
+public class SingularItem {
     private int mImageResource;
     private String mText1;
     private String mText2;
 
-    public Singular_Item(int imageResource, String text1, String text2) {
+    public SingularItem(int imageResource, String text1, String text2) {
         mImageResource = imageResource;
         mText1 = text1;
         mText2 = text2;

@@ -17,6 +17,8 @@ import java.util.UUID;
 public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    public static String provider = ViewPostActivity.currPost.getAuthor();
+    public static String receiver = HomeActivity.currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +53,16 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
 
     protected boolean isDescriptionEmpty(String description){ return description.isEmpty();}
 
-    protected Trade createTrade(String tradeID, String title, String description){
-        return new Trade(tradeID, title, description);
+    protected Trade createTrade(String tradeID, String title, String description, String userProvider, String userReceiver){
+        return new Trade(tradeID, title, description, userProvider, userReceiver);
     }
+
     protected void addTradeToDatabase(DatabaseReference mDatabase, Trade trade, String tradeID){
         mDatabase.child("Trades").child(tradeID).setValue(trade);
+    }
+
+    protected void addConversationToDatabase(Conversation conversation){
+        realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
     }
 
     protected void switchToHomeWindow(){
@@ -80,11 +87,21 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
             }
 
             if(errorMessage.isEmpty()){
-                Trade trade = createTrade(tradeID, title, description);
+                Trade trade = createTrade(tradeID, title, description, provider, receiver);
                 addTradeToDatabase(realTimeDatabase, trade, tradeID);
+
+                // add code to create conversations here
+                Conversation userConversation = new Conversation(receiver, provider);
+                Conversation oppositeConversation = new Conversation(provider, receiver);
+
+                addConversationToDatabase(userConversation);
+                addConversationToDatabase(oppositeConversation);
+
                 switchToHomeWindow();
 
-            }else{
+            }
+
+            else{
                 setStatusMessage(errorMessage);
             }
 

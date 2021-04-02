@@ -1,6 +1,5 @@
 package com.example.group15project;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class AcceptanceActivity extends AppCompatActivity {
-    private ArrayList<Singular_Item> arraylist;
+    private ArrayList<SingularItem> arraylist;
     private RecyclerView mRecyclerView;
     private AdapterAcceptance mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -69,7 +68,7 @@ public class AcceptanceActivity extends AppCompatActivity {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     String value = ds.child("title").getValue(String.class);
                     String value2 = ds.child("description").getValue(String.class);
-                    arraylist.add(new Singular_Item(R.id.imageView,value,value2));
+                    arraylist.add(new SingularItem(R.id.imageView,value,value2));
                     mAdapter.notifyDataSetChanged();
                 }
             }
