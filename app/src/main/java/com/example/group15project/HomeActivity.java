@@ -55,7 +55,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
-    List<String> postImages = new ArrayList<>();
 
     Context context;
     private MyLocation myLocation;
@@ -101,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         homeView = findViewById(R.id.homePostsView);
 
-        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
+        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
 
         homeView.setAdapter(homeAdapter);
         homeView.setLayoutManager(new LinearLayoutManager(this));
@@ -124,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         histButton.setOnClickListener(this);
 
         /// searching:
-        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
+        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
         postListFound = ListOfAllPosts();
 
     }
@@ -270,7 +269,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     postTitles.add(extractedPost.getPostTitle());
                     postOPs.add(extractedPost.getAuthor());
                     postCategories.add(extractedPost.getPostCategory());
-                    postImages.add(extractedPost.getimage());
                     homeAdapter.notifyDataSetChanged();
                 }
             }
