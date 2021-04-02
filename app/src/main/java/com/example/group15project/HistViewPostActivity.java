@@ -66,10 +66,11 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
         startActivity(intent);
     }
 
-    protected void switchToDeletePostWindow() {
+    //delete post implementation changed
+    /*protected void switchToDeletePostWindow() {
         Intent intent = new Intent(this, DeletePostActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     public void onClick(View view) {
         switch (view.getId()) {
@@ -77,9 +78,9 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
                 switchToEditPostWindow();
                 break;
 
-            case R.id.deleteButton:
+            /*case R.id.deleteButton:
                 switchToDeletePostWindow();
-                break;
+                break;*/
 
             default:
                 break;

@@ -18,14 +18,24 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 
-public class DeletePostActivity extends AppCompatActivity implements View.OnClickListener {
+public class DeletePost /*extends AppCompatActivity implements View.OnClickListener*/ {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = HomeActivity.currUser;
     public static String postID;
     public Post postToRemove;
 
-    @Override
+    /** call this method on the corresponding post once the trade has been accepted */
+    public void removePost(Post postToRemove) {
+        //remove from home page
+        postToRemove.setTradeCompleted(true);
+
+        //add to history page
+
+
+    }
+
+    /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hist_view_post);
@@ -67,7 +77,7 @@ public class DeletePostActivity extends AppCompatActivity implements View.OnClic
         alert.create();
         alert.show();
 
-    }
+    }*/
 
     public String getPostID() {
         return postToRemove.getPostId(); // from viewing post page,
