@@ -25,6 +25,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
+    List<String> postImages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
 
         histView = findViewById(R.id.histPostsView);
 
-        histAdapter = new HistoryAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
+        histAdapter = new HistoryAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
         histView.setAdapter(histAdapter);
         histView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -53,8 +54,10 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
                         postTitles.add(extractedPost.getPostTitle());
                         postOPs.add(extractedPost.getAuthor());
                         postCategories.add(extractedPost.getPostCategory());
+                        postImages.add(extractedPost.getimage());
                         histAdapter.notifyDataSetChanged();
                     }
+
                 }
 
             }
