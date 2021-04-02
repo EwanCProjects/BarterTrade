@@ -171,6 +171,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //Toast.makeText(MainActivity.this,"Firebase connection success", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * runs when Filter button is clicked
+     */
+    public void goToFilterActivity(View v){
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
+    }
+
 
 
 
