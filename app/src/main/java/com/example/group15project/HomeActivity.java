@@ -50,7 +50,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public static DatabaseReference databaseReference;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
