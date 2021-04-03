@@ -16,11 +16,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import currentUserProperties.CurrentUser;
+
 public class HistChatActivity extends AppCompatActivity implements View.OnClickListener{
     RecyclerView histChatView;
     HistChatAdapter histChatAdapter;
 
-    public static String currUser = HomeActivity.currUser;
+    public static String currUser = CurrentUser.getInstance().currUserString;
     DatabaseReference realTimeDatabase = HomeActivity.realTimeDatabase;
     List<Conversation> extractedConversations = new ArrayList<>();
     List<String> conversationPartners = new ArrayList<>();
@@ -53,7 +55,6 @@ public class HistChatActivity extends AppCompatActivity implements View.OnClickL
                         histChatAdapter.notifyDataSetChanged();
                     }
                 }
-
             }
 
             @Override

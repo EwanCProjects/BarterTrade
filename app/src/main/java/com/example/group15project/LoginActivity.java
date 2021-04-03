@@ -2,17 +2,15 @@ package com.example.group15project;
 
 
 import android.content.Intent;
-import android.os.Build;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
-
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,10 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import currentUserProperties.CurrentUser;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
-    static String currUser = null;
 
     DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     DataSnapshot userTree = null;
@@ -132,15 +130,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                         else {
-                            currUser = formatEmail(email);
-                            if (userTree.hasChild(currUser)) {
-                                extractedUserPassword = userTree.child(currUser).child("password").getValue(String.class);
-                                extractedUserEmail = userTree.child(currUser).child("email").getValue(String.class);
+                            CurrentUser.getInstance().currUserString = formatEmail(email);
+                            if (userTree.hasChild(CurrentUser.getInstance().currUserString)) {
+                                extractedUserPassword = userTree.child(CurrentUser.getInstance().currUserString).child("password").getValue(String.class);
+                                extractedUserEmail = userTree.child(CurrentUser.getInstance().currUserString).child("email").getValue(String.class);
                                 if (!extractedUserPassword.equals(password)) {
-                                    currUser = null;
                                     errorMessage = getResources().getString(R.string.wrong_password).trim();
                                 }
-                                else {currUser = formatEmail(email);}
+                                else {CurrentUser.getInstance().currUserString = formatEmail(email);}
                             }
                             else {
                                 errorMessage = getResources().getString(R.string.no_account).trim();

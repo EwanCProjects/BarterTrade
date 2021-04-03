@@ -20,7 +20,7 @@ import java.util.UUID;
 public class TestTradeRequestActivity extends AppCompatActivity implements View.OnClickListener{
 
     //public static String provider = ViewPostActivity.currPost.getAuthor();
-    //public static String receiver = HomeActivity.currUser;
+    //public static String receiver = HomeActivity.CurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

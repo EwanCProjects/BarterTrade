@@ -12,13 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import currentUserProperties.CurrentUser;
 
 public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String provider = ViewPostActivity.currPost.getAuthor();
-    public static String receiver = HomeActivity.currUser;
+    public static String receiver = CurrentUser.getInstance().currUserString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,11 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
     }
 
     protected void addConversationToDatabase(Conversation conversation){
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "placeholder");
+        message.put("user", "-placeholder-user-");
         realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
+        realTimeDatabase.child("Chats").child(conversation.getConversationName()).push().setValue(message);
     }
 
     protected void switchToHomeWindow(){

@@ -18,11 +18,15 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import currentUserProperties.CurrentUser;
 
 public class ChatActivity extends AppCompatActivity {
 
-    String currUser = HomeActivity.currUser;
+    String currUser = CurrentUser.getInstance().currUserString;
     String currConversation, oppositeConversation;
     LinearLayout chatLayout1;
     RelativeLayout chatLayout2;
@@ -45,19 +49,22 @@ public class ChatActivity extends AppCompatActivity {
         currConversation = HistChatAdapter.currConversation.getConversationName();
         oppositeConversation = HistChatAdapter.currConversation.getOppositeConversation();
 
-        conversation = new Firebase("https://barter-trade-app-default-rtdb.firebaseio.com/Conversations/"+
-                currConversation+"/messages");
-        dualConversation = new Firebase("https://barter-trade-app-default-rtdb.firebaseio.com/Conversations/"+
-                oppositeConversation+"/messages");
+        Firebase.setAndroidContext(this);
+        conversation = new Firebase("https://barter-trade-app-default-rtdb.firebaseio.com/Chats/"+
+                currConversation);
+        dualConversation = new Firebase("https://barter-trade-app-default-rtdb.firebaseio.com/Chats/"+
+                oppositeConversation);
 
         
         sendButton.setOnClickListener(v -> {
             String messageText = messageArea.getText().toString();
 
             if(!messageText.equals("")){
-                Message message = new Message(generateMessageID(), messageText, currUser);
-                conversation.setValue(message);
-                dualConversation.setValue(message);
+                Map<String, String> message = new HashMap<>();
+                message.put("message", messageText);
+                message.put("user", currUser);
+                conversation.push().setValue(message);
+                dualConversation.push().setValue(message);
                 messageArea.setText("");
             }
         });
@@ -65,14 +72,15 @@ public class ChatActivity extends AppCompatActivity {
         conversation.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Message message = dataSnapshot.getValue(Message.class);
-                String messageText = message.getMessage();
-                String userName = message.getUser();
-
-                if (userName.equals(currUser)) {
-                    addMessageBox(messageText, 1);
-                } else {
-                    addMessageBox(messageText, 2);
+                Map message = dataSnapshot.getValue(Map.class);
+                String messageText =  message.get("message").toString();
+                String userName = message.get("user").toString();
+                if (!userName.equals("-placeholder-user-")) {
+                    if (userName.equals(currUser)) {
+                        addMessageBox(messageText, 1);
+                    } else {
+                        addMessageBox(messageText, 2);
+                    }
                 }
             }
 

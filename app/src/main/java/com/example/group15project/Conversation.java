@@ -5,14 +5,15 @@ public class Conversation {
     private String oppositeUser;
     private String conversationName;
     private String oppositeConversation;
-    private String messages;
 
     public Conversation(String user, String oppositeUser) {
         this.user = user;
         this.oppositeUser = oppositeUser;
-        this.conversationName = user+"_"+oppositeUser;
-        this.oppositeConversation = oppositeUser+"_"+user;
+        conversationName = user+"_"+oppositeUser;
+        oppositeConversation = oppositeUser+"_"+user;
     }
+
+    public Conversation() {}
 
     public String getOppositeConversation() { return oppositeConversation; }
 

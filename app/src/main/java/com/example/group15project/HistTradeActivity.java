@@ -16,11 +16,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import currentUserProperties.CurrentUser;
+
 public class HistTradeActivity extends AppCompatActivity implements View.OnClickListener{
     RecyclerView histTradeView;
     HistTradeAdapter histTradeAdapter;
 
-    public static String currUser = HomeActivity.currUser;
+    public static String currUser = CurrentUser.getInstance().currUserString;
     DatabaseReference realTimeDatabase = HomeActivity.realTimeDatabase;
     List<Trade> extractedTrades = new ArrayList<>();
     List<String> tradeReceivers = new ArrayList<>();

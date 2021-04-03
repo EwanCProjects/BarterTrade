@@ -1,8 +1,4 @@
 package com.example.group15project;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +8,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import currentUserProperties.CurrentUser;
 
 public class HistoryActivity extends AppCompatActivity implements View.OnClickListener {
     RecyclerView histView;
     HistoryAdapter histAdapter;
 
-    public static String currUser = HomeActivity.currUser;
+    public static String currUser = CurrentUser.getInstance().currUserString;
     DatabaseReference realTimeDatabase = HomeActivity.realTimeDatabase;
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();

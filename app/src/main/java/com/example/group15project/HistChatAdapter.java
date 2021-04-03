@@ -38,7 +38,7 @@ public class HistChatAdapter extends RecyclerView.Adapter<HistChatAdapter.HistCh
         holder.chatPartner.setText(chatPartners.get(position));
 
         holder.chatLayout.setOnClickListener(view -> {
-            Intent intent = new Intent(context, HistChatActivity.class);
+            Intent intent = new Intent(context, ChatActivity.class);
             currConversation = conversations.get(position);
             context.startActivity(intent);
         });
