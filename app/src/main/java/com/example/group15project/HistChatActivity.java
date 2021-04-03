@@ -53,7 +53,6 @@ public class HistChatActivity extends AppCompatActivity implements View.OnClickL
                         histChatAdapter.notifyDataSetChanged();
                     }
                 }
-
             }
 
             @Override

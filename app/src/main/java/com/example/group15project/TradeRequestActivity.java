@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
@@ -62,7 +64,11 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
     }
 
     protected void addConversationToDatabase(Conversation conversation){
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "placeholder");
+        message.put("user", "-placeholder-user-");
         realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
+        realTimeDatabase.child("Chats").child(conversation.getConversationName()).push().setValue(message);
     }
 
     protected void switchToHomeWindow(){

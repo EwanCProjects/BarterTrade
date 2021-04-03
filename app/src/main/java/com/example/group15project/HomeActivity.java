@@ -118,6 +118,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newPostButton.setOnClickListener(this);
         Button histButton = findViewById(R.id.histButton);
         histButton.setOnClickListener(this);
+        Button tradeButton = findViewById(R.id.tradeHistory);
+        tradeButton.setOnClickListener(this);
+        Button chatButton = findViewById(R.id.chatButton);
+        chatButton.setOnClickListener(this);
 
         /// searching:
         searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
@@ -337,8 +341,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         String editTitleStr = editedTextOfTitle.getText().toString();
         String editCategoryStr = editedTextOfCategory.getText().toString();
-
-        // DatabaseReference ref = realTimeDatabase.getReference();//////not useful
 
         List<Post> foundPostsList = new ArrayList<>();
 

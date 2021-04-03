@@ -8,9 +8,6 @@ public class Trade {
     private String provider;
     private String receiver;
 
-    public Trade(){
-
-    }
     public Trade(String tradeID, String title, String description, String provider, String receiver){
         this.tradeID = tradeID;
         this.title = title;
@@ -18,6 +15,8 @@ public class Trade {
         this.provider = provider;
         this.receiver = receiver;
     }
+
+    public Trade() {}
 
     public String getTradeID(){ return tradeID;}
 
