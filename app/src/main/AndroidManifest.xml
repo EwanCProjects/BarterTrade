@@ -1,5 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group15project">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -10,29 +15,49 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Group15Project"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:name="androidx.multidex.MultiDexApplication">
+
+        <!-- API key for google maps based API-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBDDkvKOf0IaUtVJQrRxa_q3Et_YMeE0dU" />
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestLoginActivity"/>
+        <activity android:name="testActivities.TestLoginActivity"/>
         <activity android:name=".RegistrationActivity"
             android:parentActivityName=".LoginActivity"/>
-        <activity android:name=".TestRegistrationActivity"/>
+        <activity android:name="testActivities.TestRegistrationActivity"/>
         <activity android:name=".HomeActivity"/>
         <activity android:name=".ViewPostActivity"
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".PostActivity"
             android:parentActivityName=".HomeActivity"/>
+
+        <activity android:name=".TradeRequestActivity"/>
+
         <activity android:name=".HistoryActivity"
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".HistViewPostActivity"
             android:parentActivityName=".HistoryActivity"/>
-        <activity android:name=".EditPostActivity"/>
-        <activity android:name=".TestPostActivity"/>
+        <activity android:name=".EditPostActivity"
+            android:parentActivityName=".HistoryActivity"/>
+        <activity android:name=".HistChatActivity"
+            android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".ChatActivity"
+            android:parentActivityName=".HistChatActivity"/>
+        <activity android:name=".FilterActivity"/>
+        <activity android:name="testActivities.TestPostActivity"/>
+
+        <activity android:name=".PostImageActivity"/>
         <activity android:name=".AcceptanceActivity"/>
         <activity android:name=".SearchBarActivity"/>
+
     </application>
 </manifest>
