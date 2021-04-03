@@ -34,6 +34,8 @@ public class SearchBarActivity extends Activity {
     }
 
 
+
+
     public void buttonClicked(android.view.View view) {
         EditText editedTextOfTitle = findViewById(R.id.titleSearch);
         EditText editedTextOfCategory = findViewById(R.id.hashTagSearch);
