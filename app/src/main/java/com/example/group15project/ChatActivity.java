@@ -22,9 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import currentUserProperties.CurrentUser;
+
 public class ChatActivity extends AppCompatActivity {
 
-    String currUser = HomeActivity.currUser;
+    String currUser = CurrentUser.getInstance().currUserString;
     String currConversation, oppositeConversation;
     LinearLayout chatLayout1;
     RelativeLayout chatLayout2;

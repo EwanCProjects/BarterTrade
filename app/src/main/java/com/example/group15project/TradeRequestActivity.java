@@ -16,11 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import currentUserProperties.CurrentUser;
+
 public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String provider = ViewPostActivity.currPost.getAuthor();
-    public static String receiver = HomeActivity.currUser;
+    public static String receiver = CurrentUser.getInstance().currUserString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 public class JUnitTestEditDescription {
     static EditPostActivity edActivity;
     private final static String author = "CS STUDENT EXAMPLE";
-    public static String postId = "567890"; //HomeActivity.currUser;
+    public static String postId = "567890"; //HomeActivity.CurrentUser;
     private final static String postTitle = "CHAIR";
     private final static String postDescription = "Original description of a chair...";
     private final static String postCategory = "FURNITURE";

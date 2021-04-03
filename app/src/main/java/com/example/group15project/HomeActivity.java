@@ -1,4 +1,5 @@
 package com.example.group15project;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -33,6 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import currentUserProperties.CurrentUser;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
@@ -41,7 +44,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     HomeAdapter homeAdapter;
     HomeAdapter searchedAdapter; // might not need to be global
 
-    public static String currUser = LoginActivity.currUser;
+    public static String currUser = CurrentUser.getInstance().currUserString;
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
@@ -67,10 +70,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         searchBar = new SearchBar();
         postArrayList = searchBar.ListOfAllPosts();
-
-        if (currUser == null) {
-            currUser = LoginActivity.currUser;
-        }
 
         homeView = findViewById(R.id.homePostsView);
 
