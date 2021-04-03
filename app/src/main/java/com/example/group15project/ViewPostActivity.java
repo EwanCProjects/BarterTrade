@@ -1,12 +1,17 @@
 package com.example.group15project;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+import java.util.List;
 
 public class ViewPostActivity extends AppCompatActivity implements View.OnClickListener {
     public static Post currPost;
@@ -65,6 +70,22 @@ public class ViewPostActivity extends AppCompatActivity implements View.OnClickL
         // add code for pressing contact button and integrating that contact button US
         Intent intent = new Intent(this, TradeRequestActivity.class);
         startActivity(intent);
+    }
+
+    private String getAddressFromLonLatOnUI(String latLon){
+        double lat = Double.parseDouble(latLon.split(",")[0]);
+        double lon = Double.parseDouble(latLon.split(",")[1]);
+
+        try {
+            //get the address
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> addresses = geocoder.getFromLocation(lat,lon,1);
+            String address = addresses.get(0).getAddressLine(0);
+
+            return address;
+        } catch (IOException e) {
+            return "unable to get address";
+        }
     }
 
 }

@@ -1,10 +1,10 @@
 package com.example.group15project;
 
-import android.app.Activity;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import testActivities.TestPostActivity;
 
 import static org.junit.Assert.*;
 
