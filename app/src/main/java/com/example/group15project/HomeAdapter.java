@@ -2,14 +2,10 @@ package com.example.group15project;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,18 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
     public static Post currPost;
     List<Post> posts;
-    List<String> titles, OPs, categories;
-    List<String> images;
+    List<String> titles, OPs, categories, images;
     Context context;
 
 
@@ -39,7 +29,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         OPs = postOPs;
         categories = postCategories;
         images = postImages;
-
     }
 
     @NonNull
@@ -56,18 +45,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         holder.homeOP.setText(OPs.get(position));
         holder.homeCategory.setText(categories.get(position));
 
-        if(images.get(position) != null){
-
-            Glide.with(this.context).load(images.get(position)).into(holder.homeimage);
-
-
-        }
-        else {
-            Glide.with(this.context).load("https://firebasestorage.googleapis.com/v0/b/barter-trade-app.appspot.com/o/fire.webp?alt=media&token=492d3655-5d76-45c4-9ffd-adef06a38f12").into(holder.homeimage);
-        }
-        //holder.homeimage.setImageBitmap(images.get(position));
-
-
         holder.postLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, ViewPostActivity.class);
             currPost = posts.get(position);
@@ -82,7 +59,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
         TextView homeTitle, homeOP, homeCategory;
-        ImageView homeimage;
         ConstraintLayout postLayout;
 
         public HomeViewHolder(@NonNull View itemView) {
@@ -91,7 +67,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             homeOP = itemView.findViewById(R.id.homePostOP);
             homeCategory = itemView.findViewById(R.id.homePostCategory);
             postLayout = itemView.findViewById(R.id.postCardLayout);
-            homeimage = itemView.findViewById(R.id.homePostImage);
         }
     }
 }
