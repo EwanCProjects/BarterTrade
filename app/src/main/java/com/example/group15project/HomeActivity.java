@@ -31,6 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
+    public static final int MAX_LOCAL_DISTANCE = 50000; //local is defined as 50km max in this app
     RecyclerView homeView;
     HomeAdapter homeAdapter;
     HomeAdapter searchedAdapter; // might not need to be global
@@ -44,6 +47,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     SearchBar searchBar;
     ArrayList<Post> postArrayList = new ArrayList<>();
     List<String> postImages = new ArrayList<>();
+    //int MAX_LOCAL_DISTANCE = 900000;
 
 
     ArrayList<Post> postListFound = new ArrayList<Post>(); // aka postList
