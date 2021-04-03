@@ -1,8 +1,5 @@
 package com.example.group15project;
 import android.Manifest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,12 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
@@ -58,8 +50,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     SearchBar searchBar;
     ArrayList<Post> postArrayList = new ArrayList<>();
     List<String> postImages = new ArrayList<>();
-    //int MAX_LOCAL_DISTANCE = 900000;
 
+    Context context;
+    private MyLocation myLocation;
 
     ArrayList<Post> postListFound = new ArrayList<>(); // aka postList
     public static DatabaseReference databaseReference;
@@ -111,9 +104,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         chatButton.setOnClickListener(this);
 
         /// searching:
-        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
-        postListFound = ListOfAllPosts();
-
+        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
     }
 
     /** useful when showing main page with default or prev saved preferences of user */
