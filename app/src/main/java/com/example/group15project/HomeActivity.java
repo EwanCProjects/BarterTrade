@@ -1,5 +1,8 @@
 package com.example.group15project;
 import android.Manifest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,13 +38,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     public static final int MAX_LOCAL_DISTANCE = 50000; //local is defined as 50km max in this app
-
     RecyclerView homeView;
     HomeAdapter homeAdapter;
     HomeAdapter searchedAdapter; // might not need to be global
@@ -52,32 +55,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
-
-    Context context;
-    private MyLocation myLocation;
-
-    /**
-     * runs when Filter button is clicked
-     */
-    public void goToFilterActivity(View v){
-        Intent intent = new Intent(this, FilterActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     *this method would be useful when extracting posts based on distance
-     */
-    private float getDistance(String latitudeLongitude){
-        if(latitudeLongitude == null){
-            return -1;
-        }
-
-        Double lat = Double.parseDouble(latitudeLongitude.split(",")[0]);
-        Double lon = Double.parseDouble(latitudeLongitude.split(",")[1]);
-
-        LongLatLocation myLoc = new LongLatLocation(lat,lon);
-        return myLocation.calcDistanceToLocation(myLoc);
-    }
+    SearchBar searchBar;
+    ArrayList<Post> postArrayList = new ArrayList<>();
+    List<String> postImages = new ArrayList<>();
+    //int MAX_LOCAL_DISTANCE = 900000;
 
 
     ArrayList<Post> postListFound = new ArrayList<>(); // aka postList
@@ -91,13 +72,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         databaseRead(realTimeDatabase);
 
+        searchBar = new SearchBar();
+        postArrayList = searchBar.ListOfAllPosts();
+
         if (currUser == null) {
-            currUser = RegistrationActivity.currUser;
+            currUser = LoginActivity.currUser;
         }
 
         homeView = findViewById(R.id.homePostsView);
 
-        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
+        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
 
         homeView.setAdapter(homeAdapter);
         homeView.setLayoutManager(new LinearLayoutManager(this));
@@ -118,6 +102,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newPostButton.setOnClickListener(this);
         Button histButton = findViewById(R.id.histButton);
         histButton.setOnClickListener(this);
+        Button searchBarMainBtn = findViewById(R.id.searchBarMainBtn);
+        searchBarMainBtn.setOnClickListener(this);
+
         Button tradeButton = findViewById(R.id.tradeHistory);
         tradeButton.setOnClickListener(this);
         Button chatButton = findViewById(R.id.chatButton);
@@ -302,6 +289,36 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    ////////////// update with search activity
+    protected void switchToSearchResults() {
+        //Intent intent = new Intent(this, SearchBarActivity.class);
+        //startActivity(intent);
+        EditText searchText = findViewById(R.id.searchText);
+        List<Post> foundPostList = searchBar.foundPosts(searchText.getText().toString(), postArrayList);
+
+        System.out.println(foundPostList.size());
+
+        List<String> postTitles = new ArrayList<>();
+        List<String> postOPs = new ArrayList<>();
+        List<String> postCategories = new ArrayList<>();
+        List<String> postImages = new ArrayList<>();
+
+        for(int i = 0; i < foundPostList.size(); i++){
+            postTitles.add(foundPostList.get(i).getPostTitle());
+            postOPs.add(foundPostList.get(i).getAuthor()); /// username? must be email
+            postCategories.add(foundPostList.get(i).getPostCategory());
+            // postImages.add(foundPostList.get(i).); ??????
+            // !!!! Talk to Ewan, need to add list of images to show in search results!
+        }
+
+
+        searchedAdapter = new HomeAdapter(this, foundPostList, postTitles, postOPs, postCategories, postImages);
+        homeView.setAdapter(searchedAdapter);
+        homeView.setLayoutManager(new LinearLayoutManager(this));
+
+
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
@@ -312,6 +329,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.histButton:
                 switchToHistoryWindow();
+                break;
+
+            case R.id.searchBarMainBtn:
+                switchToSearchResults();
                 break;
 
             case R.id.tradeHistory:
@@ -328,99 +349,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //Toast.makeText(MainActivity.this,"Firebase connection success", Toast.LENGTH_LONG).show();
     }
 
-
-
-
-    /// SEARCH BAR ACTIVITY ADDED:
-
-    public void buttonClicked(android.view.View view) {
-
-        //System.out.println("!!!!!!");
-        EditText editedTextOfTitle = findViewById(R.id.titleSearch);
-        EditText editedTextOfCategory = findViewById(R.id.hashTagSearch);
-
-        String editTitleStr = editedTextOfTitle.getText().toString();
-        String editCategoryStr = editedTextOfCategory.getText().toString();
-
-        List<Post> foundPostsList = new ArrayList<>();
-
-        foundPostsList = foundPosts(editTitleStr, editCategoryStr); // need to run through page
-
-
-
-        // display post
-        System.out.println(foundPostsList.size());
-
-        //// display home page
-    }
-
-
-    public ArrayList<Post> ListOfAllPosts(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts/");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Post postRef;
-                String snapshotStr = dataSnapshot.getKey();
-                //System.out.println(snapshotStr);
-
-                Map<String, Post> mapPosts = new HashMap<>();
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    Post newPostObj = snapshot.getValue(Post.class);
-                    System.out.println(newPostObj.getPostTitle());
-                    postListFound.add(newPostObj);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-        searchedAdapter.notifyDataSetChanged();
-        return postListFound;
-    }
-
-
-    public List<Post> foundPosts(String title, String category){
-        List<Post> matchedPosts = new ArrayList<>();
-
-        for (int i =0; i < postListFound.size(); i++){
-            Post postObj = postListFound.get(i);
-            String titleAtIndex = postObj.getPostTitle();
-            String categoryAtIndex = postObj.getPostCategory();
-            if(checkPostExistence(titleAtIndex, categoryAtIndex, postListFound.get(i))){
-                matchedPosts.add(postListFound.get(i));
-            }
-        }
-        return matchedPosts;
-
-    }
-
-    /*
-     * @return boolean if there exists a post
-     * @status DONE
+    /**
+     * runs when Filter button is clicked
      */
-    public boolean checkPostExistence(String title, String category, Post post){
-        boolean titleIsAvailable = false;
-        boolean categoryIsAvailable = false;
-
-        if(post.getPostTitle().matches(title)){
-            titleIsAvailable = true;
-        }
-        if(post.getPostCategory().matches(category)){
-            categoryIsAvailable = true;
-        }
-        //}
-        return (titleIsAvailable && categoryIsAvailable); // Works , returns correctly
+    public void goToFilterActivity(View v){
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
     }
-
-    public boolean isEmptyInput(String testString){
-        return testString.isEmpty();
-    }
-
-
 
 }
 
