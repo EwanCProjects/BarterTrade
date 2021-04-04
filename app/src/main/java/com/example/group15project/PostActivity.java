@@ -190,10 +190,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             //  userCurrentLocation = currentLocation;
 
             try {
-                //     getAddressFromLocation(currentLocation);
                 showMyLocationOnUI(location);
-                //  System.out.println(currentLocation.latitude );
-                //  System.out.println(currentLocation.longitude );
             } catch (Exception e) {
                 e.printStackTrace();
             }
