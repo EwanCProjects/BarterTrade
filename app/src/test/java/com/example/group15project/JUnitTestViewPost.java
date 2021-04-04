@@ -20,7 +20,7 @@ public class JUnitTestViewPost {
             "but this one is mine. " +
             "My phone is my best friend. It is my life.";
     String image = "https://firebasestorage.googleapis.com/v0/b/barter-trade-app.appspot.com/o/1615742712551?alt=media&token=3dd86e49-8800-41ac-918d-b5ce9ad84699";
-    Post testPost = new Post(author, testID, title, description, category, image);
+    Post testPost = new Post(author, testID, title, description, category, image, 0 , 0 );
 
     @BeforeClass
     public static void setup() {
