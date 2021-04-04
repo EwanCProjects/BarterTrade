@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Query;
 
-public class DeletePost /*extends AppCompatActivity implements View.OnClickListener*/ {
+public class DeletePost {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = HomeActivity.currUser;
@@ -27,57 +27,8 @@ public class DeletePost /*extends AppCompatActivity implements View.OnClickListe
 
     /** call this method on the corresponding post once the trade has been accepted */
     public void removePost(Post postToRemove) {
-        //remove from home page
         postToRemove.setTradeCompleted(true);
-
-        //add to history page
-
-
     }
-
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hist_view_post);
-
-        Button deleteButton = findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage("Are you sure you want to delete this post?");
-        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                realTimeDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        postToRemove = dataSnapshot.getValue(Post.class); // retrieve post
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        System.out.println("The read failed: " + databaseError.getCode());
-                    }
-                });
-
-                deletePost(postToRemove);
-                Intent intent = new Intent(DeletePostActivity.this, HistViewPostActivity.class);
-                startActivity(intent);
-                //Toast.makeText(getBaseContext(), "Post deleted.", Toast.LENGTH_LONG).show();
-            }
-
-        });
-        alert.setNegativeButton("No", null);
-        alert.create();
-        alert.show();
-
-    }*/
 
     public String getPostID() {
         return postToRemove.getPostId(); // from viewing post page,

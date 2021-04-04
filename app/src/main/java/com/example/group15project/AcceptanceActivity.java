@@ -89,6 +89,7 @@ public class AcceptanceActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new AdapterAcceptance.OnItemClickListener() {
             @Override
             public void onAcceptClick(ImageView ig) {
+                //removePost
                 showMessageIcon(ig);
             }
 
