@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HistViewPostActivity extends AppCompatActivity implements View.OnClickListener {
     public static Post currPost;
-    DeletePost postDeleter;
+    DeletePost postDeleter = new DeletePost(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +66,6 @@ public class HistViewPostActivity extends AppCompatActivity implements View.OnCl
         Intent intent = new Intent(this, EditPostActivity.class);
         startActivity(intent);
     }
-
-    //delete post implementation changed
-    /*protected void switchToDeletePostWindow() {
-        Intent intent = new Intent(this, DeletePostActivity.class);
-        startActivity(intent);
-    }*/
 
     public void onClick(View view) {
         switch (view.getId()) {

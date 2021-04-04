@@ -1,5 +1,6 @@
 package com.example.group15project;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.sip.SipSession;
@@ -24,6 +25,11 @@ public class DeletePost {
     public static String userID = HomeActivity.currUser;
     public static String postID;
     public Post postToRemove;
+    android.content.Context context;
+
+    public DeletePost(Context context) {
+        this.context = context;
+    }
 
     /** call this method on the corresponding post once the trade has been accepted */
     public void removePost(Post postToRemove) {
@@ -35,6 +41,16 @@ public class DeletePost {
     }
 
     public void deletePost(Post post) {
-        realTimeDatabase.child(post.getPostId()).removeValue();
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert.setMessage("Are you sure you want to permanently delete this post?");
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                realTimeDatabase.child(post.getPostId()).removeValue();
+            }
+        });
+        alert.setNegativeButton("No", null);
+        alert.create();
+        alert.show();
     }
 }
