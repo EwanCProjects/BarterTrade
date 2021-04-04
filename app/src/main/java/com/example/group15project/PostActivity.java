@@ -1,37 +1,27 @@
 package com.example.group15project;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.Address;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.core.content.ContextCompat;
-
-import com.google.android.gms.location.LocationListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
-import java.security.acl.Permission;
-import java.util.Random;
-import java.util.UUID;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
+
+import currentUserProperties.CurrentUser;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
@@ -40,7 +30,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String userID = HomeActivity.currUser;
+    public static String userID = CurrentUser.getInstance().currUserString;
 
 
     String image = "";

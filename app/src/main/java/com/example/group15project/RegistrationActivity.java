@@ -11,18 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.PatternsCompat;
 
-import java.util.Arrays;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import currentUserProperties.CurrentUser;
+
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
-
-    static String currUser = null;
 
     DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     DataSnapshot userTree;
@@ -173,9 +171,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         if (errorMessage.isEmpty()) {
             User user = createUser(firstName, lastName, emailAddress, password);
-            currUser = formatEmail(emailAddress);
+            CurrentUser.getInstance().currUserString = formatEmail(emailAddress);
 
-            addUserToFirebase(realTimeDatabase, user, currUser);
+            addUserToFirebase(realTimeDatabase, user, CurrentUser.getInstance().currUserString);
             switchToHomeWindow();
 
         } else {

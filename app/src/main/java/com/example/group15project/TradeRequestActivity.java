@@ -12,11 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+
+import currentUserProperties.CurrentUser;
 
 public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
+    public static String provider = ViewPostActivity.currPost.getAuthor();
+    public static String receiver = CurrentUser.getInstance().currUserString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +57,20 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
 
     protected boolean isDescriptionEmpty(String description){ return description.isEmpty();}
 
-    protected Trade createTrade(String tradeID, String title, String description){
-        return new Trade(tradeID, title, description);
+    protected Trade createTrade(String tradeID, String title, String description, String userProvider, String userReceiver){
+        return new Trade(tradeID, title, description, userProvider, userReceiver);
     }
+
     protected void addTradeToDatabase(DatabaseReference mDatabase, Trade trade, String tradeID){
         mDatabase.child("Trades").child(tradeID).setValue(trade);
+    }
+
+    protected void addConversationToDatabase(Conversation conversation){
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "placeholder");
+        message.put("user", "-placeholder-user-");
+        realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
+        realTimeDatabase.child("Chats").child(conversation.getConversationName()).push().setValue(message);
     }
 
     protected void switchToHomeWindow(){
@@ -80,11 +95,21 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
             }
 
             if(errorMessage.isEmpty()){
-                Trade trade = createTrade(tradeID, title, description);
+                Trade trade = createTrade(tradeID, title, description, provider, receiver);
                 addTradeToDatabase(realTimeDatabase, trade, tradeID);
+
+                // add code to create conversations here
+                Conversation userConversation = new Conversation(receiver, provider);
+                Conversation oppositeConversation = new Conversation(provider, receiver);
+
+                addConversationToDatabase(userConversation);
+                addConversationToDatabase(oppositeConversation);
+
                 switchToHomeWindow();
 
-            }else{
+            }
+
+            else{
                 setStatusMessage(errorMessage);
             }
 

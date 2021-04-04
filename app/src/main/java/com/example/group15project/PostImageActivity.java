@@ -15,9 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.group15project.HomeActivity;
-import com.example.group15project.PostActivity;
-import com.example.group15project.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +27,8 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.sql.Timestamp;
 
+import currentUserProperties.CurrentUser;
+
 public class PostImageActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -39,7 +38,7 @@ public class PostImageActivity extends AppCompatActivity implements View.OnClick
     Uri file = null;
     Uri transfer = null;
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String userID = HomeActivity.currUser;
+    public static String userID = CurrentUser.getInstance().currUserString;
 
 
 

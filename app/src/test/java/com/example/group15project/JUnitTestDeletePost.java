@@ -26,7 +26,7 @@ public class JUnitTestDeletePost {
     //static Post testPost;
     //static DeletePostActivity deletePostActivity;
     private static String author = "example post";
-    public static String postId = "005500"; //HomeActivity.currUser;
+    public static String postId = "005500"; //HomeActivity.CurrentUser;
     private static String postTitle = "--test--";
     private static String postDescription = "description of post";
     private static String postCategory = "TEST";
