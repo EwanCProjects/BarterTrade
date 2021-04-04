@@ -10,10 +10,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.location.LocationListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,9 +44,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String userID = CurrentUser.getInstance().currUserString;
-
+    public static final String LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION;
+    public static final String LOCATION_PREF = "locationPref";
 
     String image = "";
+    private LocationManager locationManager;
+    private double latitude;
+    private double longitude;
 
 
     private MyLocation myLocation;
@@ -166,8 +183,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         return category.isEmpty();
     }
 
-    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, String image) {
-        return new Post(author, postID, postTitle, postDescription, postCategory, image);
+    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, String image, double latitude, double longitude) {
+        return new Post(author, postID, postTitle, postDescription, postCategory, image, latitude, longitude);
     }
 
     protected void setStatusMessage(String message) {
@@ -231,7 +248,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (errorMessage.isEmpty()) {
-            Post post = createPost(userID, postID, postTitle, postDescription, postCategory, image);
+            Post post = createPost(userID, postID, postTitle, postDescription, postCategory, image, latitude, longitude);
             addPostToFirebase(realTimeDatabase, post, postID);
             switchToHomeWindow();
             //viewPostWindow()
