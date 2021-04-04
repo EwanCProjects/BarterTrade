@@ -6,11 +6,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +24,7 @@ import java.util.UUID;
 import currentUserProperties.CurrentUser;
 
 public class TradeRequestActivity extends AppCompatActivity implements View.OnClickListener {
-
+    DataSnapshot conversationsTree;
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     public static String provider = ViewPostActivity.currPost.getAuthor();
     public static String receiver = CurrentUser.getInstance().currUserString;
@@ -29,10 +34,28 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_request);
 
+        databaseRead(realTimeDatabase);
+
         Button sendRequest = findViewById(R.id.sendRequestButton);
         sendRequest.setOnClickListener(this);
         Button cancelRequest = findViewById(R.id.cancelRequestButton);
         cancelRequest.setOnClickListener(this);
+    }
+
+    public void databaseRead(DatabaseReference db) {
+        //code for database initialization and accessing the credentials
+        ValueEventListener userListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                conversationsTree = dataSnapshot.child("Conversations");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+        };
+        db.addValueEventListener(userListener);
     }
 
     protected String generateTradeID(){ return UUID.randomUUID().toString();}
@@ -66,11 +89,16 @@ public class TradeRequestActivity extends AppCompatActivity implements View.OnCl
     }
 
     protected void addConversationToDatabase(Conversation conversation){
-        Map<String, String> message = new HashMap<>();
-        message.put("message", "placeholder");
-        message.put("user", "-placeholder-user-");
-        realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
-        realTimeDatabase.child("Chats").child(conversation.getConversationName()).push().setValue(message);
+        if (conversationsTree.hasChild(conversation.getConversationName())) {
+            Toast.makeText(getApplicationContext(), "A new trade has been made, but you are already chatting with this user!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Map<String, String> message = new HashMap<>();
+            message.put("message", "placeholder");
+            message.put("user", "-placeholder-user-");
+            realTimeDatabase.child("Conversations").child(conversation.getConversationName()).setValue(conversation);
+            realTimeDatabase.child("Chats").child(conversation.getConversationName()).push().setValue(message);
+        }
     }
 
     protected void switchToHomeWindow(){
