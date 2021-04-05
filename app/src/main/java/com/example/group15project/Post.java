@@ -15,15 +15,19 @@ public class Post {
     private String latLonLocation;
     private float distance;
     private String image;
+    private double latitude;
+    private double longitude;
 
     public Post(String author, String postId, String postTitle, String postDescription,
-                String postCategory, String image) {
+                String postCategory, String image, double latitude, double longitude) {
         this.author = author;
         this.postId = postId;
         this.postTitle = postTitle;
         this.postDescription = postDescription;
         this.postCategory = postCategory;
         this.image = image;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Post() {
@@ -84,6 +88,13 @@ public class Post {
 
     public void setimage(String image) { this.image = image; }
 
+    public double getLatitude(){ return latitude; }
+
+    public void setLatitude(Double latitude){ this.latitude = latitude; }
+
+    public double getLongitude(){ return longitude; }
+
+    public void setLongitude(Double longitude){ this.longitude = longitude; }
 
 
 

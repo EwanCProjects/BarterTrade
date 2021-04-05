@@ -116,8 +116,8 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
         return category.isEmpty();
     }
 
-    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory) {
-        return new Post(author, postID, postTitle, postDescription, postCategory, image);
+    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, double latitude, double longitude) {
+        return new Post(author, postID, postTitle, postDescription, postCategory, image,latitude, longitude );
     }
 
     protected void setStatusMessage(String message) {
@@ -166,7 +166,7 @@ public class TestPostActivity extends AppCompatActivity implements View.OnClickL
             }
 
             if (errorMessage.isEmpty()) {
-                Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
+               // Post post = createPost(userID, postID, postTitle, postDescription, postCategory);
                 //addPostToFirebase(realTimeDatabase, post, postID);
                 switchToHomeWindow();
                 //viewPostWindow()
