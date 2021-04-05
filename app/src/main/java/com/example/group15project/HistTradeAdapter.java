@@ -1,6 +1,7 @@
 package com.example.group15project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,13 +40,12 @@ public class HistTradeAdapter extends RecyclerView.Adapter<HistTradeAdapter.Hist
         holder.tradeItem.setText(trades.get(position).getTitle());
         holder.receiver.setText(tradeReceivers.get(position));
         holder.provider.setText(tradeProviders.get(position));
-        /*
+
         holder.tradeLayout.setOnClickListener(view -> {
             Intent intent = new Intent(context, ViewTradeActivity.class);
             currTrade = trades.get(position);
             context.startActivity(intent);
-
-        });*/
+        });
     }
 
     @Override

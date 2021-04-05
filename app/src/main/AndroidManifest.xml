@@ -43,6 +43,8 @@
         <activity android:name=".TradeRequestActivity"/>
         <activity android:name=".HistTradeActivity"
             android:parentActivityName=".HomeActivity"/>
+        <activity android:name=".ViewTradeActivity"
+            android:parentActivityName=".HistTradeActivity"/>
         <activity android:name=".HistoryActivity"
             android:parentActivityName=".HomeActivity"/>
         <activity android:name=".HistViewPostActivity"
