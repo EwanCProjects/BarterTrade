@@ -52,7 +52,7 @@ public class HistoryActivity extends AppCompatActivity implements View.OnClickLi
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
                     Post extractedPost = postSnapshot.getValue(Post.class);
-                    if (extractedPost.getAuthor().equals(currUser)) {
+                    if (extractedPost.getAuthor().equals(currUser) && extractedPost.getTradeCompleted()) {
                         extractedPosts.add(extractedPost);
                         postTitles.add(extractedPost.getPostTitle());
                         postOPs.add(extractedPost.getAuthor());

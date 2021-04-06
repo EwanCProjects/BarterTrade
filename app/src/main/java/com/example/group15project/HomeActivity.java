@@ -224,11 +224,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
                     Post extractedPost = postSnapshot.getValue(Post.class);
-                    extractedPosts.add(extractedPost);
-                    postTitles.add(extractedPost.getPostTitle());
-                    postOPs.add(extractedPost.getAuthor());
-                    postCategories.add(extractedPost.getPostCategory());
-                    homeAdapter.notifyDataSetChanged();
+                    if (!extractedPost.getTradeCompleted()) {
+                        extractedPosts.add(extractedPost);
+                        postTitles.add(extractedPost.getPostTitle());
+                        postOPs.add(extractedPost.getAuthor());
+                        postCategories.add(extractedPost.getPostCategory());
+                        homeAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
