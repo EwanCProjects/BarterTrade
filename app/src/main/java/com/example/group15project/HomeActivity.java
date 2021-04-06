@@ -224,7 +224,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
                     Post extractedPost = postSnapshot.getValue(Post.class);
-                    if (!extractedPost.getTradeCompleted()) {
+                    if (!extractedPost.getTradeCompleted() && !extractedPost.getAuthor().equals(currUser)) {
                         extractedPosts.add(extractedPost);
                         postTitles.add(extractedPost.getPostTitle());
                         postOPs.add(extractedPost.getAuthor());
