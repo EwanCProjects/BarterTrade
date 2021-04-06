@@ -16,9 +16,11 @@ public class Post {
     private float distance;
     private String image;
     private boolean tradeCompleted; //flag for determining when a post should no longer be displayed on the home page
+    private double latitude;
+    private double longitude;
 
     public Post(String author, String postId, String postTitle, String postDescription,
-                String postCategory, String image) {
+                String postCategory, String image, double latitude, double longitude) {
         this.author = author;
         this.postId = postId;
         this.postTitle = postTitle;
@@ -26,6 +28,8 @@ public class Post {
         this.postCategory = postCategory;
         this.image = image;
         this.tradeCompleted = false;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public Post() {
@@ -86,15 +90,23 @@ public class Post {
 
     public void setimage(String image) { this.image = image; }
 
-    //
     public boolean getTradeCompleted() {
         return tradeCompleted;
     }
-
+    
     public void setTradeCompleted(boolean completionStatus) {
         this.tradeCompleted = completionStatus;
     }
 
+    public double getLatitude(){ return latitude; }
+
+    public void setLatitude(Double latitude){ this.latitude = latitude; }
+
+    public double getLongitude(){ return longitude; }
+
+    public void setLongitude(Double longitude){ this.longitude = longitude; }
+
+    
 
 
     @Exclude

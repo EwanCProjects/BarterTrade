@@ -106,18 +106,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
     }
 
-    /** useful when showing main page with default or prev saved preferences of user */
-
-    private void setFilterPrefsToDefaultIfNeeded() {
-        FilterPreferences filterPrefs = UserStatusData.getUserFilterPrefs(this);
-        if (filterPrefs != null){
-
-        }else{
-            filterPrefs = new FilterPreferences();
-            filterPrefs.setMaxDistance(MAX_LOCAL_DISTANCE/1000);
-            UserStatusData.saveUserFilterPrefsData(filterPrefs,this);
-        }
-    }
 
     private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
 
@@ -218,13 +206,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void getLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
