@@ -1,37 +1,40 @@
 package com.example.group15project;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.Address;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
+
 import androidx.annotation.NonNull;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
-import androidx.core.content.ContextCompat;
-
-import com.google.android.gms.location.LocationListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import android.location.LocationListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
-import java.security.acl.Permission;
-import java.util.Random;
-import java.util.UUID;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
+
+import currentUserProperties.CurrentUser;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
@@ -40,10 +43,14 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
-    public static String userID = HomeActivity.currUser;
-
+    public static String userID = CurrentUser.getInstance().currUserString;
+    public static final String LOCATION_PERMISSION = android.Manifest.permission.ACCESS_FINE_LOCATION;
+    public static final String LOCATION_PREF = "locationPref";
 
     String image = "";
+    private LocationManager locationManager;
+    private double latitude;
+    private double longitude;
 
 
     private MyLocation myLocation;
@@ -55,6 +62,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         Button postButton = findViewById(R.id.postButton);
         postButton.setOnClickListener(this);
+        checkPermissions();
 
         if(getIntent().hasExtra("postTitle") && getIntent().hasExtra("postDescription")&&
                 getIntent().hasExtra("postCategory")){
@@ -69,81 +77,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             description.setText(postDescription);
             category.setText(postCategory);
         }
-
-
-
-
-
+        getCurrentLocation();
     }
 
-    private void showDbDataUi(Post dataFromDb) {
-        String address = latLongStringToAddress(dataFromDb);
-
-        ((TextView) findViewById(R.id.GPSLocation)).setText(address);
-    }
-
-    private String latLongStringToAddress(Post dataFromDb) {
-        List<Address> addresses = null;
-        try {
-            Geocoder geocoder = new Geocoder(this);
-            Double lat = Double.parseDouble(dataFromDb.getLatLonLocation().split(",")[0]);
-            Double lon = Double.parseDouble(dataFromDb.getLatLonLocation().split(",")[1]);
-            addresses = geocoder.getFromLocation(lat, lon, 1);
-            myLocation = new MyLocation(null) {
-                @Override
-                public void LocationResult(Location location) {
-                }
-            };
-            LongLatLocation latLocation = new LongLatLocation(lat, lon);
-            myLocation.setLastLocation(latLocation);
-        } catch (IOException e) {
-            getLocation();
-            return "";
-        }
-
-        return addresses.get(0).getAddressLine(0);
-    }
-
-    private void getLocation() {
-         myLocation = new MyLocation(this) {
-        @Override
-        public void LocationResult(Location location)
-        {
-        showMyLocationOnUI(location);
-        }
-        };
-    }
-
-    private void showMyLocationOnUI(Location location) {
-        double lat = location.getLatitude();
-        double lon = location.getLongitude();
-
-        try {
-            //get the address
-            Geocoder geocoder = new Geocoder(this);
-            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
-            String address = addresses.get(0).getAddressLine(0);
-
-            ((TextView) findViewById(R.id.GPSLocation)).setText(address);
-
-        } catch (IOException e) {
-            ((TextView) findViewById(R.id.GPSLocation)).setText("unable to get address");
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 99 && grantResults[0] == PERMISSION_GRANTED) {
-            getLocation();
-        } else {
-            Toast.makeText(this, "This app requires permissions to get Location data"
-                    , Toast.LENGTH_SHORT).show();
-        }
-    }
 
     protected String generatePostID() {
         return UUID.randomUUID().toString();
@@ -176,8 +112,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         return category.isEmpty();
     }
 
-    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, String image) {
-        return new Post(author, postID, postTitle, postDescription, postCategory, image);
+    protected Post createPost(String author, String postID, String postTitle, String postDescription, String postCategory, String image, double latitude, double longitude) {
+        return new Post(author, postID, postTitle, postDescription, postCategory, image, latitude, longitude);
     }
 
     protected void setStatusMessage(String message) {
@@ -187,11 +123,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void addPostToFirebase(DatabaseReference mDatabase, Post post, String postID){
         mDatabase.child("Posts").child(postID).setValue(post);
-    }
-
-    // We need to implement this later for adding a list of posts to a User
-    protected void addPostIDToUser(DatabaseReference mDatabase, String postID, String userID){
-
     }
 
     protected void switchToHomeWindow() {
@@ -241,14 +172,161 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if (errorMessage.isEmpty()) {
-            Post post = createPost(userID, postID, postTitle, postDescription, postCategory, image);
+            Post post = createPost(userID, postID, postTitle, postDescription, postCategory, image, latitude, longitude);
             addPostToFirebase(realTimeDatabase, post, postID);
             switchToHomeWindow();
-            //viewPostWindow()
         }
 
         else {
             setStatusMessage(errorMessage);
         }
     }}
+
+
+    LocationListener listener = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            //  userCurrentLocation = currentLocation;
+
+            try {
+                showMyLocationOnUI(location);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(@NonNull String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(@NonNull String provider) {
+
+        }
+    };
+
+
+    protected void getCurrentLocation() {
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000,
+                5, listener);
+    }
+
+
+    private void showMyLocationOnUI(Location location) {
+        double lat = location.getLatitude();
+        double lon = location.getLongitude();
+
+        try {
+            //get the address
+            Geocoder geocoder = new Geocoder(this);
+            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+            String address = addresses.get(0).getAddressLine(0);
+
+            ((TextView) findViewById(R.id.GPSLocation)).setText(address);
+
+        } catch (IOException e) {
+            ((TextView) findViewById(R.id.GPSLocation)).setText("unable to get address");
+            e.printStackTrace();
+        }
+
+    }
+
+    protected void checkPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            checkLocationPermission(PostActivity.this, getApplicationContext(), LOCATION_PERMISSION, LOCATION_PREF);
+        } else {
+        }
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+    }
+    /**
+     * Function: Method to ask user for sharing their location
+     * Parameters:
+     * Returns: void
+     *
+     */
+
+    private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
+        PermissionUtil.checkPermission(activity, context, Permission, prefName,
+                new PermissionUtil.PermissionAskListener() {
+                    @Override
+                    public void onPermissionAsk() {
+                        ActivityCompat.requestPermissions(activity,
+                                new String[]{Permission},
+                                0);
+                    }
+                    @Override
+                    public void onPermissionPreviouslyDenied() {
+                        //show a dialog explaining is permission denied previously , but app require it and then request permission
+                        showToast("Permission previously Denied.");
+                        ActivityCompat.requestPermissions(activity,
+                                new String[]{Permission},
+                                0);
+                    }
+                    @Override
+                    public void onPermissionDisabled() {
+                        // permission check box checked and permission denied previously .
+                        askUserToAllowPermissionFromSetting();
+                    }
+                    @Override
+                    public void onPermissionGranted() {
+                        //showToast("Permission Granted.");
+                    }
+                });
+    }
+
+    /**
+     * Function: Method to ask and take user to Settings menu to setup location permissions
+     * Parameters:
+     * Returns: void
+     *
+     */
+    private void askUserToAllowPermissionFromSetting() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                PostActivity.this);
+        // set title
+        alertDialogBuilder.setTitle("Permission Required:");
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Kindly allow Permission from App Setting, without this permission app could not show maps.")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, 0);
+                        showToast("Permission forever Disabled.");
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    }
+
 }

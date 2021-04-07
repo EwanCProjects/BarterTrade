@@ -20,13 +20,13 @@ import static org.junit.Assert.*;
 public class JUnitTestEditDescription {
     static EditPostActivity edActivity;
     private final static String author = "CS STUDENT EXAMPLE";
-    public static String postId = "567890"; //HomeActivity.currUser;
+    public static String postId = "567890"; //HomeActivity.CurrentUser;
     private final static String postTitle = "CHAIR";
     private final static String postDescription = "Original description of a chair...";
     private final static String postCategory = "FURNITURE";
     private final static String image = "    https://firebasestorage.googleapis.com/v0/b/barter-trade-app.appspot.com/o/1615742712551?alt=media&token=3dd86e49-8800-41ac-918d-b5ce9ad84699\n";
 
-    private final static Post exOriginalPost = new Post( author,  postId,  postTitle,  postDescription, postCategory, image);
+    private final static Post exOriginalPost = new Post( author,  postId,  postTitle,  postDescription, postCategory, image, 0 , 0 );
 
     // do not mock the post object using mockito
 

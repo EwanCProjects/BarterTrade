@@ -1,6 +1,8 @@
 package com.example.group15project;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ public class AcceptanceActivity extends AppCompatActivity {
     DatabaseReference dRef;
     int accept_flags = 0;
     int decline_flags = 0;
+    DeletePost postRemover = new DeletePost(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,9 @@ public class AcceptanceActivity extends AppCompatActivity {
     }
 
     public void switchActivity() {
-        Toast.makeText(getApplicationContext(),  "This was supposed to redirect to chat but chat has been oved to IT-3", Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getApplicationContext(),  "This was supposed to redirect to chat but chat has been oved to IT-3", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 
     public void showMessageIcon(ImageView ig) {
@@ -89,6 +93,7 @@ public class AcceptanceActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new AdapterAcceptance.OnItemClickListener() {
             @Override
             public void onAcceptClick(ImageView ig) {
+                postRemover.removePost(ViewPostActivity.currPost);
                 showMessageIcon(ig);
             }
 

@@ -11,7 +11,7 @@ public class TestDeletePost extends AppCompatActivity implements View.OnClickLis
 
     //static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     static Post testPost;
-    static DeletePostActivity deletePostActivity;
+
 
 
     @Override

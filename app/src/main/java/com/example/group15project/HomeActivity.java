@@ -1,6 +1,4 @@
 package com.example.group15project;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -23,67 +21,43 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import androidx.core.app.ActivityCompat;
-
-
+import currentUserProperties.CurrentUser;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     public static final int MAX_LOCAL_DISTANCE = 50000; //local is defined as 50km max in this app
-
     RecyclerView homeView;
     HomeAdapter homeAdapter;
     HomeAdapter searchedAdapter; // might not need to be global
 
-    public static String currUser = LoginActivity.currUser;
+    public static String currUser = CurrentUser.getInstance().currUserString;
     public static DatabaseReference realTimeDatabase = FirebaseDatabase.getInstance().getReference();
     List<Post> extractedPosts = new ArrayList<>();
     List<String> postTitles = new ArrayList<>();
     List<String> postOPs = new ArrayList<>();
     List<String> postCategories = new ArrayList<>();
+    SearchBar searchBar;
+    ArrayList<Post> postArrayList = new ArrayList<>();
+    List<String> postImages = new ArrayList<>();
 
     Context context;
     private MyLocation myLocation;
 
-    /**
-     * runs when Filter button is clicked
-     */
-    public void goToFilterActivity(View v){
-        Intent intent = new Intent(this, FilterActivity.class);
-        startActivity(intent);
-    }
-
-    /**
-     *this method would be useful when extracting posts based on distance
-     */
-    private float getDistance(String latitudeLongitude){
-        if(latitudeLongitude == null){
-            return -1;
-        }
-
-        Double lat = Double.parseDouble(latitudeLongitude.split(",")[0]);
-        Double lon = Double.parseDouble(latitudeLongitude.split(",")[1]);
-
-        LongLatLocation myLoc = new LongLatLocation(lat,lon);
-        return myLocation.calcDistanceToLocation(myLoc);
-    }
-
-
-    ArrayList<Post> postListFound = new ArrayList<Post>(); // aka postList
+    ArrayList<Post> postListFound = new ArrayList<>(); // aka postList
     public static DatabaseReference databaseReference;
 
 
@@ -94,13 +68,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
         databaseRead(realTimeDatabase);
 
-        if (currUser == null) {
-            currUser = RegistrationActivity.currUser;
-        }
+        searchBar = new SearchBar();
+        postArrayList = searchBar.ListOfAllPosts();
 
         homeView = findViewById(R.id.homePostsView);
 
-        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
+        homeAdapter = new HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
 
         homeView.setAdapter(homeAdapter);
         homeView.setLayoutManager(new LinearLayoutManager(this));
@@ -121,25 +94,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         newPostButton.setOnClickListener(this);
         Button histButton = findViewById(R.id.histButton);
         histButton.setOnClickListener(this);
+        Button searchBarMainBtn = findViewById(R.id.searchBarMainBtn);
+        searchBarMainBtn.setOnClickListener(this);
+
+        Button tradeAcceptance= findViewById(R.id.tradeAcceptance);
+        tradeAcceptance.setOnClickListener(this);
+
+        Button tradeButton = findViewById(R.id.tradeHistory);
+        tradeButton.setOnClickListener(this);
+        Button chatButton = findViewById(R.id.chatButton);
+        chatButton.setOnClickListener(this);
 
         /// searching:
-        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories);
-        postListFound = ListOfAllPosts();
-
+        searchedAdapter = new  HomeAdapter(this, extractedPosts, postTitles, postOPs, postCategories, postImages);
     }
 
-    /** useful when showing main page with default or prev saved preferences of user */
-
-    private void setFilterPrefsToDefaultIfNeeded() {
-        FilterPreferences filterPrefs = UserStatusData.getUserFilterPrefs(this);
-        if (filterPrefs != null){
-
-        }else{
-            filterPrefs = new FilterPreferences();
-            filterPrefs.setMaxDistance(MAX_LOCAL_DISTANCE/1000);
-            UserStatusData.saveUserFilterPrefsData(filterPrefs,this);
-        }
-    }
 
     private void checkLocationPermission(final Activity activity, final Context context, final String Permission, final String prefName) {
 
@@ -240,13 +209,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void getLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -265,11 +227,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.child("Posts").getChildren()) {
                     Post extractedPost = postSnapshot.getValue(Post.class);
-                    extractedPosts.add(extractedPost);
-                    postTitles.add(extractedPost.getPostTitle());
-                    postOPs.add(extractedPost.getAuthor());
-                    postCategories.add(extractedPost.getPostCategory());
-                    homeAdapter.notifyDataSetChanged();
+                    if (!extractedPost.getTradeCompleted() && !extractedPost.getAuthor().equals(currUser)) {
+                        extractedPosts.add(extractedPost);
+                        postTitles.add(extractedPost.getPostTitle());
+                        postOPs.add(extractedPost.getAuthor());
+                        postCategories.add(extractedPost.getPostCategory());
+                        homeAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -291,6 +255,51 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    protected void switchToTradeWindow() {
+        Intent intent = new Intent(this, HistTradeActivity.class);
+        startActivity(intent);
+    }
+
+    protected void switchToAcceptance(){
+        Intent intent = new Intent(this, AcceptanceActivity.class);
+        startActivity(intent);
+    }
+
+    protected void switchToChatWindow() {
+        Intent intent = new Intent(this, HistChatActivity.class);
+        startActivity(intent);
+    }
+
+    ////////////// update with search activity
+    protected void switchToSearchResults() {
+        //Intent intent = new Intent(this, SearchBarActivity.class);
+        //startActivity(intent);
+        EditText searchText = findViewById(R.id.searchText);
+        List<Post> foundPostList = searchBar.foundPosts(searchText.getText().toString(), postArrayList);
+
+        System.out.println(foundPostList.size());
+
+        List<String> postTitles = new ArrayList<>();
+        List<String> postOPs = new ArrayList<>();
+        List<String> postCategories = new ArrayList<>();
+        List<String> postImages = new ArrayList<>();
+
+        for(int i = 0; i < foundPostList.size(); i++){
+            postTitles.add(foundPostList.get(i).getPostTitle());
+            postOPs.add(foundPostList.get(i).getAuthor()); /// username? must be email
+            postCategories.add(foundPostList.get(i).getPostCategory());
+            // postImages.add(foundPostList.get(i).); ??????
+            // !!!! Talk to Ewan, need to add list of images to show in search results!
+        }
+
+
+        searchedAdapter = new HomeAdapter(this, foundPostList, postTitles, postOPs, postCategories, postImages);
+        homeView.setAdapter(searchedAdapter);
+        homeView.setLayoutManager(new LinearLayoutManager(this));
+
+
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
@@ -303,107 +312,35 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 switchToHistoryWindow();
                 break;
 
+            case R.id.searchBarMainBtn:
+                switchToSearchResults();
+                break;
+
+            case R.id.tradeHistory:
+                switchToTradeWindow();
+                break;
+
+            case R.id.chatButton:
+                switchToChatWindow();
+                break;
+
+            case R.id.tradeAcceptance:
+                switchToAcceptance();
+                break;
+
             default:
                 break;
         }
         //Toast.makeText(MainActivity.this,"Firebase connection success", Toast.LENGTH_LONG).show();
     }
 
-
-
-
-    /// SEARCH BAR ACTIVITY ADDED:
-
-    public void buttonClicked(android.view.View view) {
-
-        //System.out.println("!!!!!!");
-        EditText editedTextOfTitle = findViewById(R.id.titleSearch);
-        EditText editedTextOfCategory = findViewById(R.id.hashTagSearch);
-
-        String editTitleStr = editedTextOfTitle.getText().toString();
-        String editCategoryStr = editedTextOfCategory.getText().toString();
-
-        // DatabaseReference ref = realTimeDatabase.getReference();//////not useful
-
-        List<Post> foundPostsList = new ArrayList<>();
-
-        foundPostsList = foundPosts(editTitleStr, editCategoryStr); // need to run through page
-
-
-
-        // display post
-        System.out.println(foundPostsList.size());
-
-        //// display home page
-    }
-
-
-    public ArrayList<Post> ListOfAllPosts(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts/");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Post postRef;
-                String snapshotStr = dataSnapshot.getKey();
-                //System.out.println(snapshotStr);
-
-                Map<String, Post> mapPosts = new HashMap<>();
-                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    Post newPostObj = snapshot.getValue(Post.class);
-                    System.out.println(newPostObj.getPostTitle());
-                    postListFound.add(newPostObj);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-        searchedAdapter.notifyDataSetChanged();
-        return postListFound;
-    }
-
-
-    public List<Post> foundPosts(String title, String category){
-        List<Post> matchedPosts = new ArrayList<>();
-
-        for (int i =0; i < postListFound.size(); i++){
-            Post postObj = postListFound.get(i);
-            String titleAtIndex = postObj.getPostTitle();
-            String categoryAtIndex = postObj.getPostCategory();
-            if(checkPostExistence(titleAtIndex, categoryAtIndex, postListFound.get(i))){
-                matchedPosts.add(postListFound.get(i));
-            }
-        }
-        return matchedPosts;
-
-    }
-
-    /*
-     * @return boolean if there exists a post
-     * @status DONE
+    /**
+     * runs when Filter button is clicked
      */
-    public boolean checkPostExistence(String title, String category, Post post){
-        boolean titleIsAvailable = false;
-        boolean categoryIsAvailable = false;
-
-        if(post.getPostTitle().matches(title)){
-            titleIsAvailable = true;
-        }
-        if(post.getPostCategory().matches(category)){
-            categoryIsAvailable = true;
-        }
-        //}
-        return (titleIsAvailable && categoryIsAvailable); // Works , returns correctly
+    public void goToFilterActivity(View v){
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
     }
-
-    public boolean isEmptyInput(String testString){
-        return testString.isEmpty();
-    }
-
-
 
 }
 

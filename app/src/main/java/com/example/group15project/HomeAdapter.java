@@ -18,16 +18,17 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder> {
     public static Post currPost;
     List<Post> posts;
-    List<String> titles, OPs, categories;
+    List<String> titles, OPs, categories, images;
     Context context;
 
 
-    public HomeAdapter(Context ct, List<Post> extractedPosts, List<String> postTitles, List<String> postOPs, List<String> postCategories) {
+    public HomeAdapter(Context ct, List<Post> extractedPosts, List<String> postTitles, List<String> postOPs, List<String> postCategories, List<String> postImages) {
         context = ct;
         posts = extractedPosts;
         titles = postTitles;
         OPs = postOPs;
         categories = postCategories;
+        images = postImages;
     }
 
     @NonNull
