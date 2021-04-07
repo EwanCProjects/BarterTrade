@@ -97,6 +97,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Button searchBarMainBtn = findViewById(R.id.searchBarMainBtn);
         searchBarMainBtn.setOnClickListener(this);
 
+        Button tradeAcceptance= findViewById(R.id.tradeAcceptance);
+        tradeAcceptance.setOnClickListener(this);
+
         Button tradeButton = findViewById(R.id.tradeHistory);
         tradeButton.setOnClickListener(this);
         Button chatButton = findViewById(R.id.chatButton);
@@ -257,6 +260,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    protected void switchToAcceptance(){
+        Intent intent = new Intent(this, AcceptanceActivity.class);
+        startActivity(intent);
+    }
+
     protected void switchToChatWindow() {
         Intent intent = new Intent(this, HistChatActivity.class);
         startActivity(intent);
@@ -314,6 +322,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.chatButton:
                 switchToChatWindow();
+                break;
+
+            case R.id.tradeAcceptance:
+                switchToAcceptance();
                 break;
 
             default:

@@ -160,6 +160,13 @@
                 android:onClick="goToFilterActivity"
                 android:textSize="16sp"/>
 
+            <Button
+                android:id="@+id/tradeAcceptance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="My Trade Requests" />
+
         </LinearLayout>
 
     </LinearLayout>
